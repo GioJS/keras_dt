@@ -1,0 +1,15 @@
+This is a python porting of DTK library using Keras(no gpu).
+
+Usage:
+
+from keras_dt import *
+
+#initialize a DT object
+dt=DT(seed=<random generator seed>,dim=<dimension of arrays>,operator=<vectors composition operation>*,lexicalized=<if trees are lexicalized>)
+
+#*only 2 operations are implemented (circular convolution and shuffled circular convolution)
+
+#given a tree in penntree bank annotation
+#call dt method
+dist_tree=dt.dt(tree)
+#dist_tree is a numpy array
