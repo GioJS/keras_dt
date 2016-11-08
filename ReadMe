@@ -13,3 +13,9 @@ dt=DT(seed=<random generator seed>,dim=<dimension of arrays>,operator=<vectors c
 #call dt method
 dist_tree=dt.dt(tree)
 #dist_tree is a numpy array
+ 
+ #embedding DT layer
+ #initialize a DT
+ dt = DT(dim=4096,lexicalized=True)
+ #pass it to an embedding dt (the parameter one is the input dimension 1 means omitted)
+model.add(EmbeddingDT(dt,1,4096))
