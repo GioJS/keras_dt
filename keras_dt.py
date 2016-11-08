@@ -34,7 +34,6 @@ class DT:
 		#print t
 		res = K.zeros(self.dim)
 		
-		#if node is string => is a terminal
 		if len(t)>0:
 			preterminal = True
 			for i in range(len(t)):
