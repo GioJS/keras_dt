@@ -68,10 +68,7 @@ class EmbeddingDT(Layer):
         else:
             input_length = self.input_length
         return (input_shape[0], input_length, self.output_dim)
-    #questo e' da cambiare
-    #ci aspettiamo un albero calcoliamo il tree
-    #se non e' in cache
-    #e lo restituiamo tramite dot product con la matrice indentita'
+    
     def call(self, x, mask=None):
 
         # if K.dtype(x) != 'int32':
