@@ -33,13 +33,14 @@ class EmbeddingDT(Layer):
         self.initial_weights = weights
         kwargs['input_shape'] = (self.input_length,)
         kwargs['input_dtype'] = 'int32'
+        kwargs['trainable'] = False
         super(EmbeddingDT, self).__init__(**kwargs)
 
     def build(self, input_shape):
     	#ci serve la matrice identita'
         self.W = K.eye(self.output_dim)
         #self.trainable_weights = [self.W]
-        self.non_trainable_weights = [self.W]
+        #self.non_trainable_weights = [self.W]
         self.constraints = {}
         # if self.W_constraint:
         #     self.constraints[self.W] = self.W_constraint

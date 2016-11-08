@@ -1,7 +1,7 @@
 from keras_dt import *
 from scipy import spatial
 import nltk
-from tree import *
+from trees import *
 from layers import *
 from keras.layers import Dense
 from keras.models import Sequential
