@@ -39,6 +39,8 @@ class EmbeddingDT(Layer):
     
     def call(self, x, mask=None):
 
+        #questo serve ad evitare di calcolare il dt su un tensore
+        #si verifica quando viene aggiunto il layer al modello
         
         if type(x) != str:
             return K.zeros(1)
