@@ -15,9 +15,8 @@ class EmbeddingDT(Layer):
         self.input_dim = input_dim
         self.dt = dt
         self.output_dim = output_dim
-        self.input_length = input_length
+        self.input_length = input_dim
         self.cache = {}
-        
         
         kwargs['input_shape'] = (self.input_length,)
         kwargs['trainable'] = False
@@ -41,7 +40,7 @@ class EmbeddingDT(Layer):
 
         #questo serve ad evitare di calcolare il dt su un tensore
         #si verifica quando viene aggiunto il layer al modello
-        
+
         if type(x) != str:
             return K.zeros(1)
         if x not in self.cache:
