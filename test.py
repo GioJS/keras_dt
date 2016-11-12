@@ -21,6 +21,6 @@ inp=np.array(to_ord(trees[0]))
 #print inp
 #print model.layers[0].call(K.variable(inp)).eval()
 #restituisce un array di 0 perche' non c'e' learning
-print model.predict([inp])
+print model.predict(inp)
 
 
