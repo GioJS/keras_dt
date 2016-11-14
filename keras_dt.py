@@ -26,13 +26,13 @@ class DT:
 	#compute dt, t is nltk.tree.Tree
 
 	def dt(self,t):
-		tensor = K.zeros(self.dim)
+		tensor = K.zeros((self.dim,))
 		self.__recursion(Tree.from_penn(t),tensor)
 		return tensor.eval()
 	#compute S(n) with dfs
 	def __recursion(self,t,s):
 		#print t
-		res = K.zeros(self.dim)
+		res = K.zeros((self.dim,))
 		
 		if len(t)>0:
 			preterminal = True
@@ -45,8 +45,13 @@ class DT:
 				res = child_v if (i == 0) else self.operator(res, child_v,self.permutations)
 			if (not preterminal) or self.lexicalized:
 				res = self.operator(self.vector_generator.get_random_vector(t.label), res,self.permutations)
-				s.set_value((s+res).eval())
+				
+				if K.backend() == 'theano':
+					s.set_value((s+res).eval())
+				else:
+					#print 'tf'
+					s.assign((s+res).eval()).eval()
 			else:
-				res = K.zeros(self.dim)
+				res = K.zeros((self.dim,))
 		return res
 		

@@ -8,10 +8,7 @@ from keras_dt import *
 class EmbeddingDT(Layer):
     
     input_ndim = 2
-    @staticmethod
-    def to_chr(array):
-        return "".join([chr(int(i)) for i in array])
-
+    
     def __init__(self,dt, input_dim, output_dim,
                   input_length=None
                  , **kwargs):
@@ -43,16 +40,17 @@ class EmbeddingDT(Layer):
         #questo serve ad evitare di calcolare il dt su un tensore
         #si verifica quando viene aggiunto il layer al modello
         #print type(x)
-        if str(x) == 'embeddingdt_input_1':
+        if type(x) != str:
             #print 'a'
-            return K.zeros(1)
-        #print 'qui'
-        x = EmbeddingDT.to_chr(x.eval())
+            return K.zeros((1,))
+        
         #print x
         #print x
         if x not in self.cache:
         	self.cache[x] = self.dt.dt(x)
-        #return self.cache[x] direttamente o con dot?
-        return K.dot(self.W,self.cache[x])
+	print x
+	print self.cache[x]
+        return self.cache[x] #direttamente o con dot?
+        #return K.dot(self.W,K.variable(self.cache[x]))
 
     

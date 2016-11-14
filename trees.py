@@ -16,7 +16,7 @@ class Tree(list):
 	def from_penn(string):
 		
 		#print string
-		tree = None;
+		tree = None
 		string = string.strip()
 		if not '(' in string:
 			#It is a terminal node
