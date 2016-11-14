@@ -19,3 +19,8 @@ dist_tree=dt.dt(tree)
  dt = DT(dim=4096,lexicalized=True)
  #pass it to an embedding dt (the parameter one is the input dimension 1 means omitted)
 model.add(EmbeddingDT(dt,1,4096))
+
+Using tensorflow:
+
+with K.tf.Session():
+	#keras code
