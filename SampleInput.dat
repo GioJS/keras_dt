@@ -8,3 +8,5 @@
 (F (B (D (B d))(A b)))
 (B (B (E (A (D a)(D c)(D f)))))
 (F (B (D (B (E b)(B (A b))))))
+(E (A d)(B c))
+(E (C (F (C a))))

@@ -5,19 +5,35 @@ from keras import initializations, regularizers, constraints
 from keras.engine import Layer
 from keras_dt import *
 
+def indeces_trees(trees):
+    i=0
+    indeces = []
+    visited = []
+    for t in trees:
+        if not t in visited:
+            indeces.append(i)
+            visited.append(t)
+        else:
+            indeces.append(visited.index(t))
+        i+=1
+    return indeces    
+
+
 class EmbeddingDT(Layer):
     
     input_ndim = 2
     
-    def __init__(self,dt, input_dim, output_dim,
+    def __init__(self,dt, trees, limit, input_dim, output_dim,
                   input_length=None
                  , **kwargs):
         self.input_dim = input_dim
         self.dt = dt
         self.output_dim = output_dim
         self.input_length = input_dim
-        self.cache = {}
-        
+        self.cache = []
+        self.trees = trees
+        self.limit = limit
+
         kwargs['input_shape'] = (self.input_length,)
         kwargs['trainable'] = False
         super(EmbeddingDT, self).__init__(**kwargs)
@@ -35,22 +51,12 @@ class EmbeddingDT(Layer):
         return (input_shape[0], input_length, self.output_dim)
     
     def call(self, x, mask=None):
-        #print type(x)
-        #print x
-        #questo serve ad evitare di calcolare il dt su un tensore
-        #si verifica quando viene aggiunto il layer al modello
-        #print type(x)
-        if type(x) != str:
-            #print 'a'
+        if type(x) != int:
             return K.zeros((1,))
-        
-        #print x
-        #print x
-        if x not in self.cache:
-        	self.cache[x] = self.dt.dt(x)
-	print x
-	print self.cache[x]
-        return self.cache[x] #direttamente o con dot?
-        #return K.dot(self.W,K.variable(self.cache[x]))
+        if len(self.cache) >= x and len(self.cache) < self.limit:
+            self.cache.append(self.dt.dt(self.trees[x]))
+            return self.cache[-1]
+        return self.dt.dt(self.trees[x])
+
 
     
