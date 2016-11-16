@@ -9,8 +9,9 @@ trees=[]
 
 with open('SampleInput.dat','r') as f:
 	trees=[line.replace('\n','') for line in f.readlines()]
+#array of indeces for all tree in trees
 indeces=indeces_trees(trees)
-
+print indeces
 if K.backend() == 'tensorflow':
 	sess = K.tf.Session()
 	K.set_session(sess)

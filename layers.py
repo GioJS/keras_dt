@@ -13,9 +13,11 @@ def indeces_trees(trees):
         if not t in visited:
             indeces.append(i)
             visited.append(t)
+            i+=1
+        #if the index of that tree is already in indeces
         else:
             indeces.append(visited.index(t))
-        i+=1
+        
     return indeces    
 
 
