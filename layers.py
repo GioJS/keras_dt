@@ -6,19 +6,7 @@ from keras.engine import Layer
 from keras_dt import *
 
 def indeces_trees(trees):
-    i=0
-    indeces = []
-    visited = []
-    for t in trees:
-        if not t in visited:
-            indeces.append(i)
-            visited.append(t)
-            i+=1
-        #if the index of that tree is already in indeces
-        else:
-            indeces.append(visited.index(t))
-        
-    return indeces    
+    return np.unique(trees,return_inverse=True)[1]  
 
 
 class EmbeddingDT(Layer):
@@ -53,9 +41,11 @@ class EmbeddingDT(Layer):
         return (input_shape[0], input_length, self.output_dim)
     
     def call(self, x, mask=None):
-        if type(x) != int:
+
+        if type(x) != np.int64:
             return K.zeros((1,))
-        if len(self.cache) >= x and len(self.cache) < self.limit:
+        if len(self.cache) < self.limit:
+
             self.cache.append(self.dt.dt(self.trees[x]))
             return self.cache[-1]
         return self.dt.dt(self.trees[x])
