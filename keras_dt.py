@@ -4,10 +4,7 @@ import numpy.random as rnd
 from keras import backend as K
 from vectors import *
 from trees import *
-'''
-Implementation of Distributed Tree
-(no gpu)
-'''
+
 
 class DT:
 	#seed random gen, dim tensor dimensions, lambd decay,lexicalized consider leaves, mu mean, va variance 

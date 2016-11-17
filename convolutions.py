@@ -1,7 +1,8 @@
 from keras import backend as K
 import numpy as np
 from vectors import *
-
+# according this review http://scottsievert.com/blog/2016/07/01/numpy-gpu/
+# numpy fast computes FFT without acceleration (theano use numpy for fft)
 
 #circular convolution, x,y arrays, permutations is not used
 def circular_convolution(x,y,permutations=None):
