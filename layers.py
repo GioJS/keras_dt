@@ -48,7 +48,7 @@ class EmbeddingDT(Layer):
 
             self.cache.append(self.dt.dt(self.trees[x]))
             return self.cache[-1]
-        return self.dt.dt(self.trees[x])
+        return K.dot(W, self.dt.dt(self.trees[x]))
 
 
     
