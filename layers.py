@@ -5,7 +5,7 @@ from keras import initializations, regularizers, constraints
 from keras.engine import Layer
 from keras_dt import *
 
-def indeces_trees(trees):
+def indices_trees(trees):
     return np.unique(trees,return_inverse=True)[1]  
 
 
