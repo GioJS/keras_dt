@@ -2,38 +2,43 @@ from keras_dt import *
 from trees import *
 from layers import *
 from keras.models import Sequential
-from keras.layers import RepeatVector
- 
+from keras.layers import Reshape
+
 
 trees=[]
 
-with open('SampleInput.dat','r') as f:
-	trees=[line.replace('\n','') for line in f.readlines()]
+with open('SampleInput.dat', 'r') as f:
+	trees=[line.replace('\n', '') for line in f.readlines()]
 #array of indices for all tree in trees
 indices=indices_trees(trees)
+
 #print indices
 if K.backend() == 'tensorflow':
 	sess = K.tf.Session()
 	K.set_session(sess)
 	with sess.as_default():
 		model = Sequential()
-		dt = DT(dim=4096,lexicalized=True)
-		model.add(EmbeddingDT(dt,trees,2000,1,4096))
-		model.compile(loss='mse',optimizer='sgd')
-		
-		print model.layers[0].call(indices[0])
-		#restituisce un array di 0 perche' non c'e' learning
-		#print model.predict(indeces)
+	dt = DT(dim=4096, lexicalized=True)
+	model.add(EmbeddingDT(dt, trees, 2000, 1, 4096))
+	print model.layers[0].output_shape
+	model.add(Reshape((2,2048)))
+	model.compile(loss='mse', optimizer='sgd')
+	
+	print model.layers[0].call(indices[0])
+	print model.layers[1].call(model.layers[0].call(indices[0])).eval()
 else:
 
 	model = Sequential()
-	dt = DT(dim=4096,lexicalized=True)
-	model.add(EmbeddingDT(dt,trees,2000,1,4096))
-	model.compile(loss='mse',optimizer='sgd')
+	dt = DT(dim=4096, lexicalized=True)
+	model.add(EmbeddingDT(dt, trees, 2000, 1, 4096))
+	print model.layers[0].output_shape
+	model.add(Reshape((2,2048)))
+	model.compile(loss='mse', optimizer='sgd')
 	
 	print model.layers[0].call(indices[0])
+	print model.layers[1].call(model.layers[0].call(indices[0])).eval()
 	#restituisce un array di 0 perche' non c'e' learning
-	#print model.predict(indeces)
+	#print model.predict(indices)
 
 
 

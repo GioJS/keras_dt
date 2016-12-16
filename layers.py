@@ -33,12 +33,7 @@ class EmbeddingDT(Layer):
         self.W = K.eye(self.output_dim)
 
     def get_output_shape_for(self, input_shape):
-        if not self.input_length:
-            input_length = input_shape[1]
-        else:
-            input_length = self.input_length
-        #print (input_shape[0], input_length, self.output_dim)
-        return (input_shape[0], input_length, self.output_dim)
+       return (1,self.output_dim)
     
     def call(self, x, mask=None):
 
