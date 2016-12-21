@@ -30,7 +30,7 @@ class EmbeddingDT(Layer):
 
     def build(self, input_shape):
     	#ci serve la matrice identita'
-        
+
         self.W = K.eye(self.output_dim)
         super(EmbeddingDT, self).build(input_shape)
 
