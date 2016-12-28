@@ -11,7 +11,7 @@ class Tree(list):
 		s='('+self.label+' '
 		for child in self:
 			s+=str(child)
-		return s+')'
+		return s+') '
 	@staticmethod
 	def from_penn(string):
 		
