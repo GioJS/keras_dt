@@ -4,8 +4,8 @@
 #applicare algoritmi 5 e 6
 #verificare tramite cosine similarity l'effettiva somiglianza tra le due interpretazioni
 
-import cyk.Grammar as CFG
-import cyk.CYK as CYK
+import parserNLP.Grammar as CFG
+import parserNLP.CYK as CYK
 
 G = CFG.Grammar('S')
 G.add_rules_from_file('gramm_l')
