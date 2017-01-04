@@ -23,8 +23,7 @@ def shuffled_circular_convolution(x,y,permutations=None):
 
 def permutation_matrices(N):
 	I = np.eye(N)
-	p1 = circulant(I[:,0])
-
+	p1 = circulant(I[:,1])
 	return p1, p1.T
 
 def cc_circulant(x,y):
@@ -32,9 +31,10 @@ def cc_circulant(x,y):
 	#permuation matrices
 	Phi1,Phi2 = permutation_matrices(x.shape[0])
 	#circular convolution
-	#print Phi1,Phi2
+	print Phi1
+	print Phi2
 	return Phi1.dot(A).dot(Phi2).dot(y)
 if __name__ == '__main__':
-	x=np.array([1,2,3])
-	y=np.array([2,3,4])
+	x=np.array([1,2,3,5])
+	y=np.array([2,3,4,7])
 	print cc_circulant(x,y), circular_convolution(x,y)
