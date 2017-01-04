@@ -1,6 +1,7 @@
 from keras import backend as K
 import numpy as np
 from vectors import *
+from scipy.linalg import circulant
 # according this review http://scottsievert.com/blog/2016/07/01/numpy-gpu/
 # numpy fast computes FFT without acceleration (theano use numpy for fft)
 
@@ -19,3 +20,11 @@ def shuffled_circular_convolution(x,y,permutations=None):
 		y=y.eval()
 	
 	return circular_convolution(x[permutations[0]],y[permutations[1]],permutations)
+
+def cc_circulant(x,y):
+	A = circulant(x) #circulant matrix
+	#permuation matrices
+	Phi_1 = []
+	Phi_2 = []
+	#circular convolution
+	return Phi_1 * A * Phi_2 * y
