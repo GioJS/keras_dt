@@ -23,18 +23,22 @@ def shuffled_circular_convolution(x,y,permutations=None):
 
 def permutation_matrices(N):
 	I = np.eye(N)
-	p1 = circulant(I[:,1])
-	return p1, p1.T
+	p1,p2 = Vector_generator.permutations(dim=4) #using that 99,5% cosine
+	#p1 = circulant(I[:,1]) #99,28%
+	#p2 = p1.T
+	
+	return I[p1], I[p2]
 
 def cc_circulant(x,y):
 	A = circulant(x) #circulant matrix
+	B = circulant(y)
 	#permuation matrices
 	Phi1,Phi2 = permutation_matrices(x.shape[0])
 	#circular convolution
-	print Phi1
-	print Phi2
-	return Phi1.dot(A).dot(Phi2).dot(y)
+	
+	return Phi1.dot(A).dot(Phi2).dot(B).dot(np.eye(1,x.shape[0],0)[0])
 if __name__ == '__main__':
 	x=np.array([1,2,3,5])
 	y=np.array([2,3,4,7])
-	print cc_circulant(x,y), circular_convolution(x,y)
+	cc1,cc2= cc_circulant(x,y),shuffled_circular_convolution(x,y,Vector_generator.permutations(dim=4))
+	print cc1.dot(cc2)/(np.linalg.norm(cc1,2)*np.linalg.norm(cc2,2))

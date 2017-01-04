@@ -51,7 +51,7 @@ class Vector_generator:
 		return True
 	@staticmethod
 	def permutations(dim=1024,seed=0):
-		perm1 = Vector_generator.permutation(dim=dim,seed=seed)
-		#print 'perm1'
-		perm2 = Vector_generator.permutation(dim=dim,seed=seed,permutation=perm1)
+		perm1 = Vector_generator.permutation(dim=dim,seed=0)
+		#in accordo con l'implementazione java (quella python di ferrone utilizza 123)
+		perm2 = Vector_generator.permutation(dim=dim,seed=1,permutation=perm1)
 		return (perm1,perm2)
