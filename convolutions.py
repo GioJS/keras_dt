@@ -34,6 +34,7 @@ def cc_circulant(x,y):
 	#circular convolution
 	#print Phi1,Phi2
 	return Phi1.dot(A).dot(Phi2).dot(y)
-x=np.array([1,2,3])
-y=np.array([2,3,4])
-print cc_circulant(x,y), circular_convolution(x,y)
+if __name__ == '__main__':
+	x=np.array([1,2,3])
+	y=np.array([2,3,4])
+	print cc_circulant(x,y), circular_convolution(x,y)
