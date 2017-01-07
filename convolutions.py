@@ -34,7 +34,7 @@ def cc_circulant(x,y):
 	B = circulant(y)
 	#permuation matrices
 	Phi1,Phi2 = permutation_matrices(x.shape[0])
-	#circular convolution
+	#shuffled circular convolution
 	return Phi1.dot(A).dot(Phi2).dot(B).dot(np.eye(1,x.shape[0],0)[0])
 if __name__ == '__main__':
 	x=np.array([1,2,3,5])
