@@ -1,5 +1,5 @@
-import parserNLP.Grammar as CFG
-import parserNLP.CYK as CYK
+from parserNLP.Grammar import Grammar
+from parserNLP.CYK import CYK
 from vectors import *
 from keras_dt import *
 from convolutions import *
@@ -39,9 +39,9 @@ def binary(P,D):
     pass
 
 w='a a b'
-G = CFG.Grammar('S')
+G = Grammar('S')
 G.add_rules_from_file('gramm_l')
-parser = CYK.CYK(G)
+parser = CYK(G)
 parser.parse(w)
 P = parser.C
 print P
