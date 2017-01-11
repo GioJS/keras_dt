@@ -20,8 +20,8 @@ def sc(v):
 def invsc(v):
     return sc(v).T
 #initialization of level 0
-def init(w):
-    P = K.zeros((dim,dim)).eval()
+def init(w,levels):
+    P = K.zeros((levels,dim)).eval()
     #print P[0]
     for i in range(len(w)):
         s = (sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i]))).dot(sc(gen.get_random_vector('Sep'))).dot(np.eye(1,dim,0)[0]))
@@ -34,12 +34,12 @@ def preterminals(P,D):
 def binary(P,D):
     pass
 
-
+w='a a b'
 G = CFG.Grammar('S')
 G.add_rules_from_file('gramm_l')
 parser = CYK.CYK(G)
 parser.parse('a a b')
 P = parser.C
 print P
-P_dist=init('aab')
+P_dist=init(w.replace(' ',''),len(P))
 print P_dist
