@@ -34,6 +34,7 @@ def preterminals(P,D,w):
         s = (sc(gen.get_random_vector('1')).dot(sc(gen.get_random_vector(str(i)))).dot(R).dot(invsc(gen.get_random_vector(str(i)))).dot(gen.get_random_vector('0')))
         P = P + s
     return P
+#binary rules
 def binary(P,D):
     pass
 
