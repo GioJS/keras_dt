@@ -38,7 +38,7 @@ def preterminals(P,D,w):
 def binary(P,D):
     pass
 
-w='a a b'
+w = 'a a b'
 G = Grammar('S')
 G.add_rules_from_file('gramm_l')
 parser = CYK(G)
