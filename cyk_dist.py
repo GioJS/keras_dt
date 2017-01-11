@@ -11,12 +11,12 @@ from keras_dt import *
 from convolutions import *
 dim = 1024
 gen = Vector_generator(dim)
-
+#[v]+
 def sc(v):
     if type(v) != np.ndarray:
         v=v.eval()
     return circulant(v)
-
+#[v]-
 def invsc(v):
     return sc(v).T
 #initialization of level 0
