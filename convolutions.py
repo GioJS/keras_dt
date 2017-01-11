@@ -18,8 +18,8 @@ def shuffled_circular_convolution(x,y,permutations=None):
 		x=x.eval()
 	if type(y) != np.ndarray:
 		y=y.eval()
-	print permutations[0],'\n',permutations[1]
-	return circular_convolution(x[permutations[0]],y[permutations[1]],permutations)
+	#print permutations[0],'\n',permutations[1]
+	return circular_convolution(x,y[permutations[1]],permutations)
 
 def permutation_matrices(N):
 	I = np.eye(N)
@@ -32,12 +32,12 @@ def permutation_matrices(N):
 def cc_circulant(x,y):
 	#permuation matrices
 	Phi1,Phi2 = permutation_matrices(x.shape[0])
-	A = circulant(Phi1.dot(x)) #circulant matrix
-	B = circulant(Phi2.dot(y))
+	A = circulant(x) #circulant matrix
+	B = y
 	
 	print Phi1,'\n',Phi2
 	#shuffled circular convolution
-	return A.dot(B).dot(np.eye(1,x.shape[0],0)[0])
+	return A.dot(Phi2).dot(B)
 if __name__ == '__main__':
 	x=np.array([1,2,3,5])
 	y=np.array([2,3,4,7])
