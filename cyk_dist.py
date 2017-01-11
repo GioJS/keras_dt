@@ -3,7 +3,7 @@ import parserNLP.CYK as CYK
 from vectors import *
 from keras_dt import *
 from convolutions import *
-dim = 2048
+dim = 1024
 gen = Vector_generator(dim=dim)
 #[v]+
 def sc(v):
@@ -42,10 +42,10 @@ w='a a b'
 G = CFG.Grammar('S')
 G.add_rules_from_file('gramm_l')
 parser = CYK.CYK(G)
-parser.parse('a a b')
+parser.parse(w)
 P = parser.C
 print P
 P_dist=init(w.replace(' ',''))
 print P_dist
-P_dist=preterminals(P_dist, P, w)
+P_dist=preterminals(P_dist, P, w.replace(' ',''))
 print P_dist
