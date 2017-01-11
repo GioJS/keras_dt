@@ -45,7 +45,7 @@ parser = CYK.CYK(G)
 parser.parse(w)
 P = parser.C
 print P
-P_dist=init(w.replace(' ',''))
+P_dist = init(w.replace(' ',''))
 print P_dist
-P_dist=preterminals(P_dist, P, w.replace(' ',''))
+P_dist = preterminals(P_dist, P, w.replace(' ',''))
 print P_dist
