@@ -1,16 +1,10 @@
-#selezionare grammatica
-#costruire CYK data frase
-#convertire matrice CYK in distribuito
-#applicare algoritmi 5 e 6
-#verificare tramite cosine similarity l'effettiva somiglianza tra le due interpretazioni
-
 import parserNLP.Grammar as CFG
 import parserNLP.CYK as CYK
 from vectors import *
 from keras_dt import *
 from convolutions import *
-dim = 1024
-gen = Vector_generator(dim)
+dim = 2048
+gen = Vector_generator(dim=dim)
 #[v]+
 def sc(v):
     if type(v) != np.ndarray:
@@ -30,7 +24,7 @@ def init(w):
     return P
 #perterminal rules
 def preterminals(P,D,w):
-    R=np.array([0])
+    R = np.array([0])
     #R=sum r_i preterminal
     for i in range(len(D)):
         for chart in D[i,i]:
