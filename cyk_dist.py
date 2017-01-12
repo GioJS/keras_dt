@@ -9,7 +9,9 @@ gen = Vector_generator(dim=dim)
 def sc(v):
     if type(v) != np.ndarray:
         v=v.eval()
-    return circulant(v)
+    Phi = permutation_matrices(dim)[1]
+    #print Phi.shape
+    return circulant(v).dot(Phi)
 #[v]-
 def invsc(v):
     return sc(v).T
