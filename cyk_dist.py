@@ -37,6 +37,7 @@ def preterminals(P,D,w):
         P = P + s
     return P
 #binary rules
+#TODO
 def binary(P,D,w):
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+1):
