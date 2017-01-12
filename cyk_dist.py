@@ -15,7 +15,7 @@ def invsc(v):
     return sc(v).T
 #initialization of level 0
 def init(w):
-    P = K.zeros(dim).eval()
+    P = K.zeros((dim,)).eval()
     #print P[0]
     for i in range(len(w)):
         s = (sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i]))).dot(sc(gen.get_random_vector('Sep'))).dot(np.eye(1,dim,0)[0]))
@@ -37,15 +37,30 @@ def preterminals(P,D,w):
 #binary rules
 def binary(P,D):
     pass
-
-w = 'a a b'
-G = Grammar('S')
-G.add_rules_from_file('gramm_l')
-parser = CYK(G)
-parser.parse(w)
-P = parser.C
-print P
-P_dist = init(w.replace(' ',''))
-print P_dist
-P_dist = preterminals(P_dist, P, w.replace(' ',''))
-print P_dist
+if K.backend() == 'tensorflow':
+	sess = K.tf.Session()
+	K.set_session(sess)
+	with sess.as_default():
+		w = 'a a b'
+		G = Grammar('S')
+		G.add_rules_from_file('gramm_l')
+		parser = CYK(G)
+		parser.parse(w)
+		P = parser.C
+		print P
+		P_dist = init(w.replace(' ',''))
+		print P_dist
+		P_dist = preterminals(P_dist, P, w.replace(' ',''))
+		print P_dist
+else:
+		w = 'a a b'
+		G = Grammar('S')
+		G.add_rules_from_file('gramm_l')
+		parser = CYK(G)
+		parser.parse(w)
+		P = parser.C
+		print P
+		P_dist = init(w.replace(' ',''))
+		print P_dist
+		P_dist = preterminals(P_dist, P, w.replace(' ',''))
+		print P_dist
