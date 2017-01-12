@@ -37,30 +37,22 @@ def preterminals(P,D,w):
 #binary rules
 def binary(P,D):
     pass
+def cyk_dist(D,w):
+	P_dist = init(w.replace(' ',''))
+	#print P_dist
+	P_dist = preterminals(P_dist, D, w.replace(' ',''))
+	return P_dist
+w = 'a a b'
+G = Grammar('S')
+G.add_rules_from_file('gramm_l')
+parser = CYK(G)
+parser.parse(w)
+P = parser.C
+print P
 if K.backend() == 'tensorflow':
 	sess = K.tf.Session()
 	K.set_session(sess)
 	with sess.as_default():
-		w = 'a a b'
-		G = Grammar('S')
-		G.add_rules_from_file('gramm_l')
-		parser = CYK(G)
-		parser.parse(w)
-		P = parser.C
-		print P
-		P_dist = init(w.replace(' ',''))
-		print P_dist
-		P_dist = preterminals(P_dist, P, w.replace(' ',''))
-		print P_dist
+		print cyk_dist(P,w)
 else:
-		w = 'a a b'
-		G = Grammar('S')
-		G.add_rules_from_file('gramm_l')
-		parser = CYK(G)
-		parser.parse(w)
-		P = parser.C
-		print P
-		P_dist = init(w.replace(' ',''))
-		print P_dist
-		P_dist = preterminals(P_dist, P, w.replace(' ',''))
-		print P_dist
+	print cyk_dist(P,w)
