@@ -39,9 +39,7 @@ def preterminals(P,D,w):
 #binary rules
 def binary(P,D,w):
     for i in range(2,len(w)):
-    	#print i
     	for j in range(0,len(w)-i+1):
-    		#print D[j,i]
     		for A in D[j,i]:
     			for k in range(0,i+1):
     				print i,j,A,k
