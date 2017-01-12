@@ -40,9 +40,15 @@ def preterminals(P,D,w):
 def binary(P,D,w):
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+1):
+    		Pa=np.array([0])
     		for A in D[j,i]:
+    			RL = sc(gen.get_random_vector(A.rule.production()[0])).dot(sc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.production()[1]))).dot(invsc(gen.get_random_vector(A.rule.production()[0]))).dot(invsc(gen.get_random_vector(invsc(A.rule.head()))))
+    			RL_ = 
+    			RR =
+    			RR_ =
     			for k in range(0,i+1):
-    				print i,j,A,k
+    				Pa = Pa +
+    return P
 def cyk_dist(D,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
