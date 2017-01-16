@@ -5,11 +5,12 @@ from keras_dt import *
 from convolutions import *
 dim = 1024
 gen = Vector_generator(dim=dim)
+Phi = permutation_matrices(dim)[1]
 #[v]+
 def sc(v):
     if type(v) != np.ndarray:
         v=v.eval()
-    Phi = permutation_matrices(dim)[1]
+    
     #print Phi.shape
     return circulant(v).dot(Phi)
 #[v]-
@@ -20,7 +21,7 @@ def init(w):
     P = K.zeros((dim,)).eval()
     #print P[0]
     for i in range(len(w)):
-        s = (sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i]))).dot(sc(gen.get_random_vector('Sep'))).dot(np.eye(1,dim,0)[0]))
+        s = (sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i]))).dot(sc(gen.get_random_vector('Sep'))))
         #print s
         P = P + s
     return P
@@ -37,23 +38,24 @@ def preterminals(P,D,w):
         P = P + s
     return P
 #binary rules
-#TODO
 def binary(P,D,w):
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+1):
-    		Pa=np.array([0])
+    		Pa = np.array([0])
     		for A in D[j,i]:
-    			RL = sc(gen.get_random_vector(A.rule.production()[0])).dot(sc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.production()[1]))).dot(invsc(gen.get_random_vector(A.rule.production()[0]))).dot(invsc(gen.get_random_vector(invsc(A.rule.head()))))
-    			RL_ = 
-    			RR =
-    			RR_ =
+    			RL = sc(gen.get_random_vector(A.rule.production()[0])).dot(sc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.production()[1]))).dot(invsc(gen.get_random_vector(A.rule.production()[0]))).dot(invsc(gen.get_random_vector(A.rule.head())))
+    			RL_ = sc(gen.get_random_vector(A.rule.head())).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.production()[0])))
+    			RR = sc(gen.get_random_vector(A.rule.head())).dot(sc(gen.get_random_vector(A.rule.production()[0]))).dot(sc(gen.get_random_vector(A.rule.production()[1]))).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.production()[1])))
+    			RR_ = sc(gen.get_random_vector(A.rule.production()[1])).dot(sc(gen.get_random_vector('Sep')))
+    			#print RL,RL_,RR,RR_
     			for k in range(0,i+1):
-    				Pa = Pa +
+    				Pa = Pa + RL_.dot(invsc(gen.get_random_vector(str(j)))).dot(invsc(gen.get_random_vector(str(k)))).dot(P).dot(RL).dot(RR).dot(invsc(gen.get_random_vector(str(j+k)))).dot(invsc(gen.get_random_vector(str(i-k)))).dot(P).dot(RR_)
+    				#print Pa
+    			P = P + sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(sc(gen.get_random_vector(A.rule.head()))).dot(sc(gen.get_random_vector('Sep'))).dot(Pa).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.head())))
     return P
 def cyk_dist(D,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
-	#print P_dist
 	P_dist = preterminals(P_dist, D, w)
 	binary(P_dist, D, w)
 	return P_dist

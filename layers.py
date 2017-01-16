@@ -40,12 +40,12 @@ class EmbeddingDT(Layer):
     def call(self, x, mask=None):
 
         if type(x) != np.int64:
-            return K.zeros((1,))
+            return K.dot(self.W,K.zeros((4096,)))
         if len(self.cache) < self.limit:
 
             self.cache.append(self.dt.dt(self.trees[x]))
             return self.cache[-1]
-        return K.dot(W, self.dt.dt(self.trees[x]))
+        return K.dot(self.W, self.dt.dt(self.trees[x]))
 
 
     
