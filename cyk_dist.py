@@ -10,7 +10,7 @@ Phi = permutation_matrices(dim)[1]
 def sc(v):
     if type(v) != np.ndarray:
         v=v.eval()
-    
+
     #print Phi.shape
     return circulant(v).dot(Phi)
 #[v]-
@@ -32,7 +32,7 @@ def preterminals(P,D,w):
     for i in range(len(D)):
         for chart in D[i,i]:
             R = R + (sc(gen.get_random_vector(chart.rule.head())).dot(circulant(gen.get_random_vector(chart.rule.production()))).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(chart.rule.production()))))
-    
+
     for i in range(len(w)):
         s = (sc(gen.get_random_vector('1')).dot(sc(gen.get_random_vector(str(i)))).dot(R).dot(invsc(gen.get_random_vector(str(i)))).dot(invsc(gen.get_random_vector('0'))).dot(P))
         P = P + s
@@ -53,12 +53,14 @@ def binary(P,D,w):
     				#print Pa
     			P = P + sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(sc(gen.get_random_vector(A.rule.head()))).dot(sc(gen.get_random_vector('Sep'))).dot(Pa).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.head())))
     return P
+
 def cyk_dist(D,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
 	P_dist = preterminals(P_dist, D, w)
 	binary(P_dist, D, w)
 	return P_dist
+
 w = 'a a b'
 G = Grammar('S')
 G.add_rules_from_file('gramm_l')
