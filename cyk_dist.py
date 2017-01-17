@@ -84,14 +84,14 @@ def P_to_dist(P,w):
     #first row
     for i in range(len(w)):
         #preterminal trees
-        Pd = Pd +
+        pass
     #generic row
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+1):
     		Pa = np.array([0])
             #construct all subtrees rooted in A
     		for A in P[j,i]:
-
+                pass
 '''
 con grammatiche stupide e frasi piccole
 e con grammatiche più complesse e frasi più lunghe
