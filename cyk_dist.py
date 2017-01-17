@@ -6,6 +6,7 @@ from convolutions import *
 dim = 1024
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
+
 #[v]+
 def sc(v):
     if type(v) != np.ndarray:
@@ -16,6 +17,7 @@ def sc(v):
 #[v]-
 def invsc(v):
     return sc(v).T
+
 #initialization of level 0
 def init(w):
     P = K.zeros((dim,)).eval()
@@ -53,14 +55,36 @@ def binary(P,D,w):
     				#print Pa
     			P = P + sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(sc(gen.get_random_vector(A.rule.head()))).dot(sc(gen.get_random_vector('Sep'))).dot(Pa).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.head())))
     return P
-#transform P to P_dist
+
+#transform P to P_dist with algo5,6
 def cyk_dist(D,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
 	P_dist = preterminals(P_dist, D, w)
 	binary(P_dist, D, w)
 	return P_dist
+'''
+P : la matrice di CYK originale
+Pd : la matrice di CYK distribuito
+allora D(P) è la versione distribuita di P
+deve accadere che D(P) e Pd sono simili
+come prima cosa
+poi che una cella in P
+sia reperibile in Pd
+'''
 
+#trasformazione di P in distributed with trees
+'''ogni cella ha gli alberi che rappresenta
+e dunque puoi generare il contenuto della cella in maniera distribuita
+facendo le stesse operazioni
+per codificare l'albero
+e unendoci i vettori dei due indici'''
+
+
+'''
+con grammatiche stupide e frasi piccole
+e con grammatiche più complesse e frasi più lunghe
+'''
 w = 'a a b'
 G = Grammar('S')
 G.add_rules_from_file('gramm_l')
@@ -72,6 +96,8 @@ if K.backend() == 'tensorflow':
 	sess = K.tf.Session()
 	K.set_session(sess)
 	with sess.as_default():
-		print cyk_dist(P,w)
+		Pd = cyk_dist(P,w)
+        print Pd
 else:
-	print cyk_dist(P,w)
+	Pd = cyk_dist(P,w)
+    print Pd
