@@ -79,7 +79,8 @@ e dunque puoi generare il contenuto della cella in maniera distribuita
 facendo le stesse operazioni
 per codificare l'albero
 e unendoci i vettori dei due indici'''
-
+def P_to_dist(P):
+    pass
 
 '''
 con grammatiche stupide e frasi piccole
