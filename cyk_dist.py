@@ -80,12 +80,12 @@ facendo le stesse operazioni
 per codificare l'albero
 e unendoci i vettori dei due indici'''
 def P_to_dist(P,w):
-    Pd = K.zeros((dim,)).eval()
+    Dp = K.zeros((dim,)).eval()
     #first row
     for i in range(len(D)):
         for chart in D[i,i]:
         #preterminal trees
-        pass
+            pass
     #generic row
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+1):
