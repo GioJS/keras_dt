@@ -53,7 +53,7 @@ def binary(P,D,w):
     				#print Pa
     			P = P + sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(sc(gen.get_random_vector(A.rule.head()))).dot(sc(gen.get_random_vector('Sep'))).dot(Pa).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.head())))
     return P
-
+#transform P to P_dist
 def cyk_dist(D,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
