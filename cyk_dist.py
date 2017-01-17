@@ -82,7 +82,8 @@ e unendoci i vettori dei due indici'''
 def P_to_dist(P,w):
     Pd = K.zeros((dim,)).eval()
     #first row
-    for i in range(len(w)):
+    for i in range(len(D)):
+        for chart in D[i,i]:
         #preterminal trees
         pass
     #generic row
