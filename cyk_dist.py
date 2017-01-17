@@ -79,8 +79,18 @@ e dunque puoi generare il contenuto della cella in maniera distribuita
 facendo le stesse operazioni
 per codificare l'albero
 e unendoci i vettori dei due indici'''
-def P_to_dist(P):
-    pass
+def P_to_dist(P,w):
+    Pd = K.zeros((dim,)).eval()
+    #first row
+    for i in range(len(w)):
+        #preterminal trees
+        Pd = Pd +
+    #generic row
+    for i in range(2,len(w)):
+    	for j in range(0,len(w)-i+1):
+    		Pa = np.array([0])
+            #construct all subtrees rooted in A
+    		for A in P[j,i]:
 
 '''
 con grammatiche stupide e frasi piccole
