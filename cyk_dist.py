@@ -44,7 +44,7 @@ def preterminals(P,D,w):
 #binary rules
 def binary(P,D,w):
     for i in range(2,len(w)):
-    	for j in range(0,len(w)-i+1):
+    	for j in range(0,len(w)-i+2):
     		Pa = np.array([0])
     		if i==j:
     			continue
@@ -54,7 +54,8 @@ def binary(P,D,w):
     			RR = sc(gen.get_random_vector(A.rule.head())).dot(sc(gen.get_random_vector(A.rule[0]))).dot(sc(gen.get_random_vector(A.rule[1]))).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[1])))
     			RR_ = sc(gen.get_random_vector(A.rule[1])).dot(sc(gen.get_random_vector('Sep')))
     			#print RL,RL_,RR,RR_
-    			for k in range(0,i+1):
+    			for k in range(0,i+2):
+    				#print k
     				Pa = Pa + RL_.dot(invsc(gen.get_random_vector(str(j)))).dot(invsc(gen.get_random_vector(str(k)))).dot(P).dot(RL).dot(RR).dot(invsc(gen.get_random_vector(str(j+k)))).dot(invsc(gen.get_random_vector(str(i-k)))).dot(P).dot(RR_)
     				#print Pa
     			P = P + sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(sc(gen.get_random_vector(A.rule.head()))).dot(sc(gen.get_random_vector('Sep'))).dot(Pa).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.head())))
@@ -98,10 +99,10 @@ def P_to_dist(parser,w):
     #generic row
     #print Dp
     for i in range(2,len(w)):
-        for j in range(0,len(w)-i+1):
+        for j in range(0,len(w)-i+2):
             if i==j or not parser.C[j,i]:
                 continue
-            print parser.C[j,i]
+            #print parser.C[j,i]
             tree = parser.get_tree(parser.C[j,i])
             Dp = Dp + sc(gen.get_random_vector(str(j))).dot(sc(gen.get_random_vector(str(i)))).dot(sc(dt.dt(tree, to_penn=False)))
     return Dp
