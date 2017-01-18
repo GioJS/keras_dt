@@ -95,7 +95,7 @@ def P_to_dist(parser,w):
         for A in parser.C[i,i]:
             tree = parser.get_tree(A)
             #print tree
-            dt_tree = sc(gen.get_random_vector('1')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(dt.dt(tree, to_penn=False))).dot(invsc(gen.get_random_vector(str(i)))).dot(invsc(gen.get_random_vector('0'))).dot(Dp)
+            dt_tree = sc(gen.get_random_vector('1')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(dt.dt(tree, to_penn=False)))
             #print dt_tree
             Dp = Dp + dt_tree
     #generic row
