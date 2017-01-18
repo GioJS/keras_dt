@@ -66,7 +66,7 @@ def cyk_dist(D,w):
 '''
 P : la matrice di CYK originale
 Pd : la matrice di CYK distribuito
-allora D(P) è la versione distribuita di P
+allora D(P) e' la versione distribuita di P
 deve accadere che D(P) e Pd sono simili
 come prima cosa
 poi che una cella in P
@@ -78,7 +78,7 @@ sia reperibile in Pd
 e dunque puoi generare il contenuto della cella in maniera distribuita
 facendo le stesse operazioni
 per codificare l'albero
-e unendoci i vettori dei due indici'''
+e unendoci i vettori dei due indici
 def P_to_dist(P,w):
     Dp = K.zeros((dim,)).eval()
     #first row
@@ -93,9 +93,10 @@ def P_to_dist(P,w):
             #construct all subtrees rooted in A
     		for A in P[j,i]:
                 pass
+                '''
 '''
 con grammatiche stupide e frasi piccole
-e con grammatiche più complesse e frasi più lunghe
+e con grammatiche piu' complesse e frasi piu' lunghe
 '''
 w = 'a a b'
 G = Grammar('S')
@@ -105,11 +106,11 @@ parser.parse(w)
 P = parser.C
 print P
 if K.backend() == 'tensorflow':
-	sess = K.tf.Session()
-	K.set_session(sess)
-	with sess.as_default():
-		Pd = cyk_dist(P,w)
+    sess = K.tf.Session()
+    K.set_session(sess)
+    with sess.as_default():
+        Pd = cyk_dist(P,w)
         print Pd
 else:
-	Pd = cyk_dist(P,w)
+    Pd = cyk_dist(P,w)
     print Pd
