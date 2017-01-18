@@ -46,11 +46,13 @@ def binary(P,D,w):
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+1):
     		Pa = np.array([0])
+    		if i==j:
+    			continue
     		for A in D[j,i]:
-    			RL = sc(gen.get_random_vector(A.rule.production()[0])).dot(sc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.production()[1]))).dot(invsc(gen.get_random_vector(A.rule.production()[0]))).dot(invsc(gen.get_random_vector(A.rule.head())))
-    			RL_ = sc(gen.get_random_vector(A.rule.head())).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.production()[0])))
-    			RR = sc(gen.get_random_vector(A.rule.head())).dot(sc(gen.get_random_vector(A.rule.production()[0]))).dot(sc(gen.get_random_vector(A.rule.production()[1]))).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.production()[1])))
-    			RR_ = sc(gen.get_random_vector(A.rule.production()[1])).dot(sc(gen.get_random_vector('Sep')))
+    			RL = sc(gen.get_random_vector(A.rule[0])).dot(sc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[1]))).dot(invsc(gen.get_random_vector(A.rule[0]))).dot(invsc(gen.get_random_vector(A.rule.head())))
+    			RL_ = sc(gen.get_random_vector(A.rule.head())).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[0])))
+    			RR = sc(gen.get_random_vector(A.rule.head())).dot(sc(gen.get_random_vector(A.rule[0]))).dot(sc(gen.get_random_vector(A.rule[1]))).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[1])))
+    			RR_ = sc(gen.get_random_vector(A.rule[1])).dot(sc(gen.get_random_vector('Sep')))
     			#print RL,RL_,RR,RR_
     			for k in range(0,i+1):
     				Pa = Pa + RL_.dot(invsc(gen.get_random_vector(str(j)))).dot(invsc(gen.get_random_vector(str(k)))).dot(P).dot(RL).dot(RR).dot(invsc(gen.get_random_vector(str(j+k)))).dot(invsc(gen.get_random_vector(str(i-k)))).dot(P).dot(RR_)
@@ -97,6 +99,9 @@ def P_to_dist(parser,w):
     #print Dp
     for i in range(2,len(w)):
         for j in range(0,len(w)-i+1):
+            if i==j or not parser.C[j,i]:
+                continue
+            print parser.C[j,i]
             tree = parser.get_tree(parser.C[j,i])
             Dp = Dp + sc(gen.get_random_vector(str(j))).dot(sc(gen.get_random_vector(str(i)))).dot(sc(dt.dt(tree, to_penn=False)))
     return Dp
@@ -104,17 +109,29 @@ def P_to_dist(parser,w):
 con grammatiche stupide e frasi piccole
 e con grammatiche piu' complesse e frasi piu' lunghe
 '''
-w = 'a a b'
+
+
 G = Grammar('S')
 G.add_rules_from_file('gramm_l')
 parser = CYK(G)
-parser.parse(w)
-P = parser.C
-print P
-if K.backend() == 'tensorflow':
-    sess = K.tf.Session()
-    K.set_session(sess)
-    with sess.as_default():
+for i in range(2,11):
+    w = ('a '*i)+'b'
+    print w
+    parser.parse(w)
+    P = parser.C
+    print P
+    if K.backend() == 'tensorflow':
+        sess = K.tf.Session()
+        K.set_session(sess)
+        with sess.as_default():
+            Pd = cyk_dist(P,w)
+            #print Pd
+            Dp = P_to_dist(parser,w)
+            #print Dp
+            import scipy.spatial.distance as sp
+            sim = 1 - sp.cdist(Pd,Dp,'cosine')
+            print sim
+    else:
         Pd = cyk_dist(P,w)
         #print Pd
         Dp = P_to_dist(parser,w)
@@ -122,6 +139,3 @@ if K.backend() == 'tensorflow':
         import scipy.spatial.distance as sp
         sim = 1 - sp.cdist(Pd,Dp,'cosine')
         print sim
-else:
-    Pd = cyk_dist(P,w)
-    print Pd
