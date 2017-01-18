@@ -84,6 +84,7 @@ e dunque puoi generare il contenuto della cella in maniera distribuita
 facendo le stesse operazioni
 per codificare l'albero
 e unendoci i vettori dei due indici'''
+#TODO da complementare "stesse operazioni"
 def P_to_dist(parser,w):
     w = w.replace(' ','')
     Dp = K.zeros((dim,)).eval()
