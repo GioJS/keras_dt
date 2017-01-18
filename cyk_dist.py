@@ -114,7 +114,7 @@ e con grammatiche piu' complesse e frasi piu' lunghe
 G = Grammar('S')
 G.add_rules_from_file('gramm_l')
 parser = CYK(G)
-for i in range(2,11):
+for i in range(2,3):
     w = ('a '*i)+'b'
     print w
     parser.parse(w)
