@@ -14,7 +14,7 @@ class Tree(list):
 		return s+') '
 	@staticmethod
 	def from_penn(string):
-		
+
 		#print string
 		tree = None
 		string = string.strip()
@@ -24,17 +24,17 @@ class Tree(list):
 		elif string[0] == '(' and string[len(string)-1] == ')':
 			#It is a tree
 			content = string[1:len(string)-1].strip()
-			
+
 			if not '(' in content:
-				
+
 				#It is either a terminal node or a preterminal node with a single terminal node
-				
+
 				if not ' ' in content:
-					
+
 					tree = Tree(content.strip(),[])
 				else:
 					firstBlank = content.index(' ')
-					
+
 					tree = Tree(content[0:firstBlank].strip(),[])
 					tree.addChild(Tree(content[firstBlank+1:].strip(),[]))
 			else:
@@ -42,13 +42,13 @@ class Tree(list):
 				firstPar = content.index('(')
 				tree = Tree(content[0:firstPar].strip(),[])
 				content = content[firstPar:].strip()
-				
+
 				while len(content) > 0:
 
 					openPars = 1;
 					index = 1;
 					while openPars > 0:
-					
+
 						if content[index] == ')':
 							openPars-=1
 						elif content[index] == '(':
@@ -58,5 +58,3 @@ class Tree(list):
 					tree.addChild(child)
 					content = content[index:].strip()
 		return tree
-				
-						
