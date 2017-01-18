@@ -89,17 +89,17 @@ def P_to_dist(parser,w):
         #preterminal trees
         #print chart
         tree = parser.get_tree(parser.C[i,i])
-        print tree
-        dt_tree = dt.dt(tree, to_penn=False)
-        print dt_tree
+        #print tree
+        dt_tree = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(dt.dt(tree, to_penn=False)))
+        #print dt_tree
+        Dp = Dp + dt_tree
     #generic row
+    #print Dp
     for i in range(2,len(w)):
         for j in range(0,len(w)-i+1):
-            Pa = np.array([0])
-            #construct all subtrees rooted in A
-            for A in parser.C[j,i]:
-                pass
-
+            tree = parser.get_tree(parser.C[j,i])
+            Dp = Dp + sc(gen.get_random_vector(str(j))).dot(sc(gen.get_random_vector(str(i)))).dot(sc(dt.dt(tree, to_penn=False)))
+    return Dp
 '''
 con grammatiche stupide e frasi piccole
 e con grammatiche piu' complesse e frasi piu' lunghe
@@ -115,9 +115,13 @@ if K.backend() == 'tensorflow':
     sess = K.tf.Session()
     K.set_session(sess)
     with sess.as_default():
-        #Pd = cyk_dist(P,w)
+        Pd = cyk_dist(P,w)
         #print Pd
-        P_to_dist(parser,w)
+        Dp = P_to_dist(parser,w)
+        #print Dp
+        import scipy.spatial.distance as sp
+        sim = 1 - sp.cdist(Pd,Dp,'cosine')
+        print sim
 else:
     Pd = cyk_dist(P,w)
     print Pd
