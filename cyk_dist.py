@@ -81,19 +81,23 @@ e dunque puoi generare il contenuto della cella in maniera distribuita
 facendo le stesse operazioni
 per codificare l'albero
 e unendoci i vettori dei due indici'''
-def P_to_dist(P,w):
+def P_to_dist(parser,w):
+    w = w.replace(' ','')
     Dp = K.zeros((dim,)).eval()
     #first row
-    for i in range(len(D)):
-        for chart in D[i,i]:
-            #preterminal trees
-            pass
+    for i in range(len(parser.C)):
+        #preterminal trees
+        #print chart
+        tree = parser.get_tree(parser.C[i,i])
+        print tree
+        dt_tree = dt.dt(tree, to_penn=False)
+        print dt_tree
     #generic row
     for i in range(2,len(w)):
         for j in range(0,len(w)-i+1):
             Pa = np.array([0])
             #construct all subtrees rooted in A
-            for A in P[j,i]:
+            for A in parser.C[j,i]:
                 pass
 
 '''
@@ -111,8 +115,9 @@ if K.backend() == 'tensorflow':
     sess = K.tf.Session()
     K.set_session(sess)
     with sess.as_default():
-        Pd = cyk_dist(P,w)
-        print Pd
+        #Pd = cyk_dist(P,w)
+        #print Pd
+        P_to_dist(parser,w)
 else:
     Pd = cyk_dist(P,w)
     print Pd
