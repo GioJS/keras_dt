@@ -127,7 +127,7 @@ for i in range(2,3):
         K.set_session(sess)
         with sess.as_default():
             Pd = cyk_dist(P,w)
-            print Pd
+            #print Pd
             test_P(parser,w,Pd)
     else:
         Pd = cyk_dist(P,w)
