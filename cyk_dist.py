@@ -104,7 +104,7 @@ def test_P(parser,w,P_dist):
             print 'tree: ',tree
             td = tree_dist(tree)
             print 'distributed tree: ',td
-            P_dist0i = invsc(gen.get_random_vector(str(i))).dot(invsc(gen.get_random_vector(str('0')))).dot(P_dist)
+            P_dist0i = invsc(gen.get_random_vector(str(i))).dot(invsc(gen.get_random_vector(str('1')))).dot(P_dist)
             print 'element of P_dist[0,i]: ',P_dist0i
             print 'sim: ', np.linalg.norm(td-P_dist0i,2)
 '''
