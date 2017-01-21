@@ -3,9 +3,9 @@ from parserNLP.CYK import CYK
 from vectors import *
 from keras_dt import *
 from convolutions import *
-from keras_dt import *
+#from keras_dt import *
 dim = 1024
-dt = DT(dim=1024, lexicalized=True)
+#dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
 
@@ -84,8 +84,15 @@ e dunque puoi generare il contenuto della cella in maniera distribuita
 facendo le stesse operazioni
 per codificare l'albero
 e unendoci i vettori dei due indici'''
-#TODO da completare "stesse operazioni"
-def P_to_dist(parser,w):
+def tree_dist(t):
+    if len(t)==0:
+        return sc(gen.get_random_vector(t.label))
+    s=sc(gen.get_random_vector(t.label))
+    for child in t:
+        s=s.dot(tree_dist(child))
+    return s
+
+def test_P(parser,w,P_dist):
     w = w.replace(' ','')
     Dp = K.zeros((dim,)).eval()
     #first row
@@ -94,21 +101,12 @@ def P_to_dist(parser,w):
         #print chart
         for A in parser.C[i,i]:
             tree = parser.get_tree(A)
-            #print tree
-            dt_tree = sc(gen.get_random_vector('1')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(dt.dt(tree, to_penn=False)))
-            #print dt_tree
-            Dp = Dp + dt_tree
-    #generic row
-    #print Dp
-    for i in range(2,len(w)):
-        for j in range(0,len(w)-i+2):
-            if i==j or not parser.C[j,i]:
-                continue
-            for A in  parser.C[j,i]:
-                tree = parser.get_tree(A)
-                for k in range(0,i+1):
-                    Dp = Dp + sc(gen.get_random_vector(str(j))).dot(sc(gen.get_random_vector(str(i)))).dot(sc(dt.dt(tree, to_penn=False)))
-    return Dp
+            print 'tree: ',tree
+            td = tree_dist(tree)
+            print 'distributed tree: ',td
+            P_dist0i = invsc(gen.get_random_vector(str(i))).dot(invsc(gen.get_random_vector(str('0')))).dot(P_dist)
+            print 'element of P_dist[0,i]: ',P_dist0i
+            print 'sim: ', td.dot(P_dist0i)
 '''
 con grammatiche stupide e frasi piccole
 e con grammatiche piu' complesse e frasi piu' lunghe
@@ -130,16 +128,9 @@ for i in range(2,3):
         with sess.as_default():
             Pd = cyk_dist(P,w)
             print Pd
-            Dp = P_to_dist(parser,w)
-            print Dp
-            import scipy.spatial.distance as sp
-            sim = 1 - sp.cdist(Pd,Dp,'cosine')
-            print sim
+            test_P(parser,w,Pd)
     else:
         Pd = cyk_dist(P,w)
-        #print Pd
-        Dp = P_to_dist(parser,w)
+        print Pd
+        testP(parser,w,Pd)
         #print Dp
-        import scipy.spatial.distance as sp
-        sim = 1 - sp.cdist(Pd,Dp,'cosine')
-        print sim
