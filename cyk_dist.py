@@ -106,7 +106,7 @@ def test_P(parser,w,P_dist):
             print 'distributed tree: ',td
             P_dist0i = invsc(gen.get_random_vector(str(i))).dot(invsc(gen.get_random_vector(str('0')))).dot(P_dist)
             print 'element of P_dist[0,i]: ',P_dist0i
-            print 'sim: ', td.dot(P_dist0i)
+            print 'sim: ', np.linalg.norm(td-P_dist0i,2)
 '''
 con grammatiche stupide e frasi piccole
 e con grammatiche piu' complesse e frasi piu' lunghe
