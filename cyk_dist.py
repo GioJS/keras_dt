@@ -66,7 +66,7 @@ def cyk_dist(D,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
 	P_dist = preterminals(P_dist, D, w)
-	binary(P_dist, D, w)
+	P_dist = binary(P_dist, D, w)
 	return P_dist
 '''
 P : la matrice di CYK originale
