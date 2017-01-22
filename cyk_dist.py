@@ -133,7 +133,7 @@ for i in range(2,3):
     parser.parse(w)
     P = parser.C
     print P
-    print parser.get_tree(P[0,2][0])
+    #print parser.get_tree(P[1,2][0])
     if K.backend() == 'tensorflow':
         sess = K.tf.Session()
         K.set_session(sess)
