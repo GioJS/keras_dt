@@ -145,5 +145,7 @@ for i in range(2,3):
     else:
         Pd = cyk_dist(P,w)
         print Pd
-        testP(parser,w,Pd)
-        #print Dp
+        Dp = test_P(parser,w)
+        print Dp
+        print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
+        print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
