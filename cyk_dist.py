@@ -114,6 +114,7 @@ def test_P(parser,w):
     			tree = parser.get_tree(A)
                 #print 'tree: ',tree
                 td = sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(tree_dist(tree))
+                #print td
                 Dp = Dp + td
     return Dp
 
@@ -132,6 +133,7 @@ for i in range(2,3):
     parser.parse(w)
     P = parser.C
     print P
+    print parser.get_tree(P[0,2][0])
     if K.backend() == 'tensorflow':
         sess = K.tf.Session()
         K.set_session(sess)
