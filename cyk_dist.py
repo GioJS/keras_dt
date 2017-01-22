@@ -110,8 +110,9 @@ def test_P(parser,w):
     		if i==j:
     			continue
     		for A in parser.C[j,i]:
+    			#print A
     			tree = parser.get_tree(A)
-                print 'tree: ',tree
+                #print 'tree: ',tree
                 td = sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(tree_dist(tree))
                 Dp = Dp + td
     return Dp
