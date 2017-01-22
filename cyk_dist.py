@@ -111,7 +111,7 @@ def test_P(parser,w):
     			continue
     		for A in parser.C[j,i]:
     			tree = parser.get_tree(A)
-                #print 'tree: ',tree
+                print 'tree: ',tree
                 td = sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(tree_dist(tree))
                 Dp = Dp + td
     return Dp
@@ -139,6 +139,8 @@ for i in range(2,3):
             print Pd
             Dp = test_P(parser,w)
             print Dp
+            print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
+            print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
     else:
         Pd = cyk_dist(P,w)
         print Pd
