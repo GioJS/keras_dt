@@ -4,7 +4,7 @@ from vectors import *
 from keras_dt import *
 from convolutions import *
 #from keras_dt import *
-dim = 2048
+dim = 1024
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
@@ -92,7 +92,7 @@ def tree_dist(t):
         s=s.dot(tree_dist(child))
     return s
 
-def test_P(parser,w,P_dist):
+def test_P(parser,w):
     w = w.replace(' ','')
     Dp = K.zeros((dim,)).eval()
     #first row
@@ -101,12 +101,21 @@ def test_P(parser,w,P_dist):
         #print chart
         for A in parser.C[i,i]:
             tree = parser.get_tree(A)
-            print 'tree: ',tree
-            td = tree_dist(tree)
-            print 'distributed tree: ',td
-            P_dist0i = invsc(gen.get_random_vector(str(i))).dot(invsc(gen.get_random_vector(str('1')))).dot(P_dist)
-            print 'element of P_dist[0,i]: ',P_dist0i
-            print 'sim: ', 1-np.linalg.norm(td-P_dist0i,2)
+            #print 'tree: ',tree
+            td = sc(gen.get_random_vector("1")).dot(sc(gen.get_random_vector(str(i)))).dot(tree_dist(tree))
+            Dp = Dp + td
+    #generic row
+    for i in range(2,len(w)):
+    	for j in range(0,len(w)-i+2):
+    		if i==j:
+    			continue
+    		for A in parser.C[j,i]:
+    			tree = parser.get_tree(A)
+                #print 'tree: ',tree
+                td = sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(tree_dist(tree))
+                Dp = Dp + td
+    return Dp
+
 '''
 con grammatiche stupide e frasi piccole
 e con grammatiche piu' complesse e frasi piu' lunghe
@@ -127,8 +136,9 @@ for i in range(2,3):
         K.set_session(sess)
         with sess.as_default():
             Pd = cyk_dist(P,w)
-            #print Pd
-            test_P(parser,w,Pd)
+            print Pd
+            Dp = test_P(parser,w)
+            print Dp
     else:
         Pd = cyk_dist(P,w)
         print Pd
