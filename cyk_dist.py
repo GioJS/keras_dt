@@ -31,7 +31,7 @@ def init(w):
     return P
 #perterminal rules
 def preterminals(P,D,w):
-    R = np.array([0])
+    R = K.zeros((dim,)).eval()
     #R=sum r_i preterminal
     for i in range(len(D)):
         for chart in D[i,i]:
@@ -45,7 +45,7 @@ def preterminals(P,D,w):
 def binary(P,D,w):
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+2):
-    		Pa = np.array([0])
+    		Pa = K.zeros((dim,)).eval()
     		if i==j:
     			continue
     		for A in D[j,i]:
