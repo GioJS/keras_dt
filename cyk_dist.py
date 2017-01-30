@@ -36,9 +36,10 @@ def preterminals(P,D,w):
     for i in range(len(D)):
         for chart in D[i,i]:
             R = R + (sc(gen.get_random_vector(chart.rule.head())).dot(gen.get_random_vector('Sep')).dot(sc(gen.get_random_vector(chart.rule.head()))).dot(circulant(gen.get_random_vector(chart.rule.production()))).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(chart.rule.head()))))
-
+    #print R
     for i in range(len(w)):
         s = (sc(gen.get_random_vector('1')).dot(sc(gen.get_random_vector(str(i)))).dot(R).dot(invsc(gen.get_random_vector(str(i)))).dot(invsc(gen.get_random_vector('0'))).dot(P))
+        #print s
         P = P + s
     return P
 #binary rules
@@ -65,7 +66,9 @@ def binary(P,D,w):
 def cyk_dist(D,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
+	print P_dist
 	P_dist = preterminals(P_dist, D, w)
+	#print P_dist
 	P_dist = binary(P_dist, D, w)
 	return P_dist
 '''
