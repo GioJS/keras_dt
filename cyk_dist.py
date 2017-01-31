@@ -105,7 +105,7 @@ def test_P(parser,w):
     #test
 
     for i in range(len(w)):
-        s = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i])))
+        s = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i]))).dot(sc(gen.get_random_vector('Sep')))
         #print s
         Dp = Dp + s
 
