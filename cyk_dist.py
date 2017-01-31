@@ -1,9 +1,9 @@
 from parserNLP.Grammar import Grammar
 from parserNLP.CYK import CYK
 from vectors import *
-from keras_dt import *
-from convolutions import *
 #from keras_dt import *
+from convolutions import *
+
 dim = 1024
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
