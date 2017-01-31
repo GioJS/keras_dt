@@ -27,7 +27,7 @@ if K.backend() == 'tensorflow':
 		#model.add(Dense(4096, activation="sigmoid"))
 		model.compile(loss='mse', optimizer='sgd')
 
-		print model.layers[0].call(indices[0]).eval()
+		print model.layers[0].call(indices[0])
 		#print model.layers[1].call(model.layers[0].call(indices[0])).eval()
 		#restituisce un array di 0 perche' non c'e' learning
 		#print model.predict(indices)
