@@ -30,12 +30,16 @@ def init(w):
         P = P + s
     return P
 #perterminal rules
-def preterminals(P,D,w):
+def preterminals(P,G,w):
     R = K.zeros((dim,)).eval()
     #R=sum r_i preterminal
-    for i in range(len(D)):
-        for chart in D[i,i]:
-            R = R + (sc(gen.get_random_vector(chart.rule.head())).dot(gen.get_random_vector('Sep')).dot(sc(gen.get_random_vector(chart.rule.head()))).dot(circulant(gen.get_random_vector(chart.rule.production()))).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(chart.rule.head()))))
+    # for i in range(len(D)):
+    #     for chart in D[i,i]:
+    for rule in G.get_unit_productions():
+        #print 'prima: ',sc(gen.get_random_vector(rule.head())).dot(sc(gen.get_random_vector('Sep'))).dot(sc(gen.get_random_vector(rule.head())))
+        #print 'circ: ',circulant(gen.get_random_vector(rule.production())),'rule: ',rule.production(),'vect: ',gen.get_random_vector(rule.production())
+        R = R + (sc(gen.get_random_vector(rule.head())).dot(sc(gen.get_random_vector('Sep'))).dot(sc(gen.get_random_vector(rule.head()))).dot(circulant(gen.get_random_vector(rule.production()))).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(rule.head()))))
+        #print R
     #print R
     for i in range(len(w)):
         s = (sc(gen.get_random_vector('1')).dot(sc(gen.get_random_vector(str(i)))).dot(R).dot(invsc(gen.get_random_vector(str(i)))).dot(invsc(gen.get_random_vector('0'))).dot(P))
@@ -63,13 +67,13 @@ def binary(P,D,w):
     return P
 
 #transform P to P_dist with algo5,6
-def cyk_dist(D,w):
+def cyk_dist(G,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
 	#print P_dist
-	P_dist = preterminals(P_dist, D, w)
+	P_dist = preterminals(P_dist, G, w)
 	#print P_dist
-	P_dist = binary(P_dist, D, w)
+	#P_dist = binary(P_dist, D, w)
 	return P_dist
 '''
 P : la matrice di CYK originale
@@ -99,12 +103,12 @@ def test_P(parser,w):
     w = w.replace(' ','')
     Dp = K.zeros((dim,)).eval()
     #test
-    
+
     for i in range(len(w)):
         s = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i])))
         #print s
         Dp = Dp + s
-    
+
     #first row
     for i in range(len(parser.C)):
         #preterminal trees
@@ -115,7 +119,7 @@ def test_P(parser,w):
             td = sc(gen.get_random_vector("1")).dot(sc(gen.get_random_vector(str(i)))).dot(tree_dist(tree))
             Dp = Dp + td
     #generic row
-    for i in range(2,len(w)):
+    '''for i in range(2,len(w)):
     	for j in range(0,len(w)-i+2):
     		if i==j:
     			continue
@@ -125,7 +129,7 @@ def test_P(parser,w):
                 #print 'tree: ',tree
                 td = sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(tree_dist(tree))
                 #print td
-                Dp = Dp + td
+                Dp = Dp + td'''
     return Dp
 
 '''
@@ -136,7 +140,8 @@ G = Grammar('S')
 G.add_rules_from_file('gramm_l')
 parser = CYK(G)
 for i in range(2,3):
-    w = ('a '*i)+'b'
+    #w = ('a '*i)+'b'
+    w = 'a'
     print w
     parser.parse(w)
     P = parser.C
@@ -146,12 +151,13 @@ for i in range(2,3):
         sess = K.tf.Session()
         K.set_session(sess)
         with sess.as_default():
-            Pd = cyk_dist(P,w)
+            Pd = cyk_dist(G,w)
             print Pd
             Dp = test_P(parser,w)
             print Dp
-            print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
-            print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
+            print np.linalg.norm(Pd-Dp,2)
+            #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
+            #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
     else:
         #Pd = cyk_dist(P,w)
         #print Pd

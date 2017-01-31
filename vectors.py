@@ -11,7 +11,7 @@ class Vector_generator:
 		self.mu=mu
 		self.va=va
 		self.cache={}
-	
+
 	def get_random_vector(self,label):
 		if label in self.cache:
 			return self.cache[label]
@@ -24,10 +24,10 @@ class Vector_generator:
 		vect = np.random.normal(self.mu,self.va,self.dim)
 		vect /= np.linalg.norm(vect,2)
 		self.cache[label]=vect
-		return K.variable(vect)
+		return K.variable(vect).eval()
 	@staticmethod
 	def permutation(dim=1024,seed=0,permutation=None):
-		
+
 		np.random.seed(seed)
 		perm=np.random.permutation(dim)
 		while(not Vector_generator.test_permutation(perm,permutation)):
