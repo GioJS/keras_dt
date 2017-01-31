@@ -38,7 +38,7 @@ class EmbeddingDT(Layer):
     def call(self, x, mask=None):
 
         if K.is_keras_tensor(x):
-            return K.zeros((self.output_dim))
+            return K.zeros((self.output_dim,))
 
         if x-1 < len(self.cache):
             return self.cache[x-1]
