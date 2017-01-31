@@ -66,7 +66,7 @@ def binary(P,D,w):
 def cyk_dist(D,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
-	print P_dist
+	#print P_dist
 	P_dist = preterminals(P_dist, D, w)
 	#print P_dist
 	P_dist = binary(P_dist, D, w)
@@ -99,12 +99,12 @@ def test_P(parser,w):
     w = w.replace(' ','')
     Dp = K.zeros((dim,)).eval()
     #test
-    '''
+    
     for i in range(len(w)):
         s = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i])))
         #print s
         Dp = Dp + s
-    '''
+    
     #first row
     for i in range(len(parser.C)):
         #preterminal trees
@@ -153,9 +153,9 @@ for i in range(2,3):
             print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
             print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
     else:
-        Pd = cyk_dist(P,w)
-        print Pd
+        #Pd = cyk_dist(P,w)
+        #print Pd
         Dp = test_P(parser,w)
         print Dp
-        print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
-        print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
+        #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
+        #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
