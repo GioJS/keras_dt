@@ -29,9 +29,7 @@ class EmbeddingDT(Layer):
         super(EmbeddingDT, self).__init__(**kwargs)
 
     def build(self, input_shape):
-    	#ci serve la matrice identita'
 
-        self.W = K.eye(self.output_dim)
         super(EmbeddingDT, self).build(input_shape)
 
     def get_output_shape_for(self, input_shape):
@@ -39,13 +37,17 @@ class EmbeddingDT(Layer):
     
     def call(self, x, mask=None):
 
-        if type(x) != np.int64:
-            return K.dot(self.W,K.zeros((4096,)))
-        if len(self.cache) < self.limit:
+        if K.is_keras_tensor(x):
+            return K.zeros((self.output_dim))
 
+        if x-1 < len(self.cache):
+            return self.cache[x-1]
+
+        if len(self.cache) < self.limit:
             self.cache.append(self.dt.dt(self.trees[x]))
             return self.cache[-1]
-        return K.dot(self.W, self.dt.dt(self.trees[x]))
+
+        return self.dt.dt(self.trees[x])
 
 
     
