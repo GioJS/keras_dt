@@ -88,11 +88,11 @@ facendo le stesse operazioni
 per codificare l'albero
 e unendoci i vettori dei due indici'''
 def tree_dist(t):
-    if len(t)==0:
+    if len(t) == 0:
         return sc(gen.get_random_vector(t.label))
-    s=sc(gen.get_random_vector(t.label))
+    s = sc(gen.get_random_vector(t.label))
     for child in t:
-        s=s.dot(tree_dist(child))
+        s = s.dot(tree_dist(child))
     return s
 
 def test_P(parser,w):
