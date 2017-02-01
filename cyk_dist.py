@@ -48,8 +48,7 @@ def binary(P,G,w):
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+2):
     		Pa = K.zeros((dim,)).eval()
-    		if i==j:
-    			continue
+    		
     		for A in G.get_nonunit_productions():
     			RL = sc(gen.get_random_vector(A.rule[0])).dot(sc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[1]))).dot(invsc(gen.get_random_vector(A.rule[0]))).dot(invsc(gen.get_random_vector(A.rule.head())))
     			RL_ = sc(gen.get_random_vector(A.rule.head())).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[0])))
