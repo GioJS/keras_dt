@@ -16,13 +16,19 @@ class Vector_generator:
 		if label in self.cache:
 			return self.cache[label]
 		#if seed is hash adjust it (can be negative)
-		seed = hash(label)
-		if seed < 0:
-			seed += sys.maxsize
+		#seed = hash(label)
+		from hashlib import sha256
+		#data = np.random.rand(1000)
+		hash = sha256(label)
+		seed = np.frombuffer(hash.digest(), dtype='uint32')
+		#seed=np.frombuffer(seed, dtype='uint32')
+			#print seed
 	  	#self.seed=0
-		np.random.seed(self.seed)
+
+		np.random.seed(seed)
 		vect = np.random.normal(self.mu,self.va,self.dim)
 		vect /= np.linalg.norm(vect,2)
+
 		self.cache[label]=vect
 		return K.variable(vect).eval()
 	@staticmethod

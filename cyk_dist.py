@@ -149,11 +149,13 @@ for i in range(2,3):
         K.set_session(sess)
         with sess.as_default():
             Pd = cyk_dist(G,w)
-            Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
+            #print sc(gen.get_random_vector("0")),sc(gen.get_random_vector("Sep"))
+            #print np.linalg.norm(sc(gen.get_random_vector("Sep"))-invsc(gen.get_random_vector("0")),2)
+            #Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
             Pd = invsc(gen.get_random_vector('Sep')).dot(Pd)
             print Pd
             Dp = test_P(parser,w)
-            Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp)
+            #Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp)
             print Dp
             print np.linalg.norm(Pd-Dp,2)
             #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
