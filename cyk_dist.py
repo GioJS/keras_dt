@@ -44,13 +44,13 @@ def preterminals(P,G,w):
         P = P + s
     return P
 #binary rules
-def binary(P,D,w):
+def binary(P,G,w):
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+2):
     		Pa = K.zeros((dim,)).eval()
     		if i==j:
     			continue
-    		for A in D[j,i]:
+    		for A in G.get_nonunit_productions():
     			RL = sc(gen.get_random_vector(A.rule[0])).dot(sc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[1]))).dot(invsc(gen.get_random_vector(A.rule[0]))).dot(invsc(gen.get_random_vector(A.rule.head())))
     			RL_ = sc(gen.get_random_vector(A.rule.head())).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[0])))
     			RR = sc(gen.get_random_vector(A.rule.head())).dot(sc(gen.get_random_vector(A.rule[0]))).dot(sc(gen.get_random_vector(A.rule[1]))).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[1])))
@@ -151,11 +151,11 @@ for i in range(2,3):
             Pd = cyk_dist(G,w)
             #print sc(gen.get_random_vector("0")),sc(gen.get_random_vector("0"))
             #print np.linalg.norm(sc(gen.get_random_vector("Sep"))-invsc(gen.get_random_vector("0")),2)
-            #Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
+            Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
             Pd = invsc(gen.get_random_vector('Sep')).dot(Pd)
             print Pd
             Dp = test_P(parser,w)
-            #Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp)
+            Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp)
             print Dp
             print np.linalg.norm(Pd-Dp,2)
             #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
