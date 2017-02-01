@@ -149,7 +149,7 @@ for i in range(2,3):
         K.set_session(sess)
         with sess.as_default():
             Pd = cyk_dist(G,w)
-            #print sc(gen.get_random_vector("0")),sc(gen.get_random_vector("Sep"))
+            #print sc(gen.get_random_vector("0")),sc(gen.get_random_vector("0"))
             #print np.linalg.norm(sc(gen.get_random_vector("Sep"))-invsc(gen.get_random_vector("0")),2)
             #Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
             Pd = invsc(gen.get_random_vector('Sep')).dot(Pd)
