@@ -145,16 +145,24 @@ for i in range(2,3):
         sess = K.tf.Session()
         K.set_session(sess)
         with sess.as_default():
-            Pd = cyk_dist(G,w)
+            a = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('0'))).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
+            a_0 = invsc(gen.get_random_vector('0')).dot(a)
+            a_1 = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
+            print a_0
+            print a_1
+            print np.linalg.norm(a_0-a_1,2)
+
+
+            #Pd = cyk_dist(G,w)
             #print sc(gen.get_random_vector("0")),sc(gen.get_random_vector("0"))
             #print np.linalg.norm(sc(gen.get_random_vector("Sep"))-invsc(gen.get_random_vector("Sep")),2)
-            Pd = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(Pd)
-            Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
-            print Pd
-            Dp = test_P(parser,w)
-            Dp = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(Dp)
-            print Dp
-            print np.linalg.norm(Pd-Dp,2)
+            #Pd = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(Pd)
+            #Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
+            #print Pd
+            #Dp = test_P(parser,w)
+            #Dp = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(Dp)
+            #print Dp
+            #print np.linalg.norm(Pd-Dp,2)
             #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
             #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
     else:
