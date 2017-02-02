@@ -5,11 +5,11 @@ import sys
 random vector generator(versors)
 '''
 class Vector_generator:
-	def __init__(self,seed=0,dim=1024,mu=0,va=1):
+	def __init__(self,seed=0,dim=1024,mu=0,std=1):
 		self.seed=seed
 		self.dim=dim
 		self.mu=mu
-		self.va=va
+		self.std=std
 		self.cache={}
 
 	def get_random_vector(self,label):
@@ -27,6 +27,7 @@ class Vector_generator:
 
 		np.random.seed(seed)
 		vect = np.random.normal(self.mu,self.va,self.dim)
+		#print vect
 		vect /= np.linalg.norm(vect,2)
 
 		self.cache[label]=vect
