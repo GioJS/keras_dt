@@ -48,18 +48,18 @@ def binary(P,G,w):
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+2):
     		Pa = K.zeros((dim,)).eval()
-    		
-    		for A in G.get_nonunit_productions():
-    			RL = sc(gen.get_random_vector(A.rule[0])).dot(sc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[1]))).dot(invsc(gen.get_random_vector(A.rule[0]))).dot(invsc(gen.get_random_vector(A.rule.head())))
-    			RL_ = sc(gen.get_random_vector(A.rule.head())).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[0])))
-    			RR = sc(gen.get_random_vector(A.rule.head())).dot(sc(gen.get_random_vector(A.rule[0]))).dot(sc(gen.get_random_vector(A.rule[1]))).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule[1])))
-    			RR_ = sc(gen.get_random_vector(A.rule[1])).dot(sc(gen.get_random_vector('Sep')))
+
+    		for rule in G.get_nonunit_productions():
+    			RL = sc(gen.get_random_vector(rule[0])).dot(sc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(rule[1]))).dot(invsc(gen.get_random_vector(rule[0]))).dot(invsc(gen.get_random_vector(rule.head())))
+    			RL_ = sc(gen.get_random_vector(rule.head())).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(rule[0])))
+    			RR = sc(gen.get_random_vector(rule.head())).dot(sc(gen.get_random_vector(rule[0]))).dot(sc(gen.get_random_vector(rule[1]))).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(rule[1])))
+    			RR_ = sc(gen.get_random_vector(rule[1])).dot(sc(gen.get_random_vector('Sep')))
     			#print RL,RL_,RR,RR_
     			for k in range(0,i+2):
     				#print k
     				Pa = Pa + RL_.dot(invsc(gen.get_random_vector(str(j)))).dot(invsc(gen.get_random_vector(str(k)))).dot(P).dot(RL).dot(RR).dot(invsc(gen.get_random_vector(str(j+k)))).dot(invsc(gen.get_random_vector(str(i-k)))).dot(P).dot(RR_)
     				#print Pa
-    			P = P + sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(sc(gen.get_random_vector(A.rule.head()))).dot(sc(gen.get_random_vector('Sep'))).dot(Pa).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(A.rule.head())))
+    			P = P + sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(sc(gen.get_random_vector(rule.head()))).dot(sc(gen.get_random_vector('Sep'))).dot(Pa).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(rule.head())))
     return P
 
 #transform P to P_dist with algo5,6
@@ -69,7 +69,7 @@ def cyk_dist(G,w):
 	#print P_dist
 	#P_dist = preterminals(P_dist, G, w)
 	#print P_dist
-	#P_dist = binary(P_dist, D, w)
+	#P_dist = binary(P_dist, G, w)
 	return P_dist
 '''
 P : la matrice di CYK originale
