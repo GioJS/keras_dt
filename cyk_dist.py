@@ -11,7 +11,6 @@ Phi = permutation_matrices(dim)[1]
 
 #[v]+
 def sc(v):
-
     return circulant(v).dot(Phi)
 #[v]-
 def invsc(v):
@@ -160,9 +159,11 @@ for i in range(2,3):
             #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
             #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
     else:
-        #Pd = cyk_dist(P,w)
-        #print Pd
+        Pd = cyk_dist(G,w)
+        Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
+        Pd = invsc(gen.get_random_vector('Sep')).dot(Pd)
+        print Pd
         Dp = test_P(parser,w)
+        Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp)
         print Dp
-        #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
-        #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
+        print np.linalg.norm(Pd-Dp,2)
