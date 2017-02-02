@@ -19,8 +19,8 @@ class Vector_generator:
 		#seed = hash(label)
 		from hashlib import sha256
 		#data = np.random.rand(1000)
-		hash = sha256(label)
-		seed = np.frombuffer(hash.digest(), dtype='uint32')
+		hashl = sha256(label)
+		seed = np.frombuffer(hashl.digest(), dtype='uint32')
 		#seed=np.frombuffer(seed, dtype='uint32')
 			#print seed
 	  	#self.seed=0
