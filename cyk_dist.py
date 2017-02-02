@@ -9,6 +9,7 @@ dim = 1024
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
 
+
 #[v]+
 def sc(v):
     return circulant(v).dot(Phi)
@@ -146,9 +147,9 @@ for i in range(2,3):
         with sess.as_default():
             Pd = cyk_dist(G,w)
             #print sc(gen.get_random_vector("0")),sc(gen.get_random_vector("0"))
-            #print np.linalg.norm(sc(gen.get_random_vector("Sep"))-invsc(gen.get_random_vector("0")),2)
+            #print np.linalg.norm(sc(gen.get_random_vector("Sep"))-invsc(gen.get_random_vector("Sep")),2)
             Pd = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(Pd)
-            Pd = invsc(gen.get_random_vector('Sep')).dot(Pd)
+            Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
             print Pd
             Dp = test_P(parser,w)
             Dp = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(Dp)
