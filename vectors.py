@@ -26,7 +26,7 @@ class Vector_generator:
 	  	#self.seed=0
 
 		np.random.seed(seed)
-		vect = np.random.multivariate_normal(np.ones(self.dim)*self.mu,np.eye(self.dim)*self.dim,1)
+		vect = np.random.multivariate_normal(np.ones(self.dim)*self.mu,np.eye(self.dim)*np.sqrt(self.dim))
 		#print vect
 		vect /= np.linalg.norm(vect,2)
 
