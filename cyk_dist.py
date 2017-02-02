@@ -6,7 +6,7 @@ from convolutions import *
 
 dim = 1024
 #dt = DT(dim=1024, lexicalized=True)
-gen = Vector_generator(dim=dim)
+gen = Vector_generator(dim=dim, mu=1, std=np.sqrt(dim))
 Phi = permutation_matrices(dim)[1]
 
 
