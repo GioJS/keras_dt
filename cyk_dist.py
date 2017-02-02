@@ -22,7 +22,6 @@ def init(w):
     #print P[0]
     for i in range(len(w)):
         s = (sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i]))).dot(sc(gen.get_random_vector('Sep'))))
-        #print s
         P = P + s
     return P
 #perterminal rules
@@ -101,7 +100,6 @@ def test_P(parser,w):
 
     for i in range(len(w)):
         s = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i])))
-        #print s
         Dp = Dp + s
 
     #first row
