@@ -171,7 +171,7 @@ for i in range(2,3):
     #else:
     Pd = cyk_dist(G,w)
     Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
-        #Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
+    Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
         # # print Pd
     Dp = test_P(parser,w)
     Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp)
