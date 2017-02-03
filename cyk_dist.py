@@ -114,7 +114,7 @@ def test_P(parser,w):
             td = sc(gen.get_random_vector("1")).dot(sc(gen.get_random_vector(str(i)))).dot(tree_dist(tree))
             Dp = Dp + td
     #generic row
-for i in range(2,len(w)):
+    for i in range(2,len(w)):
     	for j in range(0,len(w)-i+2):
     		if i==j:
     			continue
