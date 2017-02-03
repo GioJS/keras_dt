@@ -110,7 +110,7 @@ def test_P(parser,w):
         #print chart
         for A in parser.C[i,i]:
             tree = parser.get_tree(A)
-            print 'tree: ',tree
+            #print 'tree: ',tree
             td = sc(gen.get_random_vector("1")).dot(sc(gen.get_random_vector(str(i)))).dot(tree_dist(tree))
             Dp = Dp + td
     #generic row
