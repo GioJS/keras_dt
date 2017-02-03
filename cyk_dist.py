@@ -6,9 +6,10 @@ from convolutions import *
 
 dim = 1024
 #dt = DT(dim=1024, lexicalized=True)
-gen = Vector_generator(dim=dim, mu=1, std=np.sqrt(dim))
+gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
 
+#print Phi
 
 #[v]+
 def sc(v):
@@ -152,9 +153,9 @@ for i in range(2,3):
             print a_1
             print np.linalg.norm(a_0-a_1,2)'''
 	    
-	    a = gen.get_random_vector('a')
-	    A = circulant(a)
-	    print A.dot(A.T)
+    	    a = gen.get_random_vector('a')
+    	    A = circulant(a)
+    	    print A.dot(A.T)
             #Pd = cyk_dist(G,w)
             #print sc(gen.get_random_vector("0")),sc(gen.get_random_vector("0"))
             #print np.linalg.norm(sc(gen.get_random_vector("Sep"))-invsc(gen.get_random_vector("Sep")),2)
@@ -170,9 +171,29 @@ for i in range(2,3):
     else:
         Pd = cyk_dist(G,w)
         Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
-        Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
-        print Pd
+        #Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
+        # # print Pd
         Dp = test_P(parser,w)
-        Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp)
-        print Dp
-        print np.linalg.norm(Pd-Dp,2)
+        Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp).dot(sc(gen.get_random_vector('Sep')))
+        # #print Dp
+        print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('a')).dot(sc(gen.get_random_vector('Sep')))[:,0])
+        print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('a')).dot(sc(gen.get_random_vector('Sep')))[:,0])
+
+        #a = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('0'))).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
+        #b = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(a).dot(invsc(gen.get_random_vector('Sep')))
+        #print a[:,0].dot(b[:,0])
+        #print 'primo: ',b[:,0].dot(sc(gen.get_random_vector('a'))[:,0])
+        # #print np.linalg.norm(Pd-Dp,2)
+        # a = gen.get_random_vector('a')
+        # b = gen.get_random_vector('0')
+        # c = gen.get_random_vector('Sep')
+        # #a2 = gen.get_random_vector('a')
+        # #print np.linalg.norm(a-a2)
+        # #print sc(a).dot(invsc(a)) - invsc(a).dot(sc(a))
+
+        # #A = circulant(a)
+        # #print A,'\n'
+        # #print A.dot(A.T)
+        # x1 = sc(b).dot(sc(a)).dot(sc(c))
+        # x2 = invsc(b).dot(x1).dot(invsc(c))
+        # print x2[:,0].dot(sc(a)[:,0])

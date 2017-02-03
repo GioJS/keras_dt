@@ -8,12 +8,13 @@ class Vector_generator:
 	def __init__(self,seed=0,dim=1024,mu=0,std=1):
 		self.seed=seed
 		self.dim=dim
-		self.mu=mu
-		self.std=std
+		self.mu=np.zeros(self.dim)
+		self.std=np.eye(self.dim)*(1/float(self.dim))
 		self.cache={}
 
 	def get_random_vector(self,label):
 		if label in self.cache:
+			#print label
 			return self.cache[label]
 		#if seed is hash adjust it (can be negative)
 		#seed = hash(label)
@@ -27,12 +28,11 @@ class Vector_generator:
 
 		np.random.seed(seed)
 		
-		vect = np.random.multivariate_normal(np.ones(self.dim)*self.mu,np.eye(self.dim)*self.std)
+		vect = np.random.multivariate_normal(self.mu,self.std)
 		#print vect
-		vect /= np.linalg.norm(vect,2)
 
 		self.cache[label]=vect
-		return K.variable(vect).eval()
+		return vect
 	@staticmethod
 	def permutation(dim=1024,seed=0,permutation=None):
 
