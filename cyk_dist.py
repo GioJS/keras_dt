@@ -69,7 +69,7 @@ def cyk_dist(G,w):
 	#print P_dist
 	P_dist = preterminals(P_dist, G, w)
 	#print P_dist
-	P_dist = binary(P_dist, G, w)
+	#P_dist = binary(P_dist, G, w)
 	return P_dist
 '''
 P : la matrice di CYK originale
@@ -114,7 +114,7 @@ def test_P(parser,w):
             td = sc(gen.get_random_vector("1")).dot(sc(gen.get_random_vector(str(i)))).dot(tree_dist(tree))
             Dp = Dp + td
     #generic row
-    for i in range(2,len(w)):
+    '''for i in range(2,len(w)):
     	for j in range(0,len(w)-i+2):
     		if i==j:
     			continue
@@ -124,7 +124,7 @@ def test_P(parser,w):
                 #print 'tree: ',tree
                 td = sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(tree_dist(tree))
                 #print td
-                Dp = Dp + td
+                Dp = Dp + td'''
     return Dp
 
 '''
@@ -179,6 +179,7 @@ for i in range(2,3):
     #print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('D')).dot(sc(gen.get_random_vector('a')))[:,0])
     #print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('D')).dot(sc(gen.get_random_vector('a')))[:,0])
 
+    
     print Pd[:,0].dot(Dp[:,0])
 
         #a = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('0'))).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
