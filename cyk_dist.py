@@ -8,7 +8,7 @@ dim = 1024
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
-
+v = gen.get_random_vector
 #print Phi
 
 #[v]+
@@ -23,7 +23,7 @@ def init(w):
     P = K.zeros((dim,)).eval()
     #print P[0]
     for i in range(len(w)):
-        s = (sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i]))).dot(sc(gen.get_random_vector('Sep'))))
+        s = (sc(v('0')).dot(sc(v(str(i)))).dot(sc(v(w[i]))).dot(sc(v('Sep'))))
         P = P + s
     return P
 #perterminal rules
@@ -33,13 +33,13 @@ def preterminals(P,G,w):
     # for i in range(len(D)):
     #     for chart in D[i,i]:
     for rule in G.get_unit_productions():
-        #print 'prima: ',sc(gen.get_random_vector(rule.head())).dot(sc(gen.get_random_vector('Sep'))).dot(sc(gen.get_random_vector(rule.head())))
-        #print 'circ: ',circulant(gen.get_random_vector(rule.production())),'rule: ',rule.production(),'vect: ',gen.get_random_vector(rule.production())
-        R = R + (sc(gen.get_random_vector(rule.head())).dot(sc(gen.get_random_vector('Sep'))).dot(sc(gen.get_random_vector(rule.head()))).dot(circulant(gen.get_random_vector(rule.production()))).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(rule.head()))))
+        #print 'prima: ',sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head())))
+        #print 'circ: ',circulant(v(rule.production())),'rule: ',rule.production(),'vect: ',v(rule.production())
+        R = R + (sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head()))).dot(circulant(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head()))))
         #print R
     #print R
     for i in range(len(w)):
-        s = (sc(gen.get_random_vector('1')).dot(sc(gen.get_random_vector(str(i)))).dot(R).dot(invsc(gen.get_random_vector(str(i)))).dot(invsc(gen.get_random_vector('0'))).dot(P))
+        s = (sc(v('1')).dot(sc(v(str(i)))).dot(R).dot(invsc(v(str(i)))).dot(invsc(v('0'))).dot(P))
         #print s
         P = P + s
     return P
@@ -50,16 +50,16 @@ def binary(P,G,w):
     		Pa = K.zeros((dim,)).eval()
 
     		for rule in G.get_nonunit_productions():
-    			RL = sc(gen.get_random_vector(rule[0])).dot(sc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(rule[1]))).dot(invsc(gen.get_random_vector(rule[0]))).dot(invsc(gen.get_random_vector(rule.head())))
-    			RL_ = sc(gen.get_random_vector(rule.head())).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(rule[0])))
-    			RR = sc(gen.get_random_vector(rule.head())).dot(sc(gen.get_random_vector(rule[0]))).dot(sc(gen.get_random_vector(rule[1]))).dot(Phi).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(rule[1])))
-    			RR_ = sc(gen.get_random_vector(rule[1])).dot(sc(gen.get_random_vector('Sep')))
+    			RL = sc(v(rule[0])).dot(sc(v('Sep'))).dot(invsc(v(rule[1]))).dot(invsc(v(rule[0]))).dot(invsc(v(rule.head())))
+    			RL_ = sc(v(rule.head())).dot(Phi).dot(invsc(v('Sep'))).dot(invsc(v(rule[0])))
+    			RR = sc(v(rule.head())).dot(sc(v(rule[0]))).dot(sc(v(rule[1]))).dot(Phi).dot(invsc(v('Sep'))).dot(invsc(v(rule[1])))
+    			RR_ = sc(v(rule[1])).dot(sc(v('Sep')))
     			#print RL,RL_,RR,RR_
     			for k in range(0,i+2):
     				#print k
-    				Pa = Pa + RL_.dot(invsc(gen.get_random_vector(str(j)))).dot(invsc(gen.get_random_vector(str(k)))).dot(P).dot(RL).dot(RR).dot(invsc(gen.get_random_vector(str(j+k)))).dot(invsc(gen.get_random_vector(str(i-k)))).dot(P).dot(RR_)
+    				Pa = Pa + RL_.dot(invsc(v(str(j)))).dot(invsc(v(str(k)))).dot(P).dot(RL).dot(RR).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(RR_)
     				#print Pa
-    			P = P + sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(sc(gen.get_random_vector(rule.head()))).dot(sc(gen.get_random_vector('Sep'))).dot(Pa).dot(invsc(gen.get_random_vector('Sep'))).dot(invsc(gen.get_random_vector(rule.head())))
+    			P = P + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(rule.head()))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
     return P
 
 #transform P to P_dist with algo5,6
@@ -89,8 +89,8 @@ per codificare l'albero
 e unendoci i vettori dei due indici'''
 def tree_dist(t):
     if len(t) == 0:
-        return sc(gen.get_random_vector(t.label))
-    s = sc(gen.get_random_vector(t.label))
+        return sc(v(t.label))
+    s = sc(v(t.label))
     for child in t:
         s = s.dot(tree_dist(child))
     return s
@@ -101,7 +101,7 @@ def test_P(parser,w):
     #test
 
     for i in range(len(w)):
-        s = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector(str(i)))).dot(sc(gen.get_random_vector(w[i])))
+        s = sc(v('0')).dot(sc(v(str(i)))).dot(sc(v(w[i])))
         Dp = Dp + s
 
     #first row
@@ -111,7 +111,7 @@ def test_P(parser,w):
         for A in parser.C[i,i]:
             tree = parser.get_tree(A)
             #print 'tree: ',tree
-            td = sc(gen.get_random_vector("1")).dot(sc(gen.get_random_vector(str(i)))).dot(tree_dist(tree))
+            td = sc(v("1")).dot(sc(v(str(i)))).dot(tree_dist(tree))
             Dp = Dp + td
     #generic row
     '''for i in range(2,len(w)):
@@ -122,7 +122,7 @@ def test_P(parser,w):
     			#print A
     			tree = parser.get_tree(A)
                 #print 'tree: ',tree
-                td = sc(gen.get_random_vector(str(i))).dot(sc(gen.get_random_vector(str(j)))).dot(tree_dist(tree))
+                td = sc(v(str(i))).dot(sc(v(str(j)))).dot(tree_dist(tree))
                 #print td
                 Dp = Dp + td'''
     return Dp
@@ -146,51 +146,51 @@ for i in range(2,3):
         # sess = K.tf.Session()
         # K.set_session(sess)
         # with sess.as_default():
-        #     '''a = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('0'))).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
-        #     a_0 = invsc(gen.get_random_vector('0')).dot(a)
-        #     a_1 = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
+        #     '''a = sc(v('0')).dot(sc(v('0'))).dot(sc(v('a'))).dot(sc(v('Sep')))
+        #     a_0 = invsc(v('0')).dot(a)
+        #     a_1 = sc(v('0')).dot(sc(v('a'))).dot(sc(v('Sep')))
         #     print a_0
         #     print a_1
         #     print np.linalg.norm(a_0-a_1,2)'''
 	    
-    	   #  a = gen.get_random_vector('a')
+    	   #  a = v('a')
     	   #  A = circulant(a)
     	   #  print A.dot(A.T)
             #Pd = cyk_dist(G,w)
-            #print sc(gen.get_random_vector("0")),sc(gen.get_random_vector("0"))
-            #print np.linalg.norm(sc(gen.get_random_vector("Sep"))-invsc(gen.get_random_vector("Sep")),2)
-            #Pd = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(Pd)
-            #Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
+            #print sc(v("0")),sc(v("0"))
+            #print np.linalg.norm(sc(v("Sep"))-invsc(v("Sep")),2)
+            #Pd = invsc(v('0')).dot(invsc(v('0'))).dot(Pd)
+            #Pd = Pd.dot(invsc(v('Sep')))
             #print Pd
             #Dp = test_P(parser,w)
-            #Dp = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(Dp)
+            #Dp = invsc(v('0')).dot(invsc(v('0'))).dot(Dp)
             #print Dp
             #print np.linalg.norm(Pd-Dp,2)
-            #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
-            #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
+            #print invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
+            #print invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
     #else:
     Pd = cyk_dist(G,w)
-    Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
-    Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
+    Pd = invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
+    Pd = Pd.dot(invsc(v('Sep')))
         # # print Pd
     Dp = test_P(parser,w)
-    Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
+    Dp = invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
         # #print Dp
-    #print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('D')).dot(sc(gen.get_random_vector('a')))[:,0])
-    #print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('D')).dot(sc(gen.get_random_vector('a')))[:,0])
+    #print 'Pd: ',Pd[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
+    #print 'Dp: ',Dp[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
 
 
     print Pd[:,0].dot(Dp[:,0])
 
-        #a = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('0'))).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
-        #b = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(a).dot(invsc(gen.get_random_vector('Sep')))
+        #a = sc(v('0')).dot(sc(v('0'))).dot(sc(v('a'))).dot(sc(v('Sep')))
+        #b = invsc(v('0')).dot(invsc(v('0'))).dot(a).dot(invsc(v('Sep')))
         #print a[:,0].dot(b[:,0])
-        #print 'primo: ',b[:,0].dot(sc(gen.get_random_vector('a'))[:,0])
+        #print 'primo: ',b[:,0].dot(sc(v('a'))[:,0])
         # #print np.linalg.norm(Pd-Dp,2)
-        # a = gen.get_random_vector('a')
-        # b = gen.get_random_vector('0')
-        # c = gen.get_random_vector('Sep')
-        # #a2 = gen.get_random_vector('a')
+        # a = v('a')
+        # b = v('0')
+        # c = v('Sep')
+        # #a2 = v('a')
         # #print np.linalg.norm(a-a2)
         # #print sc(a).dot(invsc(a)) - invsc(a).dot(sc(a))
 
