@@ -20,7 +20,7 @@ def invsc(v):
 
 #initialization of level 0
 def init(w):
-    P = K.zeros((dim,)).eval()
+    P = np.array([0])
     #print P[0]
     for i in range(len(w)):
         s = (sc(v('0')).dot(sc(v(str(i)))).dot(sc(v(w[i]))).dot(sc(v('Sep'))))
