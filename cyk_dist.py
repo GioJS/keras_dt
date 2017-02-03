@@ -171,8 +171,9 @@ for i in range(2,3):
     #else:
     Pd = cyk_dist(G,w)
     Pd = invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
-    from trees import *
+    
     Pd = Pd.dot(sc(v('D'))).dot(sc(v('Sep')))
+    Pd = invsc(v('D')).dot(invsc(v('Sep'))).dot(Pd)
         # # print Pd
     Dp = test_P(parser,w)
     Dp = invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
