@@ -170,14 +170,14 @@ for i in range(2,3):
             #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
     #else:
     Pd = cyk_dist(G,w)
-    Pd = invsc(gen.get_random_vector("1")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
+    Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
     Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
         # # print Pd
     Dp = test_P(parser,w)
-    Dp = invsc(gen.get_random_vector("1")).dot(invsc(gen.get_random_vector("0"))).dot(Dp)
+    Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp)
         # #print Dp
-    #print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('a'))[:,0])
-    #print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('a'))[:,0])
+    print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('a'))[:,0])
+    print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('a'))[:,0])
 
 
     print Pd[:,0].dot(Dp[:,0])
