@@ -179,7 +179,7 @@ for i in range(2,3):
     #print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('D')).dot(sc(gen.get_random_vector('a')))[:,0])
     #print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('D')).dot(sc(gen.get_random_vector('a')))[:,0])
 
-    print Pd.dot(Dp)
+    print Pd.dot(Dp.T)
     print Pd[:,0].dot(Dp[:,0])
 
         #a = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('0'))).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
