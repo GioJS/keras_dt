@@ -42,7 +42,7 @@ def preterminals(P,G,w):
         s = (sc(v('1')).dot(sc(v(str(i)))).dot(R).dot(invsc(v(str(i)))).dot(invsc(v('0'))).dot(P))
         #print s
         P = P + s
-    return P
+    return (P,R)
 #binary rules
 def binary(P,G,w):
     for i in range(2,len(w)):
@@ -67,10 +67,10 @@ def cyk_dist(G,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
 	#print P_dist
-	P_dist = preterminals(P_dist, G, w)
+	P_dist,R = preterminals(P_dist, G, w)
 	#print P_dist
 	#P_dist = binary(P_dist, G, w)
-	return P_dist
+	return P_dist,R
 '''
 P : la matrice di CYK originale
 Pd : la matrice di CYK distribuito
@@ -169,15 +169,15 @@ for i in range(2,3):
             #print invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
             #print invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
     #else:
-    Pd = cyk_dist(G,w)
+    Pd,R = cyk_dist(G,w)
     Pd = invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
     Pd = Pd.dot(invsc(v('Sep')))
         # # print Pd
     Dp = test_P(parser,w)
     Dp = invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
         # #print Dp
-    print 'Pd: ',Pd[:,0].dot(sc(v('a')).dot(sc(v('D')))[:,0])
-    print 'Dp: ',Dp[:,0].dot(sc(v('a')).dot(sc(v('D')))[:,0])
+    print 'Pd: ',Pd[:,0].dot(R))[:,0])
+    print 'Dp: ',Dp[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
 
 
     print Pd[:,0].dot(Dp[:,0])
