@@ -176,8 +176,8 @@ for i in range(2,3):
     Dp = test_P(parser,w)
     Dp = invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
         # #print Dp
-    print 'Pd: ',Pd[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
-    print 'Dp: ',Dp[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
+    #print 'Pd: ',Pd[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
+    #print 'Dp: ',Dp[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
 
 
     print Pd[:,0].dot(Dp[:,0])
