@@ -67,7 +67,7 @@ def cyk_dist(G,w):
 	w = w.replace(' ','')
 	P_dist = init(w)
 	#print P_dist
-	#P_dist = preterminals(P_dist, G, w)
+	P_dist = preterminals(P_dist, G, w)
 	#print P_dist
 	#P_dist = binary(P_dist, G, w)
 	return P_dist
@@ -105,14 +105,14 @@ def test_P(parser,w):
         Dp = Dp + s
 
     #first row
-    '''for i in range(len(parser.C)):
+    for i in range(len(parser.C)):
         #preterminal trees
         #print chart
         for A in parser.C[i,i]:
             tree = parser.get_tree(A)
             #print 'tree: ',tree
             td = sc(gen.get_random_vector("1")).dot(sc(gen.get_random_vector(str(i)))).dot(tree_dist(tree))
-            Dp = Dp + td'''
+            Dp = Dp + td
     #generic row
     '''for i in range(2,len(w)):
     	for j in range(0,len(w)-i+2):
