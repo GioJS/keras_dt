@@ -42,7 +42,7 @@ def preterminals(P,G,w):
         s = (sc(v('1')).dot(sc(v(str(i)))).dot(R).dot(invsc(v(str(i)))).dot(invsc(v('0'))).dot(P))
         #print s
         P = P + s
-    return (P,R)
+    return (P,R.dot(invsc(v(str(i)))).dot(invsc(v('0'))).dot(P))
 #binary rules
 def binary(P,G,w):
     for i in range(2,len(w)):
@@ -171,7 +171,7 @@ for i in range(2,3):
     #else:
     Pd,R = cyk_dist(G,w)
     Pd = invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
-    #Pd = Pd.dot(invsc(v('Sep')))
+    Pd = Pd.dot(invsc(v('Sep')))
         # # print Pd
     Dp = test_P(parser,w)
     Dp = invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
