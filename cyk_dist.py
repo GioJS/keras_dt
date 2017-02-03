@@ -172,7 +172,7 @@ for i in range(2,3):
     Pd = cyk_dist(G,w)
     Pd = invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
     from trees import *
-    Pd = Pd.dot(sc(v('D'))).dot(sc(v('Sep'))).dot(circulant(v('a')).T).dot(invsc(tree_dist(parser.get_tree(parser.C[0,0][0])))).dot(invsc(v('Sep')))
+    Pd = Pd.dot(sc(v('D'))).dot(sc(v('Sep')))
         # # print Pd
     Dp = test_P(parser,w)
     Dp = invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
