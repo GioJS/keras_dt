@@ -35,7 +35,7 @@ def preterminals(P,G,w):
     for rule in G.get_unit_productions():
         #print 'prima: ',sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head())))
         #print 'circ: ',circulant(v(rule.production())),'rule: ',rule.production(),'vect: ',v(rule.production())
-        R = R + (sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head()))).dot(circulant(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))).dot(invsc(v('Sep'))).dot(invsc(v(w[i])))
+        R = R + (sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head()))).dot(circulant(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head()))))
         #print R
     #print R
     for i in range(len(w)):
