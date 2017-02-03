@@ -170,11 +170,11 @@ for i in range(2,3):
             #print invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
     #else:
     Pd = cyk_dist(G,w)
-    Pd = invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
+    Pd = invsc(v("1")).dot(invsc(v("1"))).dot(Pd)
     Pd = Pd.dot(invsc(v('Sep')))
         # # print Pd
     Dp = test_P(parser,w)
-    Dp = invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
+    Dp = invsc(v("1")).dot(invsc(v("1"))).dot(Dp)
         # #print Dp
     #print 'Pd: ',Pd[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
     #print 'Dp: ',Dp[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
