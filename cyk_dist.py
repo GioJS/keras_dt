@@ -176,8 +176,8 @@ for i in range(2,3):
     Dp = test_P(parser,w)
     Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
         # #print Dp
-    print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('a')).dot(sc(gen.get_random_vector('D')))[:,0])
-    print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('a')).dot(sc(gen.get_random_vector('D')))[:,0])
+    print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('D')).dot(sc(gen.get_random_vector('a')))[:,0])
+    print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('D')).dot(sc(gen.get_random_vector('a')))[:,0])
 
 
     print Pd[:,0].dot(Dp[:,0])
