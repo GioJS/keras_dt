@@ -28,7 +28,7 @@ def init(w):
     return P
 #perterminal rules
 def preterminals(P,G,w):
-    R = K.zeros((dim,)).eval()
+    R = np.array([0])
     #R=sum r_i preterminal
     # for i in range(len(D)):
     #     for chart in D[i,i]:
@@ -97,7 +97,7 @@ def tree_dist(t):
 
 def test_P(parser,w):
     w = w.replace(' ','')
-    Dp = K.zeros((dim,)).eval()
+    Dp = np.array([0])
     #test
 
     for i in range(len(w)):
@@ -142,20 +142,20 @@ for i in range(2,3):
     P = parser.C
     print P
     #print parser.get_tree(P[2,2][0])
-    if K.backend() == 'tensorflow':
-        sess = K.tf.Session()
-        K.set_session(sess)
-        with sess.as_default():
-            '''a = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('0'))).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
-            a_0 = invsc(gen.get_random_vector('0')).dot(a)
-            a_1 = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
-            print a_0
-            print a_1
-            print np.linalg.norm(a_0-a_1,2)'''
+    #if K.backend() == 'tensorflow':
+        # sess = K.tf.Session()
+        # K.set_session(sess)
+        # with sess.as_default():
+        #     '''a = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('0'))).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
+        #     a_0 = invsc(gen.get_random_vector('0')).dot(a)
+        #     a_1 = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
+        #     print a_0
+        #     print a_1
+        #     print np.linalg.norm(a_0-a_1,2)'''
 	    
-    	    a = gen.get_random_vector('a')
-    	    A = circulant(a)
-    	    print A.dot(A.T)
+    	   #  a = gen.get_random_vector('a')
+    	   #  A = circulant(a)
+    	   #  print A.dot(A.T)
             #Pd = cyk_dist(G,w)
             #print sc(gen.get_random_vector("0")),sc(gen.get_random_vector("0"))
             #print np.linalg.norm(sc(gen.get_random_vector("Sep"))-invsc(gen.get_random_vector("Sep")),2)
@@ -168,16 +168,16 @@ for i in range(2,3):
             #print np.linalg.norm(Pd-Dp,2)
             #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
             #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
-    else:
-        Pd = cyk_dist(G,w)
-        Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
+    #else:
+    Pd = cyk_dist(G,w)
+    Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Pd)
         #Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
         # # print Pd
-        Dp = test_P(parser,w)
-        Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp).dot(sc(gen.get_random_vector('Sep')))
+    Dp = test_P(parser,w)
+    Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("0"))).dot(Dp).dot(sc(gen.get_random_vector('Sep')))
         # #print Dp
-        print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('a')).dot(sc(gen.get_random_vector('Sep')))[:,0])
-        print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('a')).dot(sc(gen.get_random_vector('Sep')))[:,0])
+    print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('a')).dot(sc(gen.get_random_vector('Sep')))[:,0])
+    print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('a')).dot(sc(gen.get_random_vector('Sep')))[:,0])
 
         #a = sc(gen.get_random_vector('0')).dot(sc(gen.get_random_vector('0'))).dot(sc(gen.get_random_vector('a'))).dot(sc(gen.get_random_vector('Sep')))
         #b = invsc(gen.get_random_vector('0')).dot(invsc(gen.get_random_vector('0'))).dot(a).dot(invsc(gen.get_random_vector('Sep')))
