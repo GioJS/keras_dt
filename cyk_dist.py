@@ -180,14 +180,14 @@ for i in range(2,3):
         # # print Pd
     Dp = test_P(parser,w)
     Dp = invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
-
+    print Dp[:,0].dot(Dw0[:,0])
     #print circulant(v('a')).dot(circulant(v('a')).T)
         # #print Dp
     #print 'Pd: ',Pd[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
     #print 'Dp: ',Dp[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
 
 
-    print Pd[:,0].dot(Dp[:,0])
+    #print Pd[:,0].dot(Dp[:,0])
 
         #a = sc(v('0')).dot(sc(v('0'))).dot(sc(v('a'))).dot(sc(v('Sep')))
         #b = invsc(v('0')).dot(invsc(v('0'))).dot(a).dot(invsc(v('Sep')))
