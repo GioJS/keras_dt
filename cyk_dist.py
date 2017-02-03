@@ -89,7 +89,7 @@ per codificare l'albero
 e unendoci i vettori dei due indici'''
 def tree_dist(t):
     if len(t) == 0:
-        return sc(v(t.label))
+        return circulant(v(t.label))
     s = sc(v(t.label))
     for child in t:
         s = s.dot(tree_dist(child))
