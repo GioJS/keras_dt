@@ -110,7 +110,7 @@ def test_P(parser,w):
         #print chart
         for A in parser.C[i,i]:
             tree = parser.get_tree(A)
-            #print 'tree: ',tree
+            print 'tree: ',tree
             td = sc(gen.get_random_vector("1")).dot(sc(gen.get_random_vector(str(i)))).dot(tree_dist(tree))
             Dp = Dp + td
     #generic row
@@ -170,11 +170,11 @@ for i in range(2,3):
             #print invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
     #else:
     Pd = cyk_dist(G,w)
-    Pd = invsc(gen.get_random_vector("2")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
+    Pd = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Pd)
     Pd = Pd.dot(invsc(gen.get_random_vector('Sep')))
         # # print Pd
     Dp = test_P(parser,w)
-    Dp = invsc(gen.get_random_vector("2")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
+    Dp = invsc(gen.get_random_vector("0")).dot(invsc(gen.get_random_vector("1"))).dot(Dp)
         # #print Dp
     #print 'Pd: ',Pd[:,0].dot(sc(gen.get_random_vector('D')).dot(sc(gen.get_random_vector('a')))[:,0])
     #print 'Dp: ',Dp[:,0].dot(sc(gen.get_random_vector('D')).dot(sc(gen.get_random_vector('a')))[:,0])
