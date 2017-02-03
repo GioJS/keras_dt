@@ -174,7 +174,7 @@ for i in range(2,3):
     #boh
     Pd = invsc(v('Sep')).dot(invsc(v('D'))).dot(Pd)
     Pd = Pd.dot(sc(v('D'))).dot(sc(v('Sep')))
-    Pd = Pd.dot(circulant(v('a')).T)
+    #Pd = Pd.dot(circulant(v('a')).T)
         # # print Pd
     Dp = test_P(parser,w)
     Dp = invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
