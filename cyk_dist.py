@@ -172,8 +172,8 @@ for i in range(2,3):
     Pd = cyk_dist(G,w)
     Pd = invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
     
-    Pd = invsc(v('Sep')).dot(invsc(v('D'))).dot(Pd)
-    Pd = Pd.dot(sc(v('D'))).dot(sc(v('Sep')))
+    #Pd = invsc(v('Sep')).dot(invsc(v('D'))).dot(Pd)
+    #Pd = Pd.dot(sc(v('D'))).dot(sc(v('Sep')))
 
         # # print Pd
     Dp = test_P(parser,w)
