@@ -38,10 +38,11 @@ def preterminals(P,G,w):
         R = R + (sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head()))).dot(circulant(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))).dot(invsc(v('Sep'))).dot(invsc(v(rule.production())))
         #print R
     #print R
+    s = np.array([0])
     for i in range(len(w)):
-        s = (sc(v('1')).dot(sc(v(str(i)))).dot(R).dot(invsc(v(str(i)))).dot(invsc(v('0'))).dot(P))
+        s = s + (sc(v('1')).dot(sc(v(str(i)))).dot(R).dot(invsc(v(str(i)))).dot(invsc(v('0'))).dot(P))
         #print s
-        P = P + s
+    P = P + s
     return P
 #binary rules
 def binary(P,G,w):
@@ -171,7 +172,7 @@ for i in range(2,3):
     #else:
     Pd = cyk_dist(G,w)
     Pd = invsc(v('0')).dot(invsc(v('1'))).dot(Pd)
-    #Pd = invsc(v("2")).dot(invsc(v("1"))).dot(Pd)
+    #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
     Pd = invsc(v('Sep')).dot(invsc(v('D'))).dot(Pd)
     Pd = Pd.dot(sc(v('D'))).dot(sc(v('Sep')))
@@ -188,8 +189,8 @@ for i in range(2,3):
     print Dp[:,0].dot(t_d[:,0])
     #print circulant(v('a')).dot(circulant(v('a')).T)
         # #print Dp
-    #print 'Pd: ',Pd[:,0].dot(sc(v('b'))[:,0])
-    #print 'Dp: ',Dp[:,0].dot(sc(v('b'))[:,0])
+    #print 'Pd: ',Pd[:,0].dot(sc(v('a'))[:,0])
+    #print 'Dp: ',Dp[:,0].dot(sc(v('a'))[:,0])
 
 
     #print Pd[:,0].dot(Dp[:,0])
