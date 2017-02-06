@@ -47,7 +47,7 @@ def preterminals(P,G,w):
 def binary(P,G,w):
     for i in range(2,len(w)):
     	for j in range(0,len(w)-i+2):
-    		Pa = K.zeros((dim,)).eval()
+    		Pa = np.array([0])
 
     		for rule in G.get_nonunit_productions():
     			RL = sc(v(rule[0])).dot(sc(v('Sep'))).dot(invsc(v(rule[1]))).dot(invsc(v(rule[0]))).dot(invsc(v(rule.head())))
