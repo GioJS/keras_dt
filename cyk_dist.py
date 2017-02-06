@@ -152,7 +152,7 @@ for i in range(2,3):
         #     print a_0
         #     print a_1
         #     print np.linalg.norm(a_0-a_1,2)'''
-	    
+
     	   #  a = v('a')
     	   #  A = circulant(a)
     	   #  print A.dot(A.T)
@@ -170,8 +170,9 @@ for i in range(2,3):
             #print invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
     #else:
     Pd = cyk_dist(G,w)
-    Pd = invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
-    #boh
+    Pd = invsc(v('0')).dot(invsc(v('1'))).dot(Pd)
+    #Pd = invsc(v("2")).dot(invsc(v("1"))).dot(Pd)
+
     Pd = invsc(v('Sep')).dot(invsc(v('D'))).dot(Pd)
     Pd = Pd.dot(sc(v('D'))).dot(sc(v('Sep')))
     Dw0 = sc(v('D')).dot(circulant(v('a')))
@@ -179,12 +180,13 @@ for i in range(2,3):
     #Pd = Pd.dot(circulant(v('a')).T)
         # # print Pd
     Dp = test_P(parser,w)
-    Dp = invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
+    Dp = invsc(v('0')).dot(invsc(v('1'))).dot(Dp)
+
     print Dp[:,0].dot(Dw0[:,0])
     #print circulant(v('a')).dot(circulant(v('a')).T)
         # #print Dp
-    #print 'Pd: ',Pd[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
-    #print 'Dp: ',Dp[:,0].dot(sc(v('D')).dot(sc(v('a')))[:,0])
+    #print 'Pd: ',Pd[:,0].dot(sc(v('b'))[:,0])
+    #print 'Dp: ',Dp[:,0].dot(sc(v('b'))[:,0])
 
 
     #print Pd[:,0].dot(Dp[:,0])
