@@ -47,12 +47,12 @@ def preterminals(P,G,w):
 #binary rules
 def binary(P,G,w):
     s = np.array([0])
-    for i in range(2,len(w)):
-    	for j in range(0,len(w)-i+2):
-            #print i,j
+    n = len(w)
+    for i in range(2,n):
+    	for j in range(0,n-i+1):
+            print i,j
             #if i==j:
             #    continue
-            #print 'pass'
             for rule in G.get_nonunit_productions():
                 #print rule
                 Pa = np.array([0])
@@ -61,11 +61,9 @@ def binary(P,G,w):
                 RR = sc(v(rule.head())).dot(sc(v(rule[0]))).dot(sc(v(rule[1]))).dot(Phi).dot(invsc(v('Sep'))).dot(invsc(v(rule[1])))
                 RR_ = sc(v(rule[1])).dot(sc(v('Sep')))
                 #print RL,RL_,RR,RR_
-                for k in range(0,i+2):
-                	#print k
+                for k in range(0,i+1):
+                	print k
                 	Pa = Pa + RL_.dot(invsc(v(str(j)))).dot(invsc(v(str(k)))).dot(P).dot(RL).dot(RR).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(RR_)
-                	#print Pa
-                #print i,j
                 s = s + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(rule.head()))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
     P = P + s
     return P
