@@ -125,11 +125,11 @@ def test_P(parser,w):
     		if i==j:
     			continue
     		for A in parser.C[j,i]:
-    			print A
-    			print i,j
+    			#print A
+    			#print i,j
     			tree = parser.get_tree(A)
     			#print 'tree: ',tree
-
+                #P is 3x3 Dp is 4x3
                 td = sc(v(str(i+1-j))).dot(sc(v(str(j)))).dot(tree_dist(tree))
                 #print td
                 Dp = Dp + td
@@ -177,24 +177,24 @@ for i in range(2,3):
             #print invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
             #print invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
     #else:
-    '''Pd = cyk_dist(G,w)
-    Pd = invsc(v('0')).dot(invsc(v('3'))).dot(Pd)
+    Pd = cyk_dist(G,w)
+    Pd = invsc(v('1')).dot(invsc(v('2'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
     Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
     Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
-    #Dw0 = sc(v('D')).dot(circulant(v('a')))'''
+    #Dw0 = sc(v('D')).dot(circulant(v('a')))
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
-    #t_d = tree_dist(Tree('S',[Tree('D',[Tree('a',[])]),Tree('E',[Tree('b',[])])]))
-    t_d = tree_dist(Tree('S',[Tree('D',[Tree('a',[])]),Tree('S',[Tree('D',[Tree('a',[])]),Tree('E',[Tree('b',[])])])]))
+    t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
+    #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
-    #print Pd[:,0].dot(t_d[:,0])
+    print Pd[:,0].dot(t_d[:,0])
     #Pd = Pd.dot(circulant(v('a')).T)
         # # print Pd
     Dp = test_P(parser,w)
 
-    Dp = invsc(v('0')).dot(invsc(v('3'))).dot(Dp)
+    Dp = invsc(v('1')).dot(invsc(v('2'))).dot(Dp)
 
     print Dp[:,0].dot(t_d[:,0])
     #print circulant(v('a')).dot(circulant(v('a')).T)
