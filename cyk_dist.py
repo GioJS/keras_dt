@@ -48,9 +48,9 @@ def preterminals(P,G,w):
 def binary(P,G,w):
     s = np.array([0])
     n = len(w)
-    for i in range(2,n):
+    for i in range(2,n+1):
     	for j in range(0,n-i+1):
-            print i,j
+            #print i,j
             #if i==j:
             #    continue
             for rule in G.get_nonunit_productions():
@@ -61,8 +61,8 @@ def binary(P,G,w):
                 RR = sc(v(rule.head())).dot(sc(v(rule[0]))).dot(sc(v(rule[1]))).dot(Phi).dot(invsc(v('Sep'))).dot(invsc(v(rule[1])))
                 RR_ = sc(v(rule[1])).dot(sc(v('Sep')))
                 #print RL,RL_,RR,RR_
-                for k in range(0,i+1):
-                	print k
+                for k in range(0,i):
+                	#print k
                 	Pa = Pa + RL_.dot(invsc(v(str(j)))).dot(invsc(v(str(k)))).dot(P).dot(RL).dot(RR).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(RR_)
                 s = s + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(rule.head()))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
     P = P + s
@@ -125,11 +125,12 @@ def test_P(parser,w):
     		if i==j:
     			continue
     		for A in parser.C[j,i]:
-    			#print A
-    			#print j,i
+    			print A
+    			print i,j
     			tree = parser.get_tree(A)
     			#print 'tree: ',tree
-                td = sc(v(str(i))).dot(sc(v(str(j)))).dot(tree_dist(tree))
+
+                td = sc(v(str(i+1-j))).dot(sc(v(str(j)))).dot(tree_dist(tree))
                 #print td
                 Dp = Dp + td
     return Dp
@@ -176,22 +177,24 @@ for i in range(2,3):
             #print invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
             #print invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
     #else:
-    Pd = cyk_dist(G,w)
-    Pd = invsc(v('1')).dot(invsc(v('2'))).dot(Pd)
+    '''Pd = cyk_dist(G,w)
+    Pd = invsc(v('0')).dot(invsc(v('3'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
     Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
     Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
-    #Dw0 = sc(v('D')).dot(circulant(v('a')))
+    #Dw0 = sc(v('D')).dot(circulant(v('a')))'''
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
-    t_d = tree_dist(Tree('S',[Tree('D',[Tree('a',[])]),Tree('E',[Tree('b',[])])]))
+    #t_d = tree_dist(Tree('S',[Tree('D',[Tree('a',[])]),Tree('E',[Tree('b',[])])]))
+    t_d = tree_dist(Tree('S',[Tree('D',[Tree('a',[])]),Tree('S',[Tree('D',[Tree('a',[])]),Tree('E',[Tree('b',[])])])]))
     #print t_d[:,0].dot(Dw0[:,0])
-    print Pd[:,0].dot(t_d[:,0])
+    #print Pd[:,0].dot(t_d[:,0])
     #Pd = Pd.dot(circulant(v('a')).T)
         # # print Pd
     Dp = test_P(parser,w)
-    Dp = invsc(v('1')).dot(invsc(v('2'))).dot(Dp)
+
+    Dp = invsc(v('0')).dot(invsc(v('3'))).dot(Dp)
 
     print Dp[:,0].dot(t_d[:,0])
     #print circulant(v('a')).dot(circulant(v('a')).T)
