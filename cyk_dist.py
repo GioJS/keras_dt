@@ -178,7 +178,7 @@ for i in range(2,3):
             #print invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
     #else:
     Pd = cyk_dist(G,w)
-    Pd = invsc(v('1')).dot(invsc(v('2'))).dot(Pd)
+    Pd = invsc(v('0')).dot(invsc(v('3'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
     Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
@@ -194,7 +194,7 @@ for i in range(2,3):
         # # print Pd
     Dp = test_P(parser,w)
 
-    Dp = invsc(v('1')).dot(invsc(v('2'))).dot(Dp)
+    Dp = invsc(v('0')).dot(invsc(v('3'))).dot(Dp)
 
     print Dp[:,0].dot(t_d[:,0])
     #print circulant(v('a')).dot(circulant(v('a')).T)
