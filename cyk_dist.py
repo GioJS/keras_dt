@@ -61,26 +61,37 @@ def preterminals(P,G,w):
     P = P + s
     return P'''
 
-def binary(P,G,w):
-    n = len(w)
+def compute_C(G):
     C = np.array([0])
     for A in G.groups:
         C = C + sc(v(A)).dot(sc(v('Sep')))
+    return C
+def compute_R(G, rules_A):
+    Ra = np.zeros((dim,dim))
+    for i in rules_A:
+        rule = G[i]
+        if not rule.is_preterminal():
+            #print rule
+            Ra = Ra + sc(v(rule[0])).dot(sc(v('Sep'))).dot(Phi).dot(invsc(v('Sep'))).dot(invsc(v(rule[1])))
+    return Ra
+
+def binary(P,G,w):
+    n = len(w)
+    C = compute_C(G)
     #s = np.array([0])
+    R = {}
+    for A in G.groups:
+        rules_A = G.get_rules(A)
+        R[A] = compute_R(G, rules_A)
     for i in range(2,n+1):
         for j in range(1,n-i+2):
-                for A in G.groups:
-                    rules_A = G.get_rules(A)
-                    Ra = np.zeros((dim,dim))
-                    for i in rules_A:
-                        rule = G[i]
-                        if not rule.is_preterminal():
-                            Ra = Ra + sc(v(rule[0])).dot(sc(v('Sep'))).dot(Phi).dot(invsc(v('Sep'))).dot(invsc(v(rule[1])))
-                    Pa = np.array([0])
-                    for k in range(1,i+2):
-                        Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
-                    P = P + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
-                #P = P + s
+            for A in G.groups:
+                Ra = R[A]
+                Pa = np.array([0])
+                for k in range(1,i+2):
+                    Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
+                P = P + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
+            #P = P + s
     return P
 #transform P to P_dist with algo5,6
 def cyk_dist(G,w):
