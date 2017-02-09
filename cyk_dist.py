@@ -80,6 +80,7 @@ def binary(P,G,w):
     C = compute_C(G)
     #s = np.array([0])
     R = {}
+    # G.groups = non-terminals
     for A in G.groups:
         rules_A = G.get_rules(A)
         R[A] = compute_R(G, rules_A)
@@ -90,6 +91,7 @@ def binary(P,G,w):
                 Pa = np.array([0])
                 for k in range(1,i+2):
                     Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
+                #print (Pa==0).all()
                 P = P + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
     #P = P + s
     return P
@@ -195,8 +197,11 @@ for i in range(2,3):
 
     Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(invsc(v('Sep'))).dot(invsc(v('S'))).dot(Pd)
     Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
+    '''C = compute_C(G)
+    print C.dot(C.T)
+    print C.T.dot(C)'''
     #Pd = C.T.dot(Pd).dot(C)
-    #Pd = sc(v('S')).dot(Pd) test
+    Pd = sc(v('S')).dot(Pd) #test
     #Dw0 = sc(v('D')).dot(circulant(v('a')))
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
