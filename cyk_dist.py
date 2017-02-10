@@ -72,7 +72,7 @@ def compute_R(G, rules_A):
         rule = G[i]
         if not rule.is_preterminal():
             #print rule
-            Ra = Ra + sc(v(rule[0])).dot(sc(v('Sep'))).dot(Phi).dot(invsc(v('Sep'))).dot(invsc(v(rule[1])))
+            Ra = Ra + sc(v(rule[0])).dot(sc(v('Sep'))).dot(Phi).dot(sc(v('Sep'))).dot(sc(v(rule[1])))
     return Ra
 
 def binary(P,G,w):
