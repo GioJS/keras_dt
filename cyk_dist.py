@@ -87,7 +87,7 @@ def cyk_dist(G,w):
 #trasformazione di P in distributed with trees
 def tree_dist(t):
     if len(t) == 0:
-        return circulant(v(t.label))
+        return sc(v(t.label))
     s = sc(v(t.label))
     for child in t:
         s = s.dot(tree_dist(child))
