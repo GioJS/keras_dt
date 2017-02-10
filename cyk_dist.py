@@ -78,7 +78,7 @@ def compute_R(G, rules_A):
 def binary(P,G,w):
     n = len(w)
     C = compute_C(G)
-    #s = np.array([0])
+    s = np.array([0])
     R = {}
     # G.groups = non-terminals
     for A in G.groups:
@@ -92,8 +92,8 @@ def binary(P,G,w):
                 for k in range(1,i+2):
                     Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
                 #print (Pa==0).all()
-                P = P + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
-    #P = P + s
+                s = s + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
+        P = P + s
     return P
 #transform P to P_dist with algo5,6
 def cyk_dist(G,w):
@@ -192,7 +192,7 @@ for i in range(2,3):
 
 
     Pd = cyk_dist(G,w)
-    Pd = invsc(v('1')).dot(invsc(v('3'))).dot(Pd)
+    Pd = invsc(v('2')).dot(invsc(v('2'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
     Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
@@ -205,8 +205,8 @@ for i in range(2,3):
     #Dw0 = sc(v('D')).dot(circulant(v('a')))
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
-    #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
-    t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
+    t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
+    #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
     #print Pd[:,0].dot(t_d[:,0])
     print Pd.dot(t_d)
