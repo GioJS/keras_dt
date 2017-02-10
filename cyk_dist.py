@@ -4,7 +4,7 @@ from vectors import *
 #from keras_dt import *
 from convolutions import *
 
-dim = 1024
+dim = 1024*2
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
@@ -185,16 +185,16 @@ for i in range(2,3):
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
     from parserNLP.Rule import *
-    #rule = Rule('D','a',0)
-    term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
-    print Pd.dot(term.T)
-    #print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
-    #t_d = sc(v("1")).dot(sc(v("1"))).dot(sc(v('D'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(D a)'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))
+    rule = Rule('D','a',0)
+    #term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
+    #print Pd.dot(term.T)
+    print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
+    t_d = sc(v("1")).dot(sc(v("1"))).dot(sc(v('D'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(D a)'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
     #print Pd[:,0].dot(t_d[:,0])
-    #print Pd.dot(t_d.T)
+    print Pd.dot(t_d.T)
     #Pd = Pd.dot(circulant(v('a')).T)
         # # print Pd
     #Dp = test_P(parser,w)
