@@ -75,7 +75,9 @@ def binary(P,G,w):
                     Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
                 print 'Pa:\n',Pa
                 #print (Pa==0).all()
-                P = P + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
+                s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
+                print 's: \n',s
+                P = P + s
                 print 'P new: \n',P
     #P = P + s
     return P
