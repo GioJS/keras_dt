@@ -195,7 +195,7 @@ for i in range(2,3):
     Pd = invsc(v('2')).dot(invsc(v('2'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
-    Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(invsc(v('Sep'))).dot(invsc(v('S'))).dot(Pd)
+    Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
     Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
     '''C = compute_C(G)
     print C.dot(C.T)
@@ -208,7 +208,8 @@ for i in range(2,3):
     t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
-    print Pd[:,0].dot(t_d[:,0])
+    #print Pd[:,0].dot(t_d[:,0])
+    Pd.dot(t_d)
     #Pd = Pd.dot(circulant(v('a')).T)
         # # print Pd
     Dp = test_P(parser,w)
