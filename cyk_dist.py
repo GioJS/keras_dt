@@ -90,7 +90,7 @@ def binary(P,G,w):
                 Ra = R[A]
                 Pa = np.array([0])
                 for k in range(1,i+2):
-                    Pa = Pa + (invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
+                    Pa = Pa + invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
                 #print (Pa==0).all()
                 P = P + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
     #P = P + s
