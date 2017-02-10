@@ -42,7 +42,7 @@ def preterminals(P,G,w):
 def compute_C(G):
     C = np.array([0])
     for A in G.groups:
-        C = C + sc(v(A)).dot(sc(v('Sep')))
+        C = C + invsc(v(A)).dot(invsc(v('Sep')))
     return C
 def compute_R(G, rules_A):
     Ra = np.zeros((dim,dim))
@@ -186,7 +186,7 @@ for i in range(2,3):
     t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
-    print Pd[:,0].dot(t_d[:,0])
+    #print Pd[:,0].dot(t_d[:,0])
     print Pd.dot(t_d)
     #Pd = Pd.dot(circulant(v('a')).T)
         # # print Pd
