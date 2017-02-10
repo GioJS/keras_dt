@@ -197,15 +197,15 @@ for i in range(2,3):
 
     Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
     Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
-    '''C = compute_C(G)
-    print C.dot(C.T)
+    C = compute_C(G)
+    '''print C.dot(C.T)
     print C.T.dot(C)'''
     #Pd = C.T.dot(Pd).dot(C)
     #Pd = sc(v('S')).dot(Pd) #test
     #Dw0 = sc(v('D')).dot(circulant(v('a')))
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
-    t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
+    t_d = C.dot(tree_dist(Tree.from_penn('(S (D a) (E b))'))).dot(C.T)
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
     print Pd[:,0].dot(t_d[:,0])
