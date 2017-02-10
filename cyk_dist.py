@@ -59,20 +59,24 @@ def binary(P,G,w):
     C = compute_C(G)
     #s = np.array([0])
     R = {}
-    # G.groups = non-terminals
+    print 'preterminal: \n',P
+    # G.groups =\ non-terminals
     for A in G.groups:
         rules_A = G.get_rules(A)
         R[A] = compute_R(G, rules_A)
     for i in range(2,n):
         for j in range(1,n-i+2):
-            print i,j
+            #print i,j
             for A in G.groups:
                 Ra = R[A]
+                print 'A: ',A,'Ra: \n',Ra
                 Pa = np.array([0])
                 for k in range(1,i):
                     Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
+                print 'Pa:\n',Pa
                 #print (Pa==0).all()
                 P = P + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
+                print 'P new: \n',P
     #P = P + s
     return P
 #transform P to P_dist with algo5,6
@@ -200,7 +204,7 @@ for i in range(2,3):
     #print Pd.dot(term.T)
     #print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
     #t_d = sc(v("1")).dot(sc(v("1"))).dot(sc(v('D'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(D a)'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))
-    print Pd[:,0].dot(el[:,0])
+    print Pd.dot(el.T)
     #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
