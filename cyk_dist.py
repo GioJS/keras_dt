@@ -30,6 +30,7 @@ def preterminals(P,G,w):
     R = np.array([0])
 
     for rule in G.get_unit_productions():
+        print rule
         R = R + (sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head()))).dot(sc(v('Sep'))).dot(sc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))).dot(invsc(v('Sep'))).dot(invsc(v(rule.production())))
 
     s = np.array([0])
