@@ -114,14 +114,14 @@ def test_P(parser,w):
             Dp = Dp + td
     #generic row
     for i in range(2,len(w)):
-    	for j in range(0,len(w)-i+2):
-    		if i==j:
-    			continue
-    		for A in parser.C[j,i]:
-    			#print A
-    			#print i,j
-    			tree = parser.get_tree(A)
-    			#print 'tree: ',tree
+        for j in range(0,len(w)-i+2):
+            if i==j:
+                continue
+            for A in parser.C[j,i]:
+                #print A
+                #print i,j
+                tree = parser.get_tree(A)
+                #print 'tree: ',tree
                 #P is 3x3 Dp is 4x3
                 #print i+1-j, j+1, A
                 td = sc(v(str(i+1-j))).dot(sc(v(str(j+1)))).dot(tree_dist(tree))
