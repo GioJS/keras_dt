@@ -201,7 +201,7 @@ for i in range(2,3):
     print C.dot(C.T)
     print C.T.dot(C)'''
     #Pd = C.T.dot(Pd).dot(C)
-    Pd = sc(v('S')).dot(Pd) #test
+    #Pd = sc(v('S')).dot(Pd) #test
     #Dw0 = sc(v('D')).dot(circulant(v('a')))
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
