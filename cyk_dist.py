@@ -205,7 +205,7 @@ for i in range(2,3):
     #Dw0 = sc(v('D')).dot(circulant(v('a')))
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
-    t_d = C.dot(tree_dist(Tree.from_penn('(S (D a) (E b))'))).dot(C.T)
+    t_d = C.T.dot(tree_dist(Tree.from_penn('(S (D a) (E b))'))).dot(C)
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
     print Pd[:,0].dot(t_d[:,0])
