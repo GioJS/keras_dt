@@ -81,7 +81,7 @@ def cyk_dist(G,w):
 	#print P_dist
 	P_dist = preterminals(P_dist, G, w)
 	#print P_dist
-	#P_dist = binary(P_dist, G, w)
+	P_dist = binary(P_dist, G, w)
 	return P_dist
 
 
@@ -185,10 +185,10 @@ for i in range(2,3):
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
     from parserNLP.Rule import *
-    rule = Rule('D','a',0)
+    #rule = Rule('D','a',0)
     #term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
     #print Pd.dot(term.T)
-    print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
+    #print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
     t_d = sc(v("1")).dot(sc(v("1"))).dot(sc(v('D'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(D a)'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
