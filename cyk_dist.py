@@ -88,9 +88,9 @@ def cyk_dist(G,w):
 def tree_dist(t):
     if len(t) == 0:
         return sc(v(t.label))
-    s = sc(v(t.label))
+    s = sc(v(t.label)).dot(sc(v('Sep')))
     for child in t:
-        s = s.dot(sc(v('Sep'))).dot(tree_dist(child))
+        s = s.dot(tree_dist(child))
     return s
 
 def test_P(parser,w):
