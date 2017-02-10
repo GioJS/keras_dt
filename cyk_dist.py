@@ -184,6 +184,7 @@ for i in range(2,3):
     #Dw0 = sc(v('D')).dot(circulant(v('a')))
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
+    from parserNLP.Rule import *
     rule = Rule('D','a',0)
 
     print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
