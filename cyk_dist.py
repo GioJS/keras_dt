@@ -171,7 +171,8 @@ for i in range(2,3):
 
 
     Pd = cyk_dist(G,w)
-    Pd = Pd + circulant(v('Prova'))
+    for i in range(10):
+        Pd = Pd + circulant(v('Prova'+i))
     #Pd = invsc(v('1')).dot(invsc(v('1'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
