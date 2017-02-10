@@ -208,8 +208,8 @@ for i in range(2,3):
     t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
-    #print Pd[:,0].dot(t_d[:,0])
-    print Pd.T.dot(t_d)
+    print Pd[:,0].dot(t_d[:,0])
+    print Pd.dot(t_d)
     #Pd = Pd.dot(circulant(v('a')).T)
         # # print Pd
     Dp = test_P(parser,w)
