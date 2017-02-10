@@ -184,7 +184,9 @@ for i in range(2,3):
     #Dw0 = sc(v('D')).dot(circulant(v('a')))
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
-    print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v('a'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))
+    rule = Rule('D','a',0)
+
+    print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
     t_d = sc(v("1")).dot(sc(v("1"))).dot(sc(v('D'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(D a)'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
