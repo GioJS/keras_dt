@@ -34,8 +34,8 @@ def preterminals(P,G,w):
 
     s = np.array([0])
     for i in range(len(w)):
-        P = P + (sc(v('1')).dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(invsc(v('0'))).dot(P))
-    #P = P + s
+        s = s + (sc(v('1')).dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(invsc(v('0'))).dot(P))
+    P = P + s
     return P
 
 
