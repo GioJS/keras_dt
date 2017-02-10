@@ -196,7 +196,7 @@ for i in range(2,3):
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
     #Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
-    Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
+    #Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
     '''C = compute_C(G)
     print C.dot(C.T)
     print C.T.dot(C)'''
