@@ -55,7 +55,7 @@ def compute_R(G, rules_A):
     return Ra
 
 def binary(P,G,w):
-    n = len(w)
+    n = 2
     C = compute_C(G)
     #s = np.array([0])
     R = {}
