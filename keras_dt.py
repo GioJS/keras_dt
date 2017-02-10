@@ -11,7 +11,7 @@ class DT:
 	def __init__(self,seed = 0,dim = 1024,lambd=1,lexicalized=False,mu = 0,va = 1,operator = circular_convolution):
 		self.dim = dim
 		self.lambd = lambd
-		self.vector_generator=Vector_generator(seed,dim=dim,mu=mu,va=va)
+		self.vector_generator=Vector_generator(seed,dim=dim)
 		self.lexicalized = lexicalized
 		self.operator = operator
 
