@@ -55,7 +55,7 @@ def compute_R(G, rules_A):
     return Ra
 
 def binary(P,G,w):
-    n = 2
+    n = len(w)
     C = compute_C(G)
     #s = np.array([0])
     R = {}
@@ -63,7 +63,7 @@ def binary(P,G,w):
     for A in G.groups:
         rules_A = G.get_rules(A)
         R[A] = compute_R(G, rules_A)
-    for i in range(2,n+1):
+    for i in range(2,n):
         for j in range(1,n-i+2):
             for A in G.groups:
                 Ra = R[A]
