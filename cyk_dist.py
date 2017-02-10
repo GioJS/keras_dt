@@ -171,6 +171,7 @@ for i in range(2,3):
 
 
     Pd = cyk_dist(G,w)
+    x = circulant(v('sdfg'))
     '''for i in range(100):
         Pd = Pd + circulant(v('Prova'+str(i)))'''
     #Pd = invsc(v('1')).dot(invsc(v('1'))).dot(Pd)
@@ -196,7 +197,8 @@ for i in range(2,3):
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
     #print Pd[:,0].dot(t_d[:,0])
-    print Pd.dot(t_d.T)
+    print Pd.dot(t_d.T),'\n\n'
+    print Pd.dot(x)
     #Pd = Pd.dot(circulant(v('a')).T)
         # # print Pd
     #Dp = test_P(parser,w)
