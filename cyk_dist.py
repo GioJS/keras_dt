@@ -87,8 +87,8 @@ def cyk_dist(G,w):
 #trasformazione di P in distributed with trees
 def tree_dist(t):
     if len(t) == 0:
-        return circulant(v(t.label))
-    s = sc(v(t.label))
+        return sc(v(t.label))
+    s = sc(v(t.label)).dot(sc(v('Sep')))
     for child in t:
         s = s.dot(tree_dist(child))
     return s
@@ -173,13 +173,13 @@ for i in range(2,3):
     Pd = invsc(v('2')).dot(invsc(v('2'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
-    Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
+    Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(invsc(v('Sep')).dot(invsc(v('S')))).dot(Pd)
     Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
     '''C = compute_C(G)
     print C.dot(C.T)
     print C.T.dot(C)'''
     #Pd = C.T.dot(Pd).dot(C)
-    #Pd = sc(v('S')).dot(Pd) #test
+    Pd = sc(v('S')).dot(Pd) #test
     #Dw0 = sc(v('D')).dot(circulant(v('a')))
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
