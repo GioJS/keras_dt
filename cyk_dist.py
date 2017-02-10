@@ -30,36 +30,14 @@ def preterminals(P,G,w):
     R = np.array([0])
 
     for rule in G.get_unit_productions():
-        R = R + (sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head()))).dot(circulant(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))).dot(invsc(v('Sep'))).dot(invsc(v(rule.production())))
+        R = R + (sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head()))).dot(sc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))).dot(invsc(v('Sep'))).dot(invsc(v(rule.production())))
 
     s = np.array([0])
     for i in range(len(w)):
         s = s + (sc(v('1')).dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(invsc(v('0'))).dot(P))
     P = P + s
     return P
-#binary rules
-'''def binary(P,G,w):
-    s = np.array([0])
-    n = len(w)
-    for i in range(2,n+1):
-    	for j in range(1,n-i+2):
-            print i,j
-            #if i==j:
-            #    continue
-            for rule in G.get_nonunit_productions():
-                #print rule
-                Pa = np.array([0])
-                RL = sc(v(rule[0])).dot(sc(v('Sep'))).dot(invsc(v(rule[1]))).dot(invsc(v(rule[0]))).dot(invsc(v(rule.head())))
-                RL_ = sc(v(rule.head())).dot(Phi).dot(invsc(v('Sep'))).dot(invsc(v(rule[0])))
-                RR = sc(v(rule.head())).dot(sc(v(rule[0]))).dot(sc(v(rule[1]))).dot(Phi).dot(invsc(v('Sep'))).dot(invsc(v(rule[1])))
-                RR_ = sc(v(rule[1])).dot(sc(v('Sep')))
-                #print RL,RL_,RR,RR_
-                for k in range(1,i):
-                	print k
-                	Pa = Pa + RL_.dot(invsc(v(str(j)))).dot(invsc(v(str(k)))).dot(P).dot(RL).dot(RR).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(RR_)
-                s = s + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(rule.head()))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
-    P = P + s
-    return P'''
+
 
 def compute_C(G):
     C = np.array([0])
