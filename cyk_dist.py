@@ -170,11 +170,11 @@ for i in range(2,3):
 
 
     Pd = cyk_dist(G,w)
-    Pd = invsc(v('2')).dot(invsc(v('2'))).dot(Pd)
+    Pd = invsc(v('1')).dot(invsc(v('1'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
-    Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
-    Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
+    #Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
+    #Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
     '''C = compute_C(G)
     print C.dot(C.T)
     print C.T.dot(C)'''
@@ -183,7 +183,8 @@ for i in range(2,3):
     #Dw0 = sc(v('D')).dot(circulant(v('a')))
     from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
-    t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
+    t_d = sc(v("1")).dot(sc(v("1"))).dot(sc(v('D'))).dot(sc(v('Sep'))).tree_dist(Tree.from_penn('(D a)')).dot(invsc(v('Sep'))).dot(invsc(v('D')))
+    #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
     #print Pd[:,0].dot(t_d[:,0])
@@ -192,7 +193,7 @@ for i in range(2,3):
         # # print Pd
     Dp = test_P(parser,w)
 
-    Dp = invsc(v('2')).dot(invsc(v('2'))).dot(Dp)
+    Dp = invsc(v('1')).dot(invsc(v('1'))).dot(Dp)
 
     print Dp[:,0].dot(t_d[:,0])
     #print circulant(v('a')).dot(circulant(v('a')).T)
