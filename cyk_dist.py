@@ -81,7 +81,7 @@ def cyk_dist(G,w):
 	#print P_dist
 	P_dist = preterminals(P_dist, G, w)
 	#print P_dist
-	#P_dist = binary(P_dist, G, w)
+	P_dist = binary(P_dist, G, w)
 	return P_dist
 
 
@@ -171,8 +171,8 @@ for i in range(2,3):
 
 
     Pd = cyk_dist(G,w)
-    for i in range(100):
-        Pd = Pd + circulant(v('Prova'+str(i)))
+    '''for i in range(100):
+        Pd = Pd + circulant(v('Prova'+str(i)))'''
     #Pd = invsc(v('1')).dot(invsc(v('1'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 

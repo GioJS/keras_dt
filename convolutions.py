@@ -1,4 +1,4 @@
-from keras import backend as K
+#from keras import backend as K
 import numpy as np
 from vectors import *
 from scipy.linalg import circulant
