@@ -34,8 +34,8 @@ def preterminals(P,G,w):
 
     s = np.array([0])
     for i in range(len(w)):
-        s = s + (sc(v('1')).dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(invsc(v('0'))).dot(P))
-    P = P + s
+        P = P + (sc(v('1')).dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(invsc(v('0'))).dot(P))
+    #P = P + s
     return P
 
 
@@ -87,7 +87,7 @@ def cyk_dist(G,w):
 #trasformazione di P in distributed with trees
 def tree_dist(t):
     if len(t) == 0:
-        return sc(v(t.label))
+        return circulant(v(t.label))
     s = sc(v(t.label))
     for child in t:
         s = s.dot(tree_dist(child))
