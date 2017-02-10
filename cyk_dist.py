@@ -93,7 +93,7 @@ def binary(P,G,w):
                     Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
                 #print (Pa==0).all()
                 s = s + sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
-        P = P + s
+            P = P + s
     return P
 #transform P to P_dist with algo5,6
 def cyk_dist(G,w):
