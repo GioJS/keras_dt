@@ -65,7 +65,7 @@ def binary(P,G,w):
         rules_A = G.get_rules(A)
         R[A] = compute_R(G, rules_A)
     for i in range(2,n):
-        for j in range(1,n-i+2):
+        for j in range(2,n-i+2):
             print i,j
             for A in G.groups:
                 Ra = R[A]
