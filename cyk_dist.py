@@ -21,7 +21,7 @@ def invsc(v):
 #initialization of level 0
 def init(w):
     P = np.array([0])
-    for i in range(1,len(w)):
+    for i in range(len(w)):
         s = (sc(v('0')).dot(sc(v(str(i+1)))).dot(sc(v(w[i]))).dot(sc(v('Sep'))))
         P = P + s
     return P
@@ -34,7 +34,7 @@ def preterminals(P,G,w):
         R = R + (sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head()))).dot(sc(v('Sep'))).dot(sc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))).dot(invsc(v('Sep'))).dot(invsc(v(rule.production())))
 
     s = np.array([0])
-    for i in range(1,len(w)):
+    for i in range(len(w)):
         s = s + (sc(v('1')).dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(invsc(v('0'))).dot(P))
     P = P + s
     return P
@@ -142,7 +142,7 @@ def test_P(parser,w):
 G = Grammar('S')
 G.add_rules_from_file('gramm_l')
 parser = CYK(G)
-for i in range(2,3):
+for i in range(1,2):
     w = ('a '*i)+'b'
     #w = 'a'
     print w
