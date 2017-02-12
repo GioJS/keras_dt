@@ -64,7 +64,7 @@ def binary(P,G,w):
     for A in G.groups:
         rules_A = G.get_rules(A)
         R[A] = compute_R(G, rules_A)
-    for i in range(2,n+1):
+    for i in range(2,n):
         for j in range(1,n-i+2):
             #print i,j
             for A in G.groups:
@@ -72,6 +72,8 @@ def binary(P,G,w):
                 print 'A: ',A,'Ra: \n',Ra
                 Pa = np.array([0])
                 for k in range(1,i):
+                    print "j,k:",j,k
+                    print "j+k,i-k",j+k,i-k
                     Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
                 print 'Pa:\n',Pa
                 #print (Pa==0).all()
