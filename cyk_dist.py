@@ -33,11 +33,11 @@ def preterminals(P,G,w):
         #print rule
         R = R + (sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head()))).dot(sc(v('Sep'))).dot(sc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))).dot(invsc(v('Sep'))).dot(invsc(v(rule.production())))
 
-    s = np.array([0])
+    s = []
     for i in range(len(w)):
-        print i+1
-        s = s + (sc(v('1')).dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(invsc(v('0'))).dot(P))
-    P = P + s
+        s.append(sc(v('1')).dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(invsc(v('0'))).dot(P))
+    for x in s:
+        P = P + x
     return P
 
 
