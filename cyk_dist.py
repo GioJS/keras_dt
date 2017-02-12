@@ -64,7 +64,7 @@ def binary(P,G,w):
     for A in G.groups:
         rules_A = G.get_rules(A)
         R[A] = compute_R(G, rules_A)
-    for i in range(2,n):
+    for i in range(2,n+1):
         for j in range(1,n-i+2):
             print i,j
             for A in G.groups:
@@ -142,7 +142,7 @@ def test_P(parser,w):
 G = Grammar('S')
 G.add_rules_from_file('gramm_l')
 parser = CYK(G)
-for i in range(2,3):
+for i in range(1,2):
     w = ('a '*i)+'b'
     #w = 'a'
     print w
