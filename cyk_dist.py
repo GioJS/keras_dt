@@ -142,7 +142,7 @@ def test_P(parser,w):
 G = Grammar('S')
 G.add_rules_from_file('gramm_l')
 parser = CYK(G)
-for i in range(1,2):
+for i in range(2,3):
     w = ('a '*i)+'b'
     #w = 'a'
     print w
@@ -198,11 +198,11 @@ for i in range(1,2):
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
     from parserNLP.Rule import *
     #tentando di costruire a mano l'elemento secondo binary
-    #C = compute_C(G)
-    #rules_A = G.get_rules('S')
+    C = compute_C(G)
+    rules_A = G.get_rules('S')
     Ra = compute_R(G, rules_A)
     Pa = C.dot(sc(v('D').dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(D a)'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))).dot(Ra).dot(sc(v('E')).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(E b)'))).dot(invsc(v('Sep'))).dot(invsc(v('E'))))).dot(C.T)
-    el = sc(v(str(2))).dot(sc(v(str(1)))).dot(sc(v('S'))).dot(sc(v('Sep'))).dot(sc(v('S'))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v('S')))
+    el = sc(v(str(2))).dot(sc(v(str(2)))).dot(sc(v('S'))).dot(sc(v('Sep'))).dot(sc(v('S'))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v('S')))
     #rule = Rule('D','a',0)
     #term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
     #print Pd.dot(term.T)
