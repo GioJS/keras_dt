@@ -66,6 +66,8 @@ def binary(P,G,w):
         R[A] = compute_R(G, rules_A)
     for i in range(2,n):
         for j in range(1,n-i+2):
+            if j==1:
+                continue #pezza prova
             #print i,j
             for A in G.groups:
                 Ra = R[A]
