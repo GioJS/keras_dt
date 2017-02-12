@@ -66,8 +66,6 @@ def binary(P,G,w):
         R[A] = compute_R(G, rules_A)
     for i in range(2,n):
         for j in range(1,n-i+2):
-            if j==1:
-                continue #pezza prova
             #print i,j
             for A in G.groups:
                 Ra = R[A]
@@ -184,11 +182,11 @@ for i in range(2,3):
     #x = circulant(v('sdfg'))
     '''for i in range(100):
         Pd = Pd + circulant(v('Prova'+str(i)))'''
-    Pd = invsc(v('2')).dot(invsc(v('2'))).dot(Pd)
+    #Pd = invsc(v('1')).dot(invsc(v('1'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
-    Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
-    Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
+    #Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
+    #Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
     '''C = compute_C(G)
     print C.dot(C.T)
     print C.T.dot(C)'''
@@ -209,11 +207,11 @@ for i in range(2,3):
     #print Pd.dot(term.T)
     #print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
     #t_d = sc(v("1")).dot(sc(v("1"))).dot(sc(v('D'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(D a)'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))
-    #print Pd.dot(t_d.T)
-    t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
+    print Pd.dot(el.T)
+    #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
-    print Pd[:,0].dot(t_d[:,0])
+    #print Pd[:,0].dot(t_d[:,0])
     '''print Pd.dot(t_d.T),'\n\n'
     print Pd.dot(x)'''
     #Pd = Pd.dot(circulant(v('a')).T)
