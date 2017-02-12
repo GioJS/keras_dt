@@ -184,7 +184,7 @@ for i in range(2,3):
     #x = circulant(v('sdfg'))
     '''for i in range(100):
         Pd = Pd + circulant(v('Prova'+str(i)))'''
-    Pd = invsc(v('1')).dot(invsc(v('1'))).dot(Pd)
+    Pd = invsc(v('2')).dot(invsc(v('2'))).dot(Pd)
     #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
 
     Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
