@@ -64,7 +64,7 @@ def binary(P,G,w):
     for A in G.groups:
         rules_A = G.get_rules(A)
         R[A] = compute_R(G, rules_A)
-    for i in range(2,n+1):
+    for i in range(2,n):
         for j in range(1,n-i+2):
             print i,j
             for A in G.groups:
@@ -90,7 +90,7 @@ def cyk_dist(G,w):
 	#print P_dist
 	P_dist = preterminals(P_dist, G, w)
 	#print P_dist
-	P_dist = binary(P_dist, G, w)
+	#P_dist = binary(P_dist, G, w)
 	return P_dist
 
 
@@ -142,7 +142,7 @@ def test_P(parser,w):
 G = Grammar('S')
 G.add_rules_from_file('gramm_l')
 parser = CYK(G)
-for i in range(1,2):
+for i in range(2,3):
     w = ('a '*i)+'b'
     #w = 'a'
     print w
@@ -198,22 +198,22 @@ for i in range(1,2):
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
     from parserNLP.Rule import *
     #tentando di costruire a mano l'elemento secondo binary
-    C = compute_C(G)
-    rules_A = G.get_rules('S')
-    Ra = compute_R(G, rules_A)
-    Pa = C.dot(sc(v('D').dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(D a)'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))).dot(Ra).dot(sc(v('E')).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(E b)'))).dot(invsc(v('Sep'))).dot(invsc(v('E'))))).dot(C.T)
-    el = sc(v(str(2))).dot(sc(v(str(2)))).dot(sc(v('S'))).dot(sc(v('Sep'))).dot(sc(v('S'))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v('S')))
+    #C = compute_C(G)
+    #rules_A = G.get_rules('S')
+    #Ra = compute_R(G, rules_A)
+    #Pa = C.dot(sc(v('D').dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(D a)'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))).dot(Ra).dot(sc(v('E')).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(E b)'))).dot(invsc(v('Sep'))).dot(invsc(v('E'))))).dot(C.T)
+    #el = sc(v(str(2))).dot(sc(v(str(2)))).dot(sc(v('S'))).dot(sc(v('Sep'))).dot(sc(v('S'))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v('S')))
     #rule = Rule('D','a',0)
     #term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
     #print Pd.dot(term.T)
     #print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
-    #t_d = sc(v("1")).dot(sc(v("2"))).dot(sc(v('E'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(E b)'))).dot(invsc(v('Sep'))).dot(invsc(v('E')))
-    print Pd.dot(el.T)
+    t_d = sc(v("1")).dot(sc(v("3"))).dot(sc(v('E'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(E b)'))).dot(invsc(v('Sep'))).dot(invsc(v('E')))
+    #print Pd.dot(el.T)
     #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
     #print Pd[:,0].dot(t_d[:,0])
-    #print Pd.dot(t_d.T)
+    print Pd.dot(t_d.T)
     '''print Pd.dot(t_d.T),'\n\n'
     print Pd.dot(x)'''
     #Pd = Pd.dot(circulant(v('a')).T)
