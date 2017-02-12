@@ -90,7 +90,7 @@ def cyk_dist(G,w):
 	#print P_dist
 	P_dist = preterminals(P_dist, G, w)
 	#print P_dist
-	#P_dist = binary(P_dist, G, w)
+	P_dist = binary(P_dist, G, w)
 	return P_dist
 
 
