@@ -207,7 +207,7 @@ for i in range(1,2):
     #term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
     #print Pd.dot(term.T)
     #print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
-    t_d = sc(v("1")).dot(sc(v("3"))).dot(sc(v('E'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(E b)'))).dot(invsc(v('Sep'))).dot(invsc(v('E')))
+    t_d = sc(v("1")).dot(sc(v("2"))).dot(sc(v('E'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(E b)'))).dot(invsc(v('Sep'))).dot(invsc(v('E')))
     #print Pd.dot(el.T)
     #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
