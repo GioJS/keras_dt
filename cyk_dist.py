@@ -17,12 +17,19 @@ def sc(v):
 #[v]-
 def invsc(v):
     return sc(v).T
+index0 = sc(v('0'))
+index1 = sc(v('1'))
+index2 = sc(v('2'))
+index3 = sc(v('3'))
+D = sc(v('D'))
+E = sc(v('E'))
 
+sep = sc(v('Sep'))
 #initialization of level 0
 def init(w):
     P = np.array([0])
     for i in range(len(w)):
-        s = (sc(v('0')).dot(sc(v(str(i+1)))).dot(sc(v(w[i]))).dot(sc(v('Sep'))))
+        s = index0.dot(sc(v(str(i+1)))).dot(sc(v(w[i]))).dot(sep)
         P = P + s
     return P
 #perterminal rules
@@ -31,11 +38,11 @@ def preterminals(P,G,w):
 
     for rule in G.get_unit_productions():
         #print rule
-        R = R + (sc(v(rule.head())).dot(sc(v('Sep'))).dot(sc(v(rule.head()))).dot(sc(v('Sep'))).dot(sc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))).dot(invsc(v('Sep'))).dot(invsc(v(rule.production())))
+        R = R + (sc(v(rule.head())).dot(sep).dot(sc(v(rule.head()))).dot(sep).dot(sc(v(rule.production()))).dot(sep.T).dot(invsc(v(rule.head())))).dot(sep.T).dot(invsc(v(rule.production())))
 
     s = np.array([0])
     for i in range(len(w)):
-        s = s + (sc(v('1')).dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(invsc(v('0'))).dot(P))
+        s = s + index1.dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(index0.T).dot(P)
     P = P + s
     return P
 
@@ -43,7 +50,7 @@ def preterminals(P,G,w):
 def compute_C(G):
     C = np.array([0])
     for A in G.groups:
-        C = C + sc(v(A)).dot(sc(v('Sep')))
+        C = C + sc(v(A)).dot(sep)
     return C
 def compute_R(G, rules_A):
     Ra = np.zeros((dim,dim))
@@ -51,7 +58,7 @@ def compute_R(G, rules_A):
         rule = G[i]
         if not rule.is_preterminal():
             #print rule
-            Ra = Ra + sc(v(rule[0])).dot(sc(v('Sep'))).dot(Phi).dot(invsc(v('Sep'))).dot(invsc(v(rule[1])))
+            Ra = Ra + sc(v(rule[0])).dot(sep).dot(Phi).dot(sep.T).dot(invsc(v(rule[1])))
     return Ra
 
 def binary(P,G,w):
@@ -77,7 +84,7 @@ def binary(P,G,w):
                     Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
                 print 'Pa:\n',Pa
                 #print (Pa==0).all()
-                s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(sc(v(A))).dot(sc(v('Sep'))).dot(Pa).dot(invsc(v('Sep'))).dot(invsc(v(A)))
+                s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sep).dot(sc(v(A))).dot(sep).dot(Pa).dot(sep.T).dot(invsc(v(A)))
                 print 's: \n',s
                 P = P + s
                 print 'P new: \n',P
@@ -98,7 +105,7 @@ def cyk_dist(G,w):
 def tree_dist(t):
     if len(t) == 0:
         return sc(v(t.label))
-    s = sc(v(t.label)).dot(sc(v('Sep')))
+    s = sc(v(t.label)).dot(sep)
     for child in t:
         s = s.dot(tree_dist(child))
     return s
@@ -109,7 +116,7 @@ def test_P(parser,w):
     #test
 
     for i in range(len(w)):
-        s = sc(v('0')).dot(sc(v(str(i+1)))).dot(sc(v(w[i])))
+        s = index0.dot(sc(v(str(i+1)))).dot(sc(v(w[i])))
         Dp = Dp + s
 
     #first row
@@ -119,7 +126,7 @@ def test_P(parser,w):
         for A in parser.C[i,i]:
             tree = parser.get_tree(A)
             #print 'tree: ',tree
-            td = sc(v("1")).dot(sc(v(str(i+1)))).dot(tree_dist(tree))
+            td = index1.dot(sc(v(str(i+1)))).dot(tree_dist(tree))
             Dp = Dp + td
     #generic row
     for i in range(2,len(w)):
@@ -207,7 +214,7 @@ for i in range(2,3):
     #term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
     #print Pd.dot(term.T)
     #print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
-    t_d = sc(v("1")).dot(sc(v("3"))).dot(sc(v('E'))).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(E b)'))).dot(invsc(v('Sep'))).dot(invsc(v('E')))
+    t_d = index1.dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T)
     #print Pd.dot(el.T)
     #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
