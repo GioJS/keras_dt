@@ -23,7 +23,7 @@ index2 = sc(v('2'))
 index3 = sc(v('3'))
 D = sc(v('D'))
 E = sc(v('E'))
-
+S = sc(v('S'))
 sep = sc(v('Sep'))
 #initialization of level 0
 def init(w):
