@@ -21,10 +21,9 @@ def invsc(v):
 #initialization of level 0
 def init(w):
     P = np.array([0])
-    s = np.array([0])
     for i in range(len(w)):
-        s = s +(sc(v('0')).dot(sc(v(str(i+1)))).dot(sc(v(w[i]))).dot(sc(v('Sep'))))
-    P = P + s
+        s = (sc(v('0')).dot(sc(v(str(i+1)))).dot(sc(v(w[i]))).dot(sc(v('Sep'))))
+        P = P + s
     return P
 #perterminal rules
 def preterminals(P,G,w):
