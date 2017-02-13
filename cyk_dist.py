@@ -205,7 +205,7 @@ for i in range(2,3):
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
     from parserNLP.Rule import *
     #tentando di costruire a mano l'elemento secondo binary
-    C = compute_C(G)
+    #C = compute_C(G)
     #rules_A = G.get_rules('S')
     #Ra = compute_R(G, rules_A)
     #Pa = C.dot(sc(v('D').dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(D a)'))).dot(invsc(v('Sep'))).dot(invsc(v('D')))).dot(Ra).dot(sc(v('E')).dot(sc(v('Sep'))).dot(tree_dist(Tree.from_penn('(E b)'))).dot(invsc(v('Sep'))).dot(invsc(v('E'))))).dot(C.T)
@@ -214,7 +214,7 @@ for i in range(2,3):
     #term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
     #print Pd.dot(term.T)
     #print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
-    t_d = C.T.dot(index1.dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T)).dot(C)
+    t_d = index1.dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T)
     #print Pd.dot(el.T)
     #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
