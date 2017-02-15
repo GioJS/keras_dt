@@ -4,7 +4,7 @@ from vectors import *
 #from keras_dt import *
 from convolutions import *
 
-dim = 1024*2
+dim = 1024*4
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
