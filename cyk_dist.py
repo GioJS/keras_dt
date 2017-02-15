@@ -209,7 +209,7 @@ for i in range(2,3):
     rules_A = G.get_rules('S')
     Ra = compute_R(G, rules_A)
     Pa = C.dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T).dot(Ra).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T).dot(C.T)
-    el = index2.dot(index1).dot(S).dot(sep).dot(S).dot(sep).dot(Pa).dot(sep.T).dot(S.T)
+    el = index2.dot(index2).dot(S).dot(sep).dot(S).dot(sep).dot(Pa).dot(sep.T).dot(S.T)
     #rule = Rule('D','a',0)
     #term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
     #print Pd.dot(term.T)
@@ -220,7 +220,7 @@ for i in range(2,3):
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
     #print Pd[:,0].dot(t_d[:,0])
-    print Pd.dot(t_d.T)
+    #print Pd.dot(t_d.T)
     '''print Pd.dot(t_d.T),'\n\n'
     print Pd.dot(x)'''
     #Pd = Pd.dot(circulant(v('a')).T)
