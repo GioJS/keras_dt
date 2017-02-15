@@ -104,7 +104,7 @@ def cyk_dist(G,w):
 #trasformazione di P in distributed with trees
 def tree_dist(t):
     if len(t) == 0:
-        return sc(v(t.label)).dot(sep)
+        return sc(v(t.label))
     s = sc(v(t.label)).dot(sep)
     for child in t:
         s = s.dot(tree_dist(child))
@@ -168,7 +168,8 @@ for i in range(2,3):
     
     rule = D.dot(sep).dot(Phi).dot(sep.T).dot(E.T)
     fin = S.dot(sep).dot(sep.T).dot(D.T).dot(index2.T).dot(index1.T).dot(P_12).dot(rule).dot(index3.T).dot(index1.T).dot(P_13).dot(E).dot(sep)
-    t = tree_dist(Tree.from_penn('(S (D a) (E b))'))
+    #t = tree_dist(Tree.from_penn('(S (D a) (E b))'))
+    t = S.dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(Phi).dot(tree_dist(Tree.from_penn('(E b)')))
     #Pd = cyk_dist(G,w)
     #print Pd.dot(P_1.T)
     print fin.dot(t.T)
