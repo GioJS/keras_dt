@@ -156,37 +156,11 @@ for i in range(2,3):
     parser.parse(w)
     P = parser.C
     print P
-    #print parser.get_tree(P[2,2][0])
-    #if K.backend() == 'tensorflow':
-        # sess = K.tf.Session()
-        # K.set_session(sess)
-        # with sess.as_default():
-        #     '''a = sc(v('0')).dot(sc(v('0'))).dot(sc(v('a'))).dot(sc(v('Sep')))
-        #     a_0 = invsc(v('0')).dot(a)
-        #     a_1 = sc(v('0')).dot(sc(v('a'))).dot(sc(v('Sep')))
-        #     print a_0
-        #     print a_1
-        #     print np.linalg.norm(a_0-a_1,2)'''
-
-    	   #  a = v('a')
-    	   #  A = circulant(a)
-    	   #  print A.dot(A.T)
-            #Pd = cyk_dist(G,w)
-            #print sc(v("0")),sc(v("0"))
-            #print np.linalg.norm(sc(v("Sep"))-invsc(v("Sep")),2)
-            #Pd = invsc(v('0')).dot(invsc(v('0'))).dot(Pd)
-            #Pd = Pd.dot(invsc(v('Sep')))
-            #print Pd
-            #Dp = test_P(parser,w)
-            #Dp = invsc(v('0')).dot(invsc(v('0'))).dot(Dp)
-            #print Dp
-            #print np.linalg.norm(Pd-Dp,2)
-            #print invsc(v("0")).dot(invsc(v("1"))).dot(Pd)
-            #print invsc(v("0")).dot(invsc(v("1"))).dot(Dp)
-    #else:
-
-
+   
+    P_1 = init(w)
+    P_1 = preterminal(P_1,G,w)
     Pd = cyk_dist(G,w)
+    print Pd.dot(P_1.T)
     #x = circulant(v('sdfg'))
     '''for i in range(100):
         Pd = Pd + circulant(v('Prova'+str(i)))'''
@@ -220,38 +194,4 @@ for i in range(2,3):
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
     #print Pd.dot(t_d.T)
-    '''print Pd.dot(t_d.T),'\n\n'
-    print Pd.dot(x)'''
-    #Pd = Pd.dot(circulant(v('a')).T)
-        # # print Pd
-    #Dp = test_P(parser,w)
-
-    #Dp = invsc(v('1')).dot(invsc(v('1'))).dot(Dp)
-
-    #print Dp[:,0].dot(t_d[:,0])
-    #print circulant(v('a')).dot(circulant(v('a')).T)
-        # #print Dp
-    #print 'Pd: ',Pd[:,0].dot(sc(v('a'))[:,0])
-    #print 'Dp: ',Dp[:,0].dot(sc(v('a'))[:,0])
-
-
-    #print Pd[:,0].dot(Dp[:,0])
-
-        #a = sc(v('0')).dot(sc(v('0'))).dot(sc(v('a'))).dot(sc(v('Sep')))
-        #b = invsc(v('0')).dot(invsc(v('0'))).dot(a).dot(invsc(v('Sep')))
-        #print a[:,0].dot(b[:,0])
-        #print 'primo: ',b[:,0].dot(sc(v('a'))[:,0])
-        # #print np.linalg.norm(Pd-Dp,2)
-        # a = v('a')
-        # b = v('0')
-        # c = v('Sep')
-        # #a2 = v('a')
-        # #print np.linalg.norm(a-a2)
-        # #print sc(a).dot(invsc(a)) - invsc(a).dot(sc(a))
-
-        # #A = circulant(a)
-        # #print A,'\n'
-        # #print A.dot(A.T)
-        # x1 = sc(b).dot(sc(a)).dot(sc(c))
-        # x2 = invsc(b).dot(x1).dot(invsc(c))
-        # print x2[:,0].dot(sc(a)[:,0])
+    
