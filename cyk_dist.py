@@ -4,7 +4,7 @@ from vectors import *
 #from keras_dt import *
 from convolutions import *
 
-dim = 1024*4
+dim = 1024*2
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
@@ -161,18 +161,19 @@ for i in range(2,3):
     #P_1 = init(w)
     #P_1 = preterminals(P_1,G,w)
     #Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
-    C = compute_C(G)
-    P_11 = index1.dot(index1).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
+    #C = compute_C(G)
+    '''P_11 = index1.dot(index1).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
     P_12 = index1.dot(index2).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
-    P_13 = index1.dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T)
+    P_13 = index1.dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T)'''
     
-    rule = D.dot(sep).dot(Phi).dot(sep.T).dot(E.T)
-    fin = S.dot(sep).dot(sep.T).dot(D.T).dot(index2.T).dot(index1.T).dot(P_12).dot(rule).dot(index3.T).dot(index1.T).dot(P_13).dot(E).dot(sep)
+    #rule = D.dot(sep).dot(Phi).dot(sep.T).dot(E.T)
+    #fin = S.dot(sep).dot(sep.T).dot(D.T).dot(index2.T).dot(index1.T).dot(P_12).dot(rule).dot(index3.T).dot(index1.T).dot(P_13).dot(E).dot(sep)
     #t = tree_dist(Tree.from_penn('(S (D a) (E b))'))
-    t = S.dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(Phi).dot(tree_dist(Tree.from_penn('(E b)')))
+    t1 = S.dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(Phi).dot(tree_dist(Tree.from_penn('(E b)')))
+    t2 = S.dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(Phi).dot(tree_dist(Tree.from_penn('(E b)')))
     #Pd = cyk_dist(G,w)
     #print Pd.dot(P_1.T)
-    print fin.dot(t.T)
+    print t1.dot(t2.T)
     #x = circulant(v('sdfg'))
     '''for i in range(100):
         Pd = Pd + circulant(v('Prova'+str(i)))'''
