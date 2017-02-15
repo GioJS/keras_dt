@@ -156,7 +156,8 @@ for i in range(2,3):
     parser.parse(w)
     P = parser.C
     print P
-   
+    from trees import *
+
     #P_1 = init(w)
     #P_1 = preterminals(P_1,G,w)
     P_1 = index1.dot(index1).dot(D).dot(sep).dot(Tree.from_penn('(D a)')).dot(sep.T).dot(D.T)
@@ -178,9 +179,8 @@ for i in range(2,3):
     #Pd = C.T.dot(Pd).dot(C)
     #Pd = sc(v('S')).dot(Pd) #test
     #Dw0 = sc(v('D')).dot(circulant(v('a')))
-    from trees import *
     #t_d = tree_dist(Tree('D',[Tree('a',[])]))
-    from parserNLP.Rule import *
+    #from parserNLP.Rule import *
     #tentando di costruire a mano l'elemento secondo binary
     '''C = compute_C(G)
     rules_A = G.get_rules('S')
