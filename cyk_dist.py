@@ -175,7 +175,7 @@ for i in range(2,3):
     #Pd = cyk_dist(G,w)
     #print Pd.dot(P_1.T)
     #print sep.dot(sep.T)
-    print sep.T.dot(sep.T).dot(sep).dot(sep)
+    print sep.T.dot(D.T).dot(sep.T).dot(sep).dot(D).dot(sep)
     #print t1.dot(t2.T)
     #x = circulant(v('sdfg'))
     '''for i in range(100):
