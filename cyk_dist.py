@@ -167,7 +167,7 @@ for i in range(2,3):
     P_13 = index1.dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T)
     
     rule = D.dot(sep).dot(Phi).dot(sep.T).dot(E.T)
-    fin = S.dot(sep).dot(sep.T).dot(D.T).dot(index2.T).dot(index1.T).dot(P_12).dot(rule).dot(index3.T).dot(index1.T).dot(P_13).dot(E).dot(sep)
+    fin = S.dot(sep).dot(sep).dot(sep.T).dot(D.T).dot(index2.T).dot(index1.T).dot(P_12).dot(rule).dot(index3.T).dot(index1.T).dot(P_13).dot(E).dot(sep)
     t = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #Pd = cyk_dist(G,w)
     #print Pd.dot(P_1.T)
