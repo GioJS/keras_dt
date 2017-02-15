@@ -71,7 +71,7 @@ def binary(P,G,w):
     for A in G.groups:
         rules_A = G.get_rules(A)
         R[A] = compute_R(G, rules_A)
-    for i in range(2,n+1):
+    for i in range(2,n):
         for j in range(1,n-i+2):
             print i,j
             for A in G.groups:
@@ -209,7 +209,7 @@ for i in range(2,3):
     rules_A = G.get_rules('S')
     Ra = compute_R(G, rules_A)
     Pa = C.dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T).dot(Ra).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T).dot(C.T)
-    el = index2.dot(index2).dot(S).dot(sep).dot(S).dot(sep).dot(Pa).dot(sep.T).dot(S.T)
+    el = index1.dot(index2).dot(S).dot(sep).dot(S).dot(sep).dot(Pa).dot(sep.T).dot(S.T)
     #rule = Rule('D','a',0)
     #term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
     #print Pd.dot(term.T)
