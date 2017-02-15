@@ -215,7 +215,7 @@ for i in range(2,3):
     #print Pd.dot(term.T)
     #print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
     #t_d = index1.dot(index1).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
-    print Pd.dot(el.T)
+    #print Pd.dot(el.T)
     t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
     #print t_d[:,0].dot(Dw0[:,0])
