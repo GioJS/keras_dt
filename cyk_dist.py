@@ -72,7 +72,7 @@ def binary(P,G,w):
         rules_A = G.get_rules(A)
         R[A] = compute_R(G, rules_A)
     for i in range(2,n):
-        for j in range(2,n-i+2):
+        for j in range(1,n-i+2):
             print i,j
             for A in G.groups:
                 Ra = R[A]
@@ -161,12 +161,15 @@ for i in range(2,3):
     #P_1 = init(w)
     #P_1 = preterminals(P_1,G,w)
     #Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
-
+    C = compute_C(G)
     P_1 = index1.dot(index1).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
     P_1 = P_1 + index1.dot(index2).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
     P_1 = P_1 + index1.dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T)
-    Pd = cyk_dist(G,w)
-    print Pd.dot(P_1.T)
+    rule = D.dot(sep).dot(Phi).dot(sep.T).dot(E.T)
+    fin = C.dot(index2.T).dot(index1.T).dot(P_1).dot(rule).dot(index3.T).dot(index1.T).dot(P_1).dot(C.T)
+    #Pd = cyk_dist(G,w)
+    #print Pd.dot(P_1.T)
+    print fin
     #x = circulant(v('sdfg'))
     '''for i in range(100):
         Pd = Pd + circulant(v('Prova'+str(i)))'''
