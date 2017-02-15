@@ -50,7 +50,7 @@ def preterminals(P,G,w):
 def compute_C(G):
     C = np.array([0])
     for A in G.groups:
-        C = C + sep.dot(sc(v(A)))
+        C = C + sc(v(A)).dot(sep)
     return C
 def compute_R(G, rules_A):
     Ra = np.zeros((dim,dim))
@@ -166,7 +166,7 @@ for i in range(2,3):
     P_1 = P_1 + index1.dot(index2).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
     P_1 = P_1 + index1.dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T)
     rule = D.dot(sep).dot(Phi).dot(sep.T).dot(E.T)
-    fin = S.dot(sep).dot(C).dot(index2.T).dot(index1.T).dot(P_1).dot(rule).dot(index3.T).dot(index1.T).dot(P_1).dot(C.T)
+    fin = S.dot(sep).dot(C.T).dot(index2.T).dot(index1.T).dot(P_1).dot(rule).dot(index3.T).dot(index1.T).dot(P_1).dot(C)
     t = tree_dist(Tree.from_penn('(S (D a) (E b))'))
     #Pd = cyk_dist(G,w)
     #print Pd.dot(P_1.T)
