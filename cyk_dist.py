@@ -160,7 +160,7 @@ for i in range(2,3):
 
     #P_1 = init(w)
     #P_1 = preterminals(P_1,G,w)
-    P_1 = index1.dot(index1).dot(D).dot(sep).dot(Tree.from_penn('(D a)')).dot(sep.T).dot(D.T)
+    P_1 = index1.dot(index1).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
     P_1 = P_1 + index1.dot(index2).dot(D).dot(sep).dot(Tree.from_penn('(D a)')).dot(sep.T).dot(D.T)
     P_1 = P_1 + index1.dot(index3).dot(E).dot(sep).dot(Tree.from_penn('(E b)')).dot(sep.T).dot(E.T)
     Pd = cyk_dist(G,w)
