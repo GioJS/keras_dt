@@ -158,7 +158,7 @@ for i in range(2,3):
     print P
    
     P_1 = init(w)
-    P_1 = preterminal(P_1,G,w)
+    P_1 = preterminals(P_1,G,w)
     Pd = cyk_dist(G,w)
     print Pd.dot(P_1.T)
     #x = circulant(v('sdfg'))
