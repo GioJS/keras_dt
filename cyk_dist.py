@@ -174,8 +174,8 @@ for i in range(2,3):
     #dot(D.T).dot(index2.T).dot(index1.T).dot(index1).dot(index2).dot(D)
     #Pd = cyk_dist(G,w)
     #print Pd.dot(P_1.T)
-    print sep.dot(sep.T)
-    print sep.T.dot(sep)
+    #print sep.dot(sep.T)
+    print sep.T.dot(sep.T).dot(sep).dot(sep)
     #print t1.dot(t2.T)
     #x = circulant(v('sdfg'))
     '''for i in range(100):
