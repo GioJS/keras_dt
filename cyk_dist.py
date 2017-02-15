@@ -50,7 +50,7 @@ def preterminals(P,G,w):
 def compute_C(G):
     C = np.array([0])
     for A in G.groups:
-        C = C + sc(v(A)).dot(sep)
+        C = C + sep.dot(sc(v(A)))
     return C
 def compute_R(G, rules_A):
     Ra = np.zeros((dim,dim))
