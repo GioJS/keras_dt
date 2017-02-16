@@ -38,11 +38,12 @@ def preterminals_simple(P,G,w):
 
     for rule in G.get_unit_productions():
         #print rule
-        R = R + sc(v(rule.head())).dot(invsc(v(rule.production())))
+        R = R + sc(v(rule.head()))
 
     s = np.array([0])
     for i in range(len(w)):
-        s = s + index1.dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(index0.T).dot(P)
+        s = s + index1.dot(sc(v(str(i+1)))).dot(R)
+        #.dot(R).dot(invsc(v(str(i+1)))).dot(index0.T).dot(P)
     P = s
     return P
 
@@ -93,7 +94,7 @@ def cyk_dist_simple(G,w):
     #print P_dist
     P_dist = preterminals_simple(P_dist, G, w)
     #print P_dist
-    P_dist = binary_simple(P_dist, G, w)
+    #P_dist = binary_simple(P_dist, G, w)
     return P_dist
 
 #initialization of level 0
@@ -230,9 +231,9 @@ for i in range(2,3):
     from trees import *
     dist_P = cyk_dist_simple(G,w)
     print dist_P
-    rule = index2.dot(index2).dot(S)
+    rule = index1.dot(index1).dot(D)
     print rule
-    print dist_P[:,0].dot(rule[:,0])
+    print dist_P.dot(rule)
     #P_1 = init(w)
     #P_1 = preterminals(P_1,G,w)
     #Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
