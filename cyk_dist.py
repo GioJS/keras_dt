@@ -73,21 +73,21 @@ def binary(P,G,w):
         R[A] = compute_R(G, rules_A)
     for i in range(2,n):
         for j in range(1,n-i+2):
-            print i,j
+            #print i,j
             for A in G.groups:
                 Ra = R[A]
-                print 'A: ',A,'Ra: \n',Ra
+                #print 'A: ',A,'Ra: \n',Ra
                 Pa = np.array([0])
                 for k in range(1,i):
-                    print "j,k:",j,k
-                    print "j+k,i-k",j+k,i-k
+                    #print "j,k:",j,k
+                    #print "j+k,i-k",j+k,i-k
                     Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
-                print 'Pa:\n',Pa
+                #print 'Pa:\n',Pa
                 #print (Pa==0).all()
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(sep).dot(sc(v(A))).dot(sep).dot(Pa).dot(sep.T).dot(invsc(v(A)))
-                print 's: \n',s
+                #print 's: \n',s
                 P = P + s
-                print 'P new: \n',P
+                #print 'P new: \n',P
     #P = P + s
     return P
 #transform P to P_dist with algo5,6
