@@ -24,8 +24,8 @@ class Tree(list):
 			cyk_matrix += index0.dot(sc(v(str(displacement)))).dot(sc(v(t.label)))
 		else:    
 			cyk_matrix += sc(v(str(t.get_nterminals()-1))).dot(sc(v(str(displacement)))).dot(sc(v(t.label)))
-			self.__make_nodes(t[0],cyk_matrix,displacement)
-			self.__make_nodes(t[1],cyk_matrix,displacement + t[0].get_nterminals())
+			cyk_matrix += self.__make_nodes(t[0],cyk_matrix,displacement)
+			cyk_matrix += self.__make_nodes(t[1],cyk_matrix,displacement + t[0].get_nterminals())
 		return cyk_matrix
 
 	def get_terminals(self,t):
