@@ -228,13 +228,12 @@ if __name__ == '__main__':
         #P = parser.C
         #print P
         from trees import *
-        t = Tree.from_penn('(D a)').to_cyk()
-        print t
-        #dist_P = cyk_dist_simple(G,w)
+        
+        dist_P = cyk_dist_simple(G,w)
         #print dist_P
         rule = index1.dot(index1).dot(D)
         print rule
-        print rule.dot(t)
+        print dist_P.dot(rule)
         #P_1 = init(w)
         #P_1 = preterminals(P_1,G,w)
         #Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
