@@ -229,7 +229,9 @@ for i in range(2,3):
     #print P
     from trees import *
     dist_P = cyk_dist_simple(G,w)
-    rule = index2.dot(index1).dot(S)
+    print dist_P
+    rule = index2.dot(index2).dot(S)
+    print rule
     print dist_P.dot(rule)
     #P_1 = init(w)
     #P_1 = preterminals(P_1,G,w)
