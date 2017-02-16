@@ -23,7 +23,7 @@ class Tree(list):
 		if len(t)==1:
 			cyk_matrix[0,displacement] = t.label
 		else:    
-			cyk_matrix[t.get_nterminals()-1,displacement] = Rule(t.label,t[0].label+t[1].label,0)
+			cyk_matrix[t.get_nterminals()-1,displacement] = Rule(t.label,t[0].label+' '+t[1].label,0)
 			self.__make_nodes(t[0],cyk_matrix,displacement)
 			self.__make_nodes(t[1],cyk_matrix,displacement + t[0].get_nterminals())
 		return cyk_matrix
