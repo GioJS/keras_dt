@@ -93,7 +93,7 @@ def cyk_dist_simple(G,w):
     #print P_dist
     P_dist = preterminals_simple(P_dist, G, w)
     #print P_dist
-    P_dist = binary_simple(P_dist, G, w)
+    #P_dist = binary_simple(P_dist, G, w)
     return P_dist
 
 #initialization of level 0
