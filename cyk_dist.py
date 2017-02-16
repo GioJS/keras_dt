@@ -234,7 +234,7 @@ if __name__ == '__main__':
         #print dist_P
         rule = index1.dot(index1).dot(D)
         print rule
-        print dist_P.dot(t)
+        print rule.dot(t)
         #P_1 = init(w)
         #P_1 = preterminals(P_1,G,w)
         #Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
