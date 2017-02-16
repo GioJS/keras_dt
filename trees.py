@@ -21,9 +21,9 @@ class Tree(list):
 		return cyk_matrix
 	def __make_nodes(self,t,cyk_matrix, displacement):
 		if len(t)==1:
-			cyk_matrix += index0.dot(sc(v(displacement))).dot(sc(v(t.label)))
+			cyk_matrix += index0.dot(sc(v(str(displacement)))).dot(sc(v(t.label)))
 		else:    
-			cyk_matrix += sc(v(t.get_nterminals()-1)).dot(displacement).dot(sc(v(t.label)))
+			cyk_matrix += sc(v(str(t.get_nterminals()-1))).dot(str(displacement)).dot(sc(v(t.label)))
 			self.__make_nodes(t[0],cyk_matrix,displacement)
 			self.__make_nodes(t[1],cyk_matrix,displacement + t[0].get_nterminals())
 		return cyk_matrix
