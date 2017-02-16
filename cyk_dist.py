@@ -43,7 +43,7 @@ def preterminals_simple(P,G,w):
     s = np.array([0])
     for i in range(len(w)):
         s = s + index1.dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(index0.T).dot(P)
-    P = P + s
+    P = s
     return P
 
 
@@ -230,7 +230,7 @@ for i in range(2,3):
     from trees import *
     dist_P = cyk_dist_simple(G,w)
     print dist_P
-    rule = index1.dot(index1).dot(D)
+    rule = index1.dot(index2).dot(D)
     print rule
     print dist_P.dot(rule)
     #P_1 = init(w)
