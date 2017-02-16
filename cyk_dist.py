@@ -38,7 +38,7 @@ def preterminals_simple(P,G,w):
 
     for rule in G.get_unit_productions():
         #print rule
-        R = R + sc(v(rule.head())).dot(invsc(v(rule.production()))
+        R = R + sc(v(rule.head())).dot(invsc(v(rule.production())))
 
     s = np.array([0])
     for i in range(len(w)):
