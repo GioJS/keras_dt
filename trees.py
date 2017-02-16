@@ -1,6 +1,5 @@
 import numpy as np
 from parserNLP.Rule import Rule
-from cyk_dist import *
 class Tree(list):
 	def __init__(self,label,children):
 		list.__init__(self,children)
@@ -16,16 +15,16 @@ class Tree(list):
 		return s+') '
 	def to_cyk(self):
 		n = self.get_nterminals()
-		cyk_matrix = np.zeros((dim,dim))
+		cyk_matrix = np.zeros((n,n),dtype=object)
 		self.__make_nodes(self,cyk_matrix,0)
 		return cyk_matrix
 	def __make_nodes(self,t,cyk_matrix, displacement):
 		if len(t)==1:
-			cyk_matrix += index0.dot(sc(v(str(displacement)))).dot(sc(v(t.label)))
+			cyk_matrix[0,displacement] = t.label
 		else:    
-			cyk_matrix += sc(v(str(t.get_nterminals()-1))).dot(sc(v(str(displacement)))).dot(sc(v(t.label)))
-			cyk_matrix = self.__make_nodes(t[0],cyk_matrix,displacement)
-			cyk_matrix = self.__make_nodes(t[1],cyk_matrix,displacement + t[0].get_nterminals())
+			cyk_matrix[t.get_nterminals()-1,displacement] = Rule(t.label, t[0].label+' '+t[1].label,0)
+			self.__make_nodes(t[0],cyk_matrix,displacement)
+			self.__make_nodes(t[1],cyk_matrix,displacement + t[0].get_nterminals())
 		return cyk_matrix
 
 	def get_terminals(self,t):
