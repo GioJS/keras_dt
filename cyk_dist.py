@@ -230,9 +230,9 @@ for i in range(2,3):
     from trees import *
     dist_P = cyk_dist_simple(G,w)
     print dist_P
-    rule = index1.dot(index3).dot(E)
+    rule = index1.dot(index1).dot(D)
     print rule
-    print dist_P.dot(rule)
+    print dist_P[:,0].dot(rule[:,0])
     #P_1 = init(w)
     #P_1 = preterminals(P_1,G,w)
     #Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
