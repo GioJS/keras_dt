@@ -93,7 +93,7 @@ def cyk_dist_simple(G,w):
     #print P_dist
     P_dist = preterminals_simple(P_dist, G, w)
     #print P_dist
-    #P_dist = binary_simple(P_dist, G, w)
+    P_dist = binary_simple(P_dist, G, w)
     return P_dist
 
 #initialization of level 0
@@ -230,7 +230,7 @@ for i in range(2,3):
     from trees import *
     dist_P = cyk_dist_simple(G,w)
     print dist_P
-    rule = index1.dot(index1).dot(D)
+    rule = index2.dot(index2).dot(S)
     print rule
     print dist_P[:,0].dot(rule[:,0])
     #P_1 = init(w)
