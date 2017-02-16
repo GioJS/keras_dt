@@ -16,7 +16,7 @@ class Tree(list):
 		return s+') '
 	def to_cyk(self):
 		n = self.get_nterminals()
-		cyk_matrix = np.zeros((n,n))
+		cyk_matrix = np.zeros((dim,dim))
 		self.__make_nodes(self,cyk_matrix,0)
 		return cyk_matrix
 	def __make_nodes(self,t,cyk_matrix, displacement):
