@@ -25,6 +25,77 @@ D = sc(v('D'))
 E = sc(v('E'))
 S = sc(v('S'))
 sep = sc(v('Sep'))
+
+def init_simple(w):
+    P = np.array([0])
+    for i in range(len(w)):
+        s = index0.dot(sc(v(str(i+1)))).dot(sc(v(w[i])))
+        P = P + s
+    return P
+#perterminal rules
+def preterminals_simple(P,G,w):
+    R = np.array([0])
+
+    for rule in G.get_unit_productions():
+        #print rule
+        R = R + sc(v(rule.head())).dot(invsc(v(rule.production())))
+
+    s = np.array([0])
+    for i in range(len(w)):
+        s = s + index1.dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(index0.T).dot(P)
+    P = s
+    return P
+
+
+
+def compute_R(G, rules_A):
+    Ra = np.zeros((dim,dim))
+    for i in rules_A:
+        rule = G[i]
+        if not rule.is_preterminal():
+            #print rule
+            Ra = Ra + invsc(v(rule[0])).dot(invsc(v(rule[1])))
+    return Ra
+
+def binary_simple(P,G,w):
+    n = len(w)
+    #C = compute_C(G)
+    #s = np.array([0])
+    R = {}
+    #print 'preterminal: \n',P
+    # G.groups = non-terminals
+    for A in G.groups:
+        rules_A = G.get_rules(A)
+        R[A] = compute_R(G, rules_A)
+    for i in range(2,n):
+        for j in range(1,n-i+2):
+            #print i,j
+            for A in G.groups:
+                Ra = R[A]
+                #print 'A: ',A,'Ra: \n',Ra
+                Pa = np.array([0])
+                for k in range(1,i):
+                    #print "j,k:",j,k
+                    #print "j+k,i-k",j+k,i-k
+                    Pa = Pa + invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
+                #print 'Pa:\n',Pa
+                #print (Pa==0).all()
+                s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
+                #print 's: \n',s
+                P = P + s
+                #print 'P new: \n',P
+    #P = P + s
+    return P
+#transform P to P_dist with algo5,6
+def cyk_dist_simple(G,w):
+    w = w.replace(' ','')
+    P_dist = init_simple(w)
+    #print P_dist
+    P_dist = preterminals_simple(P_dist, G, w)
+    #print P_dist
+    P_dist = binary_simple(P_dist, G, w)
+    return P_dist
+
 #initialization of level 0
 def init(w):
     P = np.array([0])
@@ -157,7 +228,8 @@ for i in range(2,3):
     #P = parser.C
     #print P
     from trees import *
-
+    dist_P = cyk_dist_simple(G,w)
+    print dist_P
     #P_1 = init(w)
     #P_1 = preterminals(P_1,G,w)
     #Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
@@ -165,13 +237,13 @@ for i in range(2,3):
     '''P_11 = index1.dot(index1).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
     P_12 = index1.dot(index2).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
     P_13 = index1.dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T)'''
-    
+
     #rule = D.dot(sep).dot(Phi).dot(sep.T).dot(E.T)
     #fin = S.dot(sep).dot(sep.T).dot(D.T).dot(index2.T).dot(index1.T).dot(P_12).dot(rule).dot(index3.T).dot(index1.T).dot(P_13).dot(E).dot(sep)
     #t = tree_dist(Tree.from_penn('(S (D a) (E b))'))
-    t1 = S.dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(Phi).dot(tree_dist(Tree.from_penn('(E b)')))
-    t2 = S.dot(sep).dot(sep.T).dot(D.T).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T).dot(D).dot(sep).dot(Phi).dot(sep.T).dot(E.T).dot(index3.T).dot(index1.T).dot(index1).dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T).dot(E).dot(sep)
-    print t1.dot(t2.T)
+    #t1 = S.dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(Phi).dot(tree_dist(Tree.from_penn('(E b)')))
+    #t2 = S.dot(sep).dot(sep.T).dot(D.T).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T).dot(D).dot(sep).dot(Phi).dot(sep.T).dot(E.T).dot(index3.T).dot(index1.T).dot(index1).dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T).dot(E).dot(sep)
+    #print t1.dot(t2.T)
     #dot(D.T).dot(index2.T).dot(index1.T).dot(index1).dot(index2).dot(D)
     #Pd = cyk_dist(G,w)
     #print Pd.dot(P_1.T)
