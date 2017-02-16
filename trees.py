@@ -1,3 +1,5 @@
+import numpy as np
+from parserNLP.Rule import Rule
 
 class Tree(list):
 	def __init__(self,label,children):
@@ -12,6 +14,30 @@ class Tree(list):
 		for child in self:
 			s+=str(child)
 		return s+') '
+	def to_cyk(self):
+		n = self.get_nterminals()
+		cyk_matrix = np.zeros((n,n),dtype=object)
+		self.__make_nodes(self,cyk_matrix,0)
+		return cyk_matrix
+	def __make_nodes(self,t,cyk_matrix, displacement):
+		if len(t)==1:
+			cyk_matrix[0,displacement] = t.label
+		else:    
+			cyk_matrix[t.get_nterminals()-1,displacement] = Rule(t.label,t[0].label+t[1].label,0)
+			self.__make_nodes(t[0],cyk_matrix,displacement)
+			self.__make_nodes(t[1],cyk_matrix,displacement + t[0].get_nterminals())
+		return cyk_matrix
+
+	def get_terminals(self,t):
+		terminals = []
+		if len(t)==1:
+			return t[0].label
+		terminals += self.get_terminals(t[0])
+		terminals += self.get_terminals(t[1])
+		return terminals
+
+	def get_nterminals(self):
+		return len(self.get_terminals(self))
 	@staticmethod
 	def from_penn(string):
 
@@ -58,3 +84,11 @@ class Tree(list):
 					tree.addChild(child)
 					content = content[index:].strip()
 		return tree
+
+if __name__ == '__main__':
+	tr='(S (D a) (E b))'
+	t = Tree.from_penn(tr)
+	print t
+	print t.get_terminals(t)
+	print t.get_nterminals()
+	print t.to_cyk()
