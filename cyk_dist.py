@@ -48,7 +48,7 @@ def preterminals_simple(P,G,w):
 
 
 
-def compute_R(G, rules_A):
+def compute_R_simple(G, rules_A):
     Ra = np.zeros((dim,dim))
     for i in rules_A:
         rule = G[i]
@@ -66,7 +66,7 @@ def binary_simple(P,G,w):
     # G.groups = non-terminals
     for A in G.groups:
         rules_A = G.get_rules(A)
-        R[A] = compute_R(G, rules_A)
+        R[A] = compute_R_simple(G, rules_A)
     for i in range(2,n):
         for j in range(1,n-i+2):
             #print i,j
