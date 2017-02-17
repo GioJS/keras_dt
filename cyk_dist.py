@@ -233,8 +233,8 @@ if __name__ == '__main__':
         
         #dist_P = cyk_dist_simple(G,w)
         #print dist_P
-        pure_P = index1.dot(index1).dot(D)
-        pure_P += index1.dot(index2).dot(D)
+        #pure_P = index1.dot(index1).dot(D)
+        pure_P = index1.dot(index2).dot(D)
         pure_P += index1.dot(index3).dot(E)
         #pure_P += index2.dot(index2).dot(S)
         print index2.T.dot(index1.T).dot(pure_P).dot(D.T).dot(E.T).dot(index3.T).dot(index1.T).dot(pure_P)
