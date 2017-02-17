@@ -241,7 +241,7 @@ if __name__ == '__main__':
         pure_P += index1.dot(index2).dot(D)
         pure_P += index1.dot(index3).dot(E)
         pure_P += index2.dot(index2).dot(S)'''
-        print index2.T.dot(index2.T).dot(dist_P).dot(S.T)
+        print index1.T.dot(index2.T).dot(dist_P).dot(S.T)
         '''R =  D.T.dot(S.T)
         print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
         R =  D.T.dot(E.T)
