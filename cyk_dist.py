@@ -236,7 +236,7 @@ if __name__ == '__main__':
         from trees import *
         
         dist_P = cyk_dist_simple(G,w)
-        #print dist_P
+        print dist_P
         pure_P = index1.dot(index1).dot(D)
         pure_P += index1.dot(index2).dot(D)
         pure_P += index1.dot(index3).dot(E)
@@ -245,7 +245,7 @@ if __name__ == '__main__':
         print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
         R =  D.T.dot(E.T)
         print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))'''
-        print dist_P.dot(pure_P)
+        #print dist_P.dot(pure_P)
         #P_1 = init(w)
         #P_1 = preterminals(P_1,G,w)
         #Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
