@@ -76,12 +76,15 @@ def binary_simple(P,G,w):
                 Ra = R[A]
                 #print 'A: ',A,'Ra: \n',Ra
                 Pa = np.array([0])
+                norm = np.array([0])
                 for k in range(1,i):
                     #print "j,k:",j,k
                     #print "j+k,i-k",j+k,i-k
-                    Pa = Pa + sigmoid(invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P))
+                    sig = sigmoid(invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P))
+                    norm += np.linalg.norm(sig,2)
+                    Pa = Pa + sig
                 #print 'Pa:\n',Pa
-                #Pa = Pa / 
+                Pa = Pa / norm
                 #print (Pa==0).all()
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
                 #print 's: \n',s
