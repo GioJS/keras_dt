@@ -24,8 +24,10 @@ D = sc(v('D'))
 E = sc(v('E'))
 S = sc(v('S'))
 sep = sc(v('Sep'))
+
 def sigmoid(x):                                        
     return 1 / (1 + np.exp(-x))
+
 def init_simple(w):
     P = np.array([0])
     for i in range(len(w)):
@@ -93,7 +95,7 @@ def cyk_dist_simple(G,w):
     #print P_dist
     P_dist = preterminals_simple(P_dist, G, w)
     #print P_dist
-    #P_dist = binary_simple(P_dist, G, w)
+    P_dist = binary_simple(P_dist, G, w)
     return P_dist
 
 #initialization of level 0
@@ -229,14 +231,14 @@ if __name__ == '__main__':
         #print P
         from trees import *
         
-        dist_P = cyk_dist_simple(G,w)
-        print dist_P
+        #dist_P = cyk_dist_simple(G,w)
+        #print dist_P
         pure_P = index1.dot(index1).dot(D)
         pure_P += index1.dot(index2).dot(D)
         pure_P += index1.dot(index3).dot(E)
-        pure_P += index2.dot(index2).dot(S)
-        print pure_P
-        print dist_P.dot(pure_P)
+        #pure_P += index2.dot(index2).dot(S)
+        print index2.dot(index1.T).dot(pure_P).dot(D.T).dot(E.T).dot(index3).dot(index1.T).dot(pure_P)
+        #print dist_P.dot(pure_P)
         #P_1 = init(w)
         #P_1 = preterminals(P_1,G,w)
         #Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
