@@ -26,7 +26,7 @@ S = sc(v('S'))
 sep = sc(v('Sep'))
 
 def sigmoid(x):                                        
-    return 1 / (1 + np.exp(-((x-0.5)*24)))
+    return 1 / (1 + np.exp(-((x-0.5)*36)))
 
 def init_simple(w):
     P = np.array([0])
@@ -239,6 +239,8 @@ if __name__ == '__main__':
         pure_P += index1.dot(index3).dot(E)
         #pure_P += index2.dot(index2).dot(S)
         R =  D.T.dot(S.T)
+        print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
+        R =  D.T.dot(E.T)
         print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
         #print dist_P.dot(pure_P)
         #P_1 = init(w)
