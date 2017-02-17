@@ -80,8 +80,8 @@ def binary_simple(P,G,w):
                 for k in range(1,i):
                     #print "j,k:",j,k
                     #print "j+k,i-k",j+k,i-k
-                    sig = sigmoid(invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)).diag()
-                    norm = norm + np.linalg.norm(sig,2)
+                    sig = sigmoid(invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P))
+                    norm = norm + np.linalg.norm(np.diag(sig),2)
                     Pa = Pa + sig
                 #print 'Pa:\n',Pa
                 Pa = Pa / norm
