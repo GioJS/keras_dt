@@ -221,8 +221,8 @@ if __name__ == '__main__':
     G.add_rules_from_file('gramm_l')
     parser = CYK(G)
     for i in range(2,3):
-        #w = ('a '*i)+'b'
-        w = 'a'
+        w = ('a '*i)+'b'
+        #w = 'a'
         print w
         #parser.parse(w)
         #P = parser.C
@@ -232,6 +232,9 @@ if __name__ == '__main__':
         dist_P = cyk_dist_simple(G,w)
         #print dist_P
         pure_P = index1.dot(index1).dot(D)
+        pure_P += index1.dot(index2).dot(D)
+        pure_P += index1.dot(index3).dot(E)
+        pure_P += index2.dot(index2).dot(S)
         print pure_P
         print dist_P.dot(pure_P)
         #P_1 = init(w)
