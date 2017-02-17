@@ -86,6 +86,7 @@ def binary_simple(P,G,w):
                     Pa = Pa + sig
                 print 'Pa:\n',Pa
                 Pa = Pa / norm
+                print 'Pa:\n',Pa
                 #print (Pa==0).all()
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
                 print 's: \n',s
