@@ -230,7 +230,7 @@ if __name__ == '__main__':
         from trees import *
         
         dist_P = cyk_dist_simple(G,w)
-        #print dist_P
+        print dist_P
         pure_P = index1.dot(index1).dot(D)
         pure_P += index1.dot(index2).dot(D)
         pure_P += index1.dot(index3).dot(E)
