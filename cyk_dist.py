@@ -26,7 +26,7 @@ S = sc(v('S'))
 sep = sc(v('Sep'))
 
 def sigmoid(x):                                        
-    return 1 / (1 + np.exp(-x))
+    return 1 / (1 + np.exp(-((x-0.5)*12)))
 
 def init_simple(w):
     P = np.array([0])
