@@ -3,7 +3,6 @@ from parserNLP.CYK import CYK
 from vectors import *
 #from keras_dt import *
 from convolutions import *
-from scipy.stats import logistic
 dim = 1024*2
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
@@ -25,7 +24,8 @@ D = sc(v('D'))
 E = sc(v('E'))
 S = sc(v('S'))
 sep = sc(v('Sep'))
-
+def sigmoid(x):                                        
+    return 1 / (1 + np.exp(-x))
 def init_simple(w):
     P = np.array([0])
     for i in range(len(w)):
@@ -77,7 +77,7 @@ def binary_simple(P,G,w):
                 for k in range(1,i):
                     #print "j,k:",j,k
                     #print "j+k,i-k",j+k,i-k
-                    Pa = Pa + logistic.cdf(invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P))
+                    Pa = Pa + sigmoid(invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P))
                 #print 'Pa:\n',Pa
                 #print (Pa==0).all()
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
