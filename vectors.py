@@ -20,7 +20,7 @@ class Vector_generator:
 		#seed = hash(label)
 		from hashlib import sha256
 		#data = np.random.rand(1000)
-		hashl = sha256(label)
+		hashl = sha256(label.encode('utf-8'))
 		seed = np.frombuffer(hashl.digest(), dtype='uint32')
 		#seed=np.frombuffer(seed, dtype='uint32')
 			#print seed

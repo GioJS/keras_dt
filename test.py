@@ -21,13 +21,13 @@ if K.backend() == 'tensorflow':
 		model = Sequential()
 		dt = DT(dim=4096, lexicalized=True)
 		model.add(EmbeddingDT(dt, trees, 2000, 1, 4096))
-		print model.layers[0].output_shape
+		print(model.layers[0].output_shape)
 		#sembra che in questo modo evito la terza dimensione
 		#model.add(Reshape((4096,)))
 		#model.add(Dense(4096, activation="sigmoid"))
 		model.compile(loss='mse', optimizer='sgd')
 
-		print model.layers[0].call(indices[0])
+		print(model.layers[0].call(indices[0]))
 		#print model.layers[1].call(model.layers[0].call(indices[0])).eval()
 		#restituisce un array di 0 perche' non c'e' learning
 		#print model.predict(indices)
@@ -37,13 +37,13 @@ else:
 	model = Sequential()
 	dt = DT(dim=4096, lexicalized=True)
 	model.add(EmbeddingDT(dt, trees, 2000, 1, 4096))
-	print model.layers[0].output_shape
+	print(model.layers[0].output_shape)
 	#sembra che in questo modo evito la terza dimensione
 	#model.add(Reshape((4096,)))
 	#model.add(Dense(4096, activation="sigmoid"))
 	model.compile(loss='mse', optimizer='sgd')
 
-	print model.layers[0].call(indices[0])
-	print model.layers[0].call(indices[0])
+	print(model.layers[0].call(indices[0]))
+	print(model.layers[0].call(indices[0]))
 	#restituisce un array di 0 perche' non c'e' learning
 	#print model.predict(indices)

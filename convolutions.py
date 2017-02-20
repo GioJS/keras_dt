@@ -42,4 +42,4 @@ if __name__ == '__main__':
 	x=np.array([1,2,3,5])
 	y=np.array([2,3,4,7])
 	cc1,cc2= cc_circulant(x,y),shuffled_circular_convolution(x,y,Vector_generator.permutations(dim=4))
-	print cc1.dot(cc2)/(np.linalg.norm(cc1,2)*np.linalg.norm(cc2,2))
+	print(cc1.dot(cc2)/(np.linalg.norm(cc1,2)*np.linalg.norm(cc2,2)))

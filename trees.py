@@ -87,7 +87,7 @@ class Tree(list):
 if __name__ == '__main__':
 	tr='(S (D a) (E b))'
 	t = Tree.from_penn(tr)
-	print t
-	print t.get_terminals(t)
-	print t.get_nterminals()
-	print t.to_cyk()
+	print(t)
+	print(t.get_terminals(t))
+	print(t.get_nterminals())
+	print(t.to_cyk())
