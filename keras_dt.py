@@ -17,7 +17,6 @@ class DT:
 
 		self.permutations=Vector_generator.permutations(dim=dim,seed=seed)
 
-	
 	#compute dt, t is nltk.tree.Tree
 	def dt(self,t, to_penn=True):
 		tensor = K.zeros((self.dim,))
