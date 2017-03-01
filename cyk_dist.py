@@ -82,10 +82,10 @@ def binary_simple(P,G,w):
                     #print "j+k,i-k",j+k,i-k
                     sig = sigmoid(invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P))
                     print(sig)
-                    norm = norm + np.linalg.norm(sig,2)
+                    #norm = norm + np.linalg.norm(sig,2)
                     Pa = Pa + sig
                 print('Pa:\n',Pa)
-                Pa = Pa / norm
+                #Pa = Pa / norm
                 print('Pa:\n',Pa)
                 #print (Pa==0).all()
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
@@ -243,7 +243,7 @@ if __name__ == '__main__':
         pure_P += index1.dot(index2).dot(D)
         pure_P += index1.dot(index3).dot(E)
         pure_P += index2.dot(index2).dot(S)'''
-        print(S.T.dot(index2.T.dot(index2.T).dot(dist_P)))
+        print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
         #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
         '''R =  D.T.dot(S.T)
         print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
