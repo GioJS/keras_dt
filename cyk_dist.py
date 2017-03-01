@@ -25,7 +25,7 @@ E = sc(v('E'))
 S = sc(v('S'))
 sep = sc(v('Sep'))
 
-def sigmoid(x):                                        
+def sigmoid(x):
     return 1 / (1 + np.exp(-((x-0.5)*36)))
 
 def init_simple(w):
@@ -236,14 +236,15 @@ if __name__ == '__main__':
         #P = parser.C
         #print P
         from trees import *
-        
+
         dist_P = cyk_dist_simple(G,w)
         print(dist_P)
         '''pure_P = index1.dot(index1).dot(D)
         pure_P += index1.dot(index2).dot(D)
         pure_P += index1.dot(index3).dot(E)
         pure_P += index2.dot(index2).dot(S)'''
-        print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
+        print(S.T.dot(index2.T.dot(index2.T).dot(dist_P)))
+        #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
         '''R =  D.T.dot(S.T)
         print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
         R =  D.T.dot(E.T)
@@ -301,4 +302,3 @@ if __name__ == '__main__':
         #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
         #print t_d[:,0].dot(Dw0[:,0])
         #print Pd.dot(t_d.T)
-        
