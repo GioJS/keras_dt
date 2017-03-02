@@ -16,6 +16,7 @@ def sc(v):
 #[v]-
 def invsc(v):
     return sc(v).T
+#init
 index0 = sc(v('0'))
 index1 = sc(v('1'))
 index2 = sc(v('2'))
@@ -78,9 +79,10 @@ def binary_simple(P,G,w):
                     print('sig:\n',sig)
                     #norm = norm + np.linalg.norm(sig,2)
                     Pa = Pa + sig
+
                 print('Pa:\n',Pa)
-                Pa = Pa / np.linalg.norm(Pa,2)
-                print('Pa:\n',Pa)
+                #Pa = Pa / np.linalg.norm(Pa,2)
+                #print('Pa:\n',Pa)
                 #print (Pa==0).all()
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
                 print('s: \n',s)
