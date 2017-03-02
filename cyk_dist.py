@@ -61,8 +61,6 @@ def compute_R_simple(G, rules_A):
 
 def binary_simple(P,G,w):
     n = len(w)
-    #C = compute_C(G)
-    #s = np.array([0])
     R = {}
     print('preterminal: \n',P)
     # G.groups = non-terminals
@@ -71,21 +69,17 @@ def binary_simple(P,G,w):
         R[A] = compute_R_simple(G, rules_A)
     for i in range(2,n):
         for j in range(1,n-i+2):
-            #print i,j
             for A in G.groups:
                 Ra = R[A]
-                #print 'A: ',A,'Ra: \n',Ra
                 Pa = np.array([0])
                 norm = np.array([0])
                 for k in range(1,i):
-                    #print "j,k:",j,k
-                    #print "j+k,i-k",j+k,i-k
                     sig = sigmoid(invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P))
                     print('sig:\n',sig)
-                    norm = norm + np.linalg.norm(sig,2)
+                    #norm = norm + np.linalg.norm(sig,2)
                     Pa = Pa + sig
                 print('Pa:\n',Pa)
-                Pa = Pa / norm
+                Pa = Pa / np.linalg.norm(Pa,2)
                 print('Pa:\n',Pa)
                 #print (Pa==0).all()
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
@@ -239,6 +233,6 @@ if __name__ == '__main__':
 
         dist_P = cyk_dist_simple(G,w)
         print(dist_P)
-        
+
         print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
         #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
