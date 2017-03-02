@@ -3,7 +3,7 @@ from parserNLP.CYK import CYK
 from vectors import *
 #from keras_dt import *
 from convolutions import *
-dim = 1024*2
+dim = 2048
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
@@ -39,15 +39,31 @@ def init_simple(w):
 def preterminals_simple(P,G,w):
     R = np.array([0])
 
-    for rule in G.get_unit_productions():
+    '''for rule in G.get_unit_productions():
         #print rule
         R = R + sc(v(rule.head())).dot(invsc(v(rule.production())))
 
     s = np.array([0])
     for i in range(len(w)):
         s = s + index1.dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(index0.T).dot(P)
-    P = s
-    return P
+    P = s'''
+
+    symbols = {}
+    for rule in G.get_unit_productions():
+        symbols[rule.head()] = np.zeros((dim,dim))
+
+    for rule in G.get_unit_productions():
+        symbols[rule.head()] = symbols[rule.head()] + invsc(v(rule.production()))
+
+    s = np.zeros((dim,dim))
+    for i in range(len(w)):
+        for symbol in G.groups:
+            tmp = np.zeros((dim,dim))
+            if symbol in symbols:
+                tmp = tmp + sc(v(symbol)).dot(sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P)))
+
+        s = s + index1.dot(sc(v(str(i+1)))).dot(tmp)
+    return s
 
 
 
@@ -75,17 +91,22 @@ def binary_simple(P,G,w):
                 Pa = np.array([0])
                 norm = np.array([0])
                 for k in range(1,i):
-                    sig = sigmoid(invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P))
-                    print('sig:\n',sig)
-                    #norm = norm + np.linalg.norm(sig,2)
-                    Pa = Pa + sig
-                print('Pa:\n',Pa)
+                    if i==2 and j==2 and k==1:
+                        pre = invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
+                        print('presig:',i,j,k,'\n', pre)
+                        sig = sigmoid(pre)
+                        print('sig: ',i,j,k,'\n',sig)
+                        #norm = norm + np.linalg.norm(sig,2)
+                        Pa = sigmoid(Pa + sig)
+                    else:
+                        Pa = np.zeros((dim,dim))
+                #print('Pa:\n',Pa)
                 #Pa = Pa / np.linalg.norm(Pa,2)
                 #print('Pa:\n',Pa)
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
-                print('s: \n',s)
+                #print('s: \n',s)
                 P = P + s
-                print('P new: \n',P)
+                #print('P new: \n',P)
     #P = P + s
     return P
 #transform P to P_dist with algo5,6
@@ -231,8 +252,25 @@ if __name__ == '__main__':
         #print P
         from trees import *
 
-        dist_P = cyk_dist_simple(G,w)
-        print(dist_P)
+        #dist_P = cyk_dist_simple(G,w)
+        #print(dist_P)
 
-        print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
+        #print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
         #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
+
+
+        pure_P = index1.dot(index1).dot(D)
+        pure_P += index1.dot(index2).dot(D)
+        pure_P += index1.dot(index3).dot(E)
+        #print(pure_P)
+        pre = init_simple(w)
+        pre = preterminals_simple(pre, G, w)
+        #print(pre)
+
+        #print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
+        #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
+        '''R =  D.T.dot(S.T)
+        print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
+        '''
+        R =  D.T.dot(E.T)
+        print(sigmoid(index2.T.dot(index1.T).dot(pre).dot(R).dot(index3.T).dot(index1.T).dot(pre)))
