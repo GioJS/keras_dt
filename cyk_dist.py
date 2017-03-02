@@ -27,7 +27,7 @@ S = sc(v('S'))
 sep = sc(v('Sep'))
 
 def sigmoid(x):
-    return 1 / (1 + np.exp(-((x-0.5)*36)))
+    return 1 / (1 + np.exp(-(x-0.5)*36))
 
 def init_simple(w):
     P = np.array([0])
@@ -79,11 +79,9 @@ def binary_simple(P,G,w):
                     print('sig:\n',sig)
                     #norm = norm + np.linalg.norm(sig,2)
                     Pa = Pa + sig
-
                 print('Pa:\n',Pa)
                 #Pa = Pa / np.linalg.norm(Pa,2)
                 #print('Pa:\n',Pa)
-                #print (Pa==0).all()
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
                 print('s: \n',s)
                 P = P + s
