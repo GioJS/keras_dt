@@ -81,11 +81,11 @@ def binary_simple(P,G,w):
                     #print "j,k:",j,k
                     #print "j+k,i-k",j+k,i-k
                     sig = sigmoid(invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P))
-                    print(sig)
-                    #norm = norm + np.linalg.norm(sig,2)
+                    print('sig:\n',sig)
+                    norm = norm + np.linalg.norm(sig,2)
                     Pa = Pa + sig
                 print('Pa:\n',Pa)
-                #Pa = Pa / norm
+                Pa = Pa / norm
                 print('Pa:\n',Pa)
                 #print (Pa==0).all()
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
@@ -239,66 +239,6 @@ if __name__ == '__main__':
 
         dist_P = cyk_dist_simple(G,w)
         print(dist_P)
-        '''pure_P = index1.dot(index1).dot(D)
-        pure_P += index1.dot(index2).dot(D)
-        pure_P += index1.dot(index3).dot(E)
-        pure_P += index2.dot(index2).dot(S)'''
+        
         print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
         #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
-        '''R =  D.T.dot(S.T)
-        print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
-        R =  D.T.dot(E.T)
-        print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))'''
-        #print dist_P.dot(pure_P)
-        #P_1 = init(w)
-        #P_1 = preterminals(P_1,G,w)
-        #Pa = Pa + C.dot((invsc(v(str(j))))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P).dot(C.T)
-        #C = compute_C(G)
-        '''P_11 = index1.dot(index1).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
-        P_12 = index1.dot(index2).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
-        P_13 = index1.dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T)'''
-
-        #rule = D.dot(sep).dot(Phi).dot(sep.T).dot(E.T)
-        #fin = S.dot(sep).dot(sep.T).dot(D.T).dot(index2.T).dot(index1.T).dot(P_12).dot(rule).dot(index3.T).dot(index1.T).dot(P_13).dot(E).dot(sep)
-        #t = tree_dist(Tree.from_penn('(S (D a) (E b))'))
-        #t1 = S.dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(Phi).dot(tree_dist(Tree.from_penn('(E b)')))
-        #t2 = S.dot(sep).dot(sep.T).dot(D.T).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T).dot(D).dot(sep).dot(Phi).dot(sep.T).dot(E.T).dot(index3.T).dot(index1.T).dot(index1).dot(index3).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T).dot(E).dot(sep)
-        #print t1.dot(t2.T)
-        #dot(D.T).dot(index2.T).dot(index1.T).dot(index1).dot(index2).dot(D)
-        #Pd = cyk_dist(G,w)
-        #print Pd.dot(P_1.T)
-        #print sep.dot(sep.T)
-        #print sep.T.dot(D.T).dot(sep.T).dot(sep).dot(D).dot(sep)
-        #print t1.dot(t2.T)
-        #x = circulant(v('sdfg'))
-        '''for i in range(100):
-            Pd = Pd + circulant(v('Prova'+str(i)))'''
-        #Pd = invsc(v('1')).dot(invsc(v('2'))).dot(Pd)
-        #Pd = invsc(v("1")).dot(invsc(v("0"))).dot(Pd).dot(invsc(v('Sep')))
-
-        #Pd = invsc(v('Sep')).dot(invsc(v('S'))).dot(Pd)
-        #Pd = Pd.dot(sc(v('S'))).dot(sc(v('Sep')))
-        '''C = compute_C(G)
-        print C.dot(C.T)
-        print C.T.dot(C)'''
-        #Pd = C.T.dot(Pd).dot(C)
-        #Pd = sc(v('S')).dot(Pd) #test
-        #Dw0 = sc(v('D')).dot(circulant(v('a')))
-        #t_d = tree_dist(Tree('D',[Tree('a',[])]))
-        #from parserNLP.Rule import *
-        #tentando di costruire a mano l'elemento secondo binary
-        '''C = compute_C(G)
-        rules_A = G.get_rules('S')
-        Ra = compute_R(G, rules_A)
-        Pa = C.dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T).dot(Ra).dot(E).dot(sep).dot(tree_dist(Tree.from_penn('(E b)'))).dot(sep.T).dot(E.T).dot(C.T)
-        el = index2.dot(index1).dot(S).dot(sep).dot(S).dot(sep).dot(Pa).dot(sep.T).dot(S.T)'''
-        #rule = Rule('D','a',0)
-        #term = sc(v('0')).dot(sc(v('1'))).dot(sc(v('a'))).dot(sc(v('Sep')))
-        #print Pd.dot(term.T)
-        #print tree_dist(Tree.from_penn('(D a)')).dot(invsc(v(rule.production()))).dot(invsc(v('Sep'))).dot(invsc(v(rule.head())))
-        #t_d = index1.dot(index1).dot(D).dot(sep).dot(tree_dist(Tree.from_penn('(D a)'))).dot(sep.T).dot(D.T)
-        #print Pd.dot(el.T)
-        #t_d = tree_dist(Tree.from_penn('(S (D a) (E b))'))
-        #t_d = tree_dist(Tree.from_penn('(S (D a) (S (D a) (E b)))'))
-        #print t_d[:,0].dot(Dw0[:,0])
-        #print Pd.dot(t_d.T)
