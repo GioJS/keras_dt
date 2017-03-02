@@ -3,7 +3,7 @@ from parserNLP.CYK import CYK
 from vectors import *
 #from keras_dt import *
 from convolutions import *
-dim = 2048
+dim = 1024
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
@@ -39,14 +39,17 @@ def init_simple(w):
 def preterminals_simple(P,G,w):
     R = np.array([0])
 
-    '''for rule in G.get_unit_productions():
+    for rule in G.get_unit_productions():
         #print rule
         R = R + sc(v(rule.head())).dot(invsc(v(rule.production())))
 
     s = np.array([0])
     for i in range(len(w)):
         s = s + index1.dot(sc(v(str(i+1)))).dot(R).dot(invsc(v(str(i+1)))).dot(index0.T).dot(P)
-    P = s'''
+    P = s
+    return P
+
+def preterminals_simple_with_sigmoid(P, G, w):
 
     symbols = {}
     for rule in G.get_unit_productions():
@@ -57,10 +60,14 @@ def preterminals_simple(P,G,w):
 
     s = np.zeros((dim,dim))
     for i in range(len(w)):
+        #print("Symbol = " , i, w[i])
+        tmp = np.zeros((dim, dim))
         for symbol in G.groups:
-            tmp = np.zeros((dim,dim))
             if symbol in symbols:
-                tmp = tmp + sc(v(symbol)).dot(sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P)))
+                #print("QUESTO >>> ", symbol)
+                detect_matrix = sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
+                #print(detect_matrix[0:4,0:4])
+                tmp = tmp + sc(v(symbol)).dot(detect_matrix)
 
         s = s + index1.dot(sc(v(str(i+1)))).dot(tmp)
     return s
@@ -243,34 +250,38 @@ if __name__ == '__main__':
     G = Grammar('S')
     G.add_rules_from_file('gramm_l')
     parser = CYK(G)
-    for i in range(2,3):
-        w = ('a '*i)+'b'
-        #w = 'a'
-        print(w)
-        #parser.parse(w)
-        #P = parser.C
-        #print P
-        from trees import *
+#    for i in range(2,3):
+    #w = ('a '*i)+'b'
+    #w = 'a'
+    w = 'aab'
+    print(w)
+    #parser.parse(w)
+    #P = parser.C
+    #print P
+    from trees import *
 
-        #dist_P = cyk_dist_simple(G,w)
-        #print(dist_P)
+    #dist_P = cyk_dist_simple(G,w)
+    #print(dist_P)
 
-        #print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
-        #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
+    #print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
+    #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
 
 
-        pure_P = index1.dot(index1).dot(D)
-        pure_P += index1.dot(index2).dot(D)
-        pure_P += index1.dot(index3).dot(E)
-        #print(pure_P)
-        pre = init_simple(w)
-        pre = preterminals_simple(pre, G, w)
-        #print(pre)
+    pure_P = index1.dot(index1).dot(D)
+    pure_P += index1.dot(index2).dot(D)
+    pure_P += index1.dot(index3).dot(E)
+    #print(pure_P)
+    pre = init_simple(w)
+    pre_1 = preterminals_simple_with_sigmoid(pre, G, w)
+    pre_2 = preterminals_simple(pre, G, w)
+    #print(pre)
 
-        #print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
-        #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
-        '''R =  D.T.dot(S.T)
-        print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
-        '''
-        R =  D.T.dot(E.T)
-        print(sigmoid(index2.T.dot(index1.T).dot(pre).dot(R).dot(index3.T).dot(index1.T).dot(pre)))
+    #print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
+    #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
+    '''R =  D.T.dot(S.T)
+    print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
+    '''
+    R =  D.T.dot(E.T)
+    print("\n\nPURE\n", sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))[0:4,0:4])
+    print("\n\nCOMPUTED SIGMOID\n", sigmoid(index2.T.dot(index1.T).dot(pre_1).dot(R).dot(index3.T).dot(index1.T).dot(pre_1))[0:4,0:4] )
+    print("\n\nCOMPUTED NO SIGMOID\n", sigmoid(index2.T.dot(index1.T).dot(pre_2).dot(R).dot(index3.T).dot(index1.T).dot(pre_2))[0:4,0:4] )
