@@ -3,7 +3,7 @@ from parserNLP.CYK import CYK
 from vectors import *
 #from keras_dt import *
 from convolutions import *
-dim = 1024
+dim = 1024*2
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
@@ -86,7 +86,7 @@ def compute_R_simple(G, rules_A):
 def binary_simple(P,G,w):
     n = len(w)
     R = {}
-    print('preterminal: \n',P)
+    #print('preterminal: \n',P)
     # G.groups = non-terminals
     for A in G.groups:
         rules_A = G.get_rules(A)
@@ -100,13 +100,14 @@ def binary_simple(P,G,w):
                 for k in range(1,i):
                     if i==2 and j==2 and k==1:
                         pre = invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
-                        print('presig:',i,j,k,'\n', pre)
+                        #print('presig:',i,j,k,'\n', pre)
                         sig = sigmoid(pre)
-                        print('sig: ',i,j,k,'\n',sig)
+                        #print('sig: ',i,j,k,'\n',sig)
                         #norm = norm + np.linalg.norm(sig,2)
-                        Pa = sigmoid(Pa + sig)
+                        Pa = Pa + sig
                     else:
                         Pa = np.zeros((dim,dim))
+
                 #print('Pa:\n',Pa)
                 #Pa = Pa / np.linalg.norm(Pa,2)
                 #print('Pa:\n',Pa)
@@ -121,7 +122,7 @@ def cyk_dist_simple(G,w):
     w = w.replace(' ','')
     P_dist = init_simple(w)
     #print P_dist
-    P_dist = preterminals_simple(P_dist, G, w)
+    P_dist = preterminals_simple_with_sigmoid(P_dist, G, w)
     #print P_dist
     P_dist = binary_simple(P_dist, G, w)
     return P_dist
@@ -260,14 +261,14 @@ if __name__ == '__main__':
     #print P
     from trees import *
 
-    #dist_P = cyk_dist_simple(G,w)
+    dist_P = cyk_dist_simple(G,w)
     #print(dist_P)
 
-    #print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
+    print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
     #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
 
 
-    pure_P = index1.dot(index1).dot(D)
+    '''pure_P = index1.dot(index1).dot(D)
     pure_P += index1.dot(index2).dot(D)
     pure_P += index1.dot(index3).dot(E)
     #print(pure_P)
@@ -278,10 +279,10 @@ if __name__ == '__main__':
 
     #print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
     #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
-    '''R =  D.T.dot(S.T)
+    R =  D.T.dot(S.T)
     print sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))
-    '''
+
     R =  D.T.dot(E.T)
     print("\n\nPURE\n", sigmoid(index2.T.dot(index1.T).dot(pure_P).dot(R).dot(index3.T).dot(index1.T).dot(pure_P))[0:4,0:4])
     print("\n\nCOMPUTED SIGMOID\n", sigmoid(index2.T.dot(index1.T).dot(pre_1).dot(R).dot(index3.T).dot(index1.T).dot(pre_1))[0:4,0:4] )
-    print("\n\nCOMPUTED NO SIGMOID\n", sigmoid(index2.T.dot(index1.T).dot(pre_2).dot(R).dot(index3.T).dot(index1.T).dot(pre_2))[0:4,0:4] )
+    print("\n\nCOMPUTED NO SIGMOID\n", sigmoid(index2.T.dot(index1.T).dot(pre_2).dot(R).dot(index3.T).dot(index1.T).dot(pre_2))[0:4,0:4] )'''
