@@ -112,7 +112,7 @@ def binary_simple(P,G,w):
                     #print(eye)
                     #eye = eye / np.linalg.norm(eye,2)
                     print(eye)
-                    Pa = np.multiply(Pa + sig, eye)
+                    Pa = Pa + np.multiply(sig, eye)
                     #Pa = Pa / np.linalg.norm(Pa,2)
                     #    n_eye += 1
                     '''else:
