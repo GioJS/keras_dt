@@ -3,7 +3,7 @@ from parserNLP.CYK import CYK
 from vectors import *
 #from keras_dt import *
 from convolutions import *
-dim = 1024*4
+dim = 1024*2
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
@@ -27,7 +27,7 @@ S = sc(v('S'))
 sep = sc(v('Sep'))
 
 def sigmoid(x):
-    return 1 / (1 + np.exp(-(x-0.5)*36))
+    return 1 / (1 + np.exp(-(x-0.5)*360))
 
 def init_simple(w):
     P = np.array([0])
@@ -107,20 +107,20 @@ def binary_simple(P,G,w):
                     diag = np.diag(sig)
                     #norm = norm + np.linalg.norm(sig,2)
                     print(np.allclose(diag,np.ones(dim),rtol=np.max(diag),atol=np.min(diag)))
-                    if np.allclose(diag,np.ones(dim),rtol=np.max(diag),atol=np.min(diag)):
-                        Pa = Pa + sig
-                        n_eye += 1
+                    #if np.allclose(diag,np.ones(dim),rtol=np.max(diag),atol=np.min(diag)):
+                    Pa = Pa + sig
+                    #    n_eye += 1
                     '''else:
                         Pa = np.zeros((dim,dim))'''
 
                 #print('Pa:\n',Pa)
-                print(n_eye)
-                if n_eye > 0:
-                    Pa = Pa / n_eye
+                #print(n_eye)
+                #if n_eye > 0:
+                #    Pa = Pa / n_eye
                     #print('Pa:\n',Pa)
-                    s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
+                s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
                     #print('s: \n',s)
-                    P = P + s
+                P = P + s
                     #print('P new: \n',P)
     #P = P + s
     return P
