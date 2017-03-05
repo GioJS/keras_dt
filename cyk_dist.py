@@ -27,7 +27,7 @@ S = sc(v('S'))
 sep = sc(v('Sep'))
 
 def sigmoid(x):
-    return 1 / (1 + np.exp(-(x-0.5)*360))
+    return 1 / (1 + np.exp(-(x-0.5)*3600))
 
 def init_simple(w):
     P = np.array([0])
@@ -96,19 +96,24 @@ def binary_simple(P,G,w):
             for A in G.groups:
                 Ra = R[A]
                 Pa = np.zeros((dim,dim))
-                norm = np.array([0])
-                n_eye = 0
+                #norm = np.array([0])
+                #n_eye = 0
                 for k in range(1,i):
                     #if i==2 and j==2 and k==1:
                     pre = invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
                     #print('presig:',i,j,k,'\n', pre)
                     sig = sigmoid(pre)
-                    print('sig: ',i,j,k,'\n',sig)
-                    diag = np.diag(sig)
+                    #print('sig: ',i,j,k,'\n',sig)
+                    #diag = np.diag(sig)
                     #norm = norm + np.linalg.norm(sig,2)
-                    print(np.allclose(diag,np.ones(dim),rtol=np.max(diag),atol=np.min(diag)))
+                    #print(np.allclose(diag,np.ones(dim),rtol=np.max(diag),atol=np.min(diag)))
                     #if np.allclose(diag,np.ones(dim),rtol=np.max(diag),atol=np.min(diag)):
-                    Pa = Pa + sig
+                    eye = sigmoid(sig.T.dot(sig))
+                    #print(eye)
+                    #eye = eye / np.linalg.norm(eye,2)
+                    print(eye)
+                    Pa = np.multiply(Pa + sig, eye)
+                    #Pa = Pa / np.linalg.norm(Pa,2)
                     #    n_eye += 1
                     '''else:
                         Pa = np.zeros((dim,dim))'''
