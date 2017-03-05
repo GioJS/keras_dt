@@ -3,7 +3,7 @@ from parserNLP.CYK import CYK
 from vectors import *
 #from keras_dt import *
 from convolutions import *
-dim = 1024*2
+dim = 1024*4
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
@@ -95,26 +95,33 @@ def binary_simple(P,G,w):
         for j in range(1,n-i+2):
             for A in G.groups:
                 Ra = R[A]
-                Pa = np.array([0])
+                Pa = np.zeros((dim,dim))
                 norm = np.array([0])
+                n_eye = 0
                 for k in range(1,i):
-                    if i==2 and j==2 and k==1:
-                        pre = invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
-                        #print('presig:',i,j,k,'\n', pre)
-                        sig = sigmoid(pre)
-                        #print('sig: ',i,j,k,'\n',sig)
-                        #norm = norm + np.linalg.norm(sig,2)
+                    #if i==2 and j==2 and k==1:
+                    pre = invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
+                    #print('presig:',i,j,k,'\n', pre)
+                    sig = sigmoid(pre)
+                    print('sig: ',i,j,k,'\n',sig)
+                    diag = np.diag(sig)
+                    #norm = norm + np.linalg.norm(sig,2)
+                    print(np.allclose(diag,np.ones(dim),rtol=np.max(diag),atol=np.min(diag)))
+                    if np.allclose(diag,np.ones(dim),rtol=np.max(diag),atol=np.min(diag)):
                         Pa = Pa + sig
-                    else:
-                        Pa = np.zeros((dim,dim))
+                        n_eye += 1
+                    '''else:
+                        Pa = np.zeros((dim,dim))'''
 
                 #print('Pa:\n',Pa)
-                #Pa = Pa / np.linalg.norm(Pa,2)
-                #print('Pa:\n',Pa)
-                s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
-                #print('s: \n',s)
-                P = P + s
-                #print('P new: \n',P)
+                print(n_eye)
+                if n_eye > 0:
+                    Pa = Pa / n_eye
+                    #print('Pa:\n',Pa)
+                    s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
+                    #print('s: \n',s)
+                    P = P + s
+                    #print('P new: \n',P)
     #P = P + s
     return P
 #transform P to P_dist with algo5,6
