@@ -98,12 +98,15 @@ def binary_simple(P,G,w):
                 Pa = np.zeros((dim,dim))
 
                 for k in range(1,i):
-                    pre = invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
+
+                    pre = invsc(v(str(j))).dot(invsc(v(str(k))).dot(P)).dot(Ra).dot(invsc(v(str(j+k))).dot(invsc(v(str(i-k)))).dot(P))
+
                     sig = sigmoid(pre)
                     #trick
-                    eye = sigmoid(sig.T.dot(sig))
+                    #eye = sigmoid(sig.T.dot(sig))
 
-                    Pa = Pa + np.multiply(sig, eye)
+                    #print(eye)
+                    Pa = Pa + sig #np.multiply(sig, eye)
 
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
 
