@@ -3,7 +3,7 @@ from parserNLP.CYK import CYK
 from vectors import *
 #from keras_dt import *
 from convolutions import *
-dim = 1024*2
+dim = 1024*4
 #dt = DT(dim=1024, lexicalized=True)
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
@@ -27,7 +27,7 @@ S = sc(v('S'))
 sep = sc(v('Sep'))
 
 def sigmoid(x):
-    return 1 / (1 + np.exp(-(x-0.5)*3600))
+    return 1 / (1 + np.exp(-(x-0.5)*360))
 
 def init_simple(w):
     P = np.array([0])
@@ -91,7 +91,7 @@ def binary_simple(P,G,w):
     for A in G.groups:
         rules_A = G.get_rules(A)
         R[A] = compute_R_simple(G, rules_A)
-    for i in range(2,n):
+    for i in range(2,n+1):
         for j in range(1,n-i+2):
             for A in G.groups:
                 Ra = R[A]
@@ -111,7 +111,7 @@ def binary_simple(P,G,w):
                     eye = sigmoid(sig.T.dot(sig))
                     #print(eye)
                     #eye = eye / np.linalg.norm(eye,2)
-                    print(eye)
+                    #print(eye)
                     Pa = Pa + np.multiply(sig, eye)
                     #Pa = Pa / np.linalg.norm(Pa,2)
                     #    n_eye += 1
@@ -185,7 +185,7 @@ def binary(P,G,w):
     for A in G.groups:
         rules_A = G.get_rules(A)
         R[A] = compute_R(G, rules_A)
-    for i in range(2,n):
+    for i in range(2,n+1):
         for j in range(1,n-i+2):
             #print i,j
             for A in G.groups:
@@ -275,10 +275,11 @@ if __name__ == '__main__':
 
     dist_P = cyk_dist_simple(G,w)
     #print(dist_P)
-
-    print(S.T.dot(index2.T).dot(index2.T).dot(dist_P))
-    #print(index1.T.dot(index1.T).dot(dist_P).dot(D.T))
-
+    print('D1\n',D.T.dot(index1.T).dot(index1.T).dot(dist_P))
+    print('D2\n',D.T.dot(index2.T).dot(index1.T).dot(dist_P))
+    print('E\n',E.T.dot(index3.T).dot(index1.T).dot(dist_P))
+    print('S1\n',S.T.dot(index2.T).dot(index2.T).dot(dist_P))
+    print('S2\n',S.T.dot(index1.T).dot(index3.T).dot(dist_P))
 
     '''pure_P = index1.dot(index1).dot(D)
     pure_P += index1.dot(index2).dot(D)
