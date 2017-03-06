@@ -1,14 +1,13 @@
 from parserNLP.Grammar import Grammar
 from parserNLP.CYK import CYK
 from vectors import *
-#from keras_dt import *
 from convolutions import *
-dim = 1024*4
-#dt = DT(dim=1024, lexicalized=True)
+
+
+dim = 1024*2
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
 v = gen.get_random_vector
-#print Phi
 
 #[v]+
 def sc(v):
@@ -86,48 +85,30 @@ def compute_R_simple(G, rules_A):
 def binary_simple(P,G,w):
     n = len(w)
     R = {}
-    #print('preterminal: \n',P)
+
     # G.groups = non-terminals
     for A in G.groups:
         rules_A = G.get_rules(A)
         R[A] = compute_R_simple(G, rules_A)
+
     for i in range(2,n+1):
         for j in range(1,n-i+2):
             for A in G.groups:
                 Ra = R[A]
                 Pa = np.zeros((dim,dim))
-                #norm = np.array([0])
-                #n_eye = 0
-                for k in range(1,i):
-                    #if i==2 and j==2 and k==1:
-                    pre = invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
-                    #print('presig:',i,j,k,'\n', pre)
-                    sig = sigmoid(pre)
-                    #print('sig: ',i,j,k,'\n',sig)
-                    #diag = np.diag(sig)
-                    #norm = norm + np.linalg.norm(sig,2)
-                    #print(np.allclose(diag,np.ones(dim),rtol=np.max(diag),atol=np.min(diag)))
-                    #if np.allclose(diag,np.ones(dim),rtol=np.max(diag),atol=np.min(diag)):
-                    eye = sigmoid(sig.T.dot(sig))
-                    #print(eye)
-                    #eye = eye / np.linalg.norm(eye,2)
-                    #print(eye)
-                    Pa = Pa + np.multiply(sig, eye)
-                    #Pa = Pa / np.linalg.norm(Pa,2)
-                    #    n_eye += 1
-                    '''else:
-                        Pa = np.zeros((dim,dim))'''
 
-                #print('Pa:\n',Pa)
-                #print(n_eye)
-                #if n_eye > 0:
-                #    Pa = Pa / n_eye
-                    #print('Pa:\n',Pa)
+                for k in range(1,i):
+                    pre = invsc(v(str(j))).dot(invsc(v(str(k)))).dot(P).dot(Ra).dot(invsc(v(str(j+k)))).dot(invsc(v(str(i-k)))).dot(P)
+                    sig = sigmoid(pre)
+                    #trick
+                    eye = sigmoid(sig.T.dot(sig))
+
+                    Pa = Pa + np.multiply(sig, eye)
+
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
-                    #print('s: \n',s)
+
                 P = P + s
-                    #print('P new: \n',P)
-    #P = P + s
+
     return P
 #transform P to P_dist with algo5,6
 def cyk_dist_simple(G,w):
