@@ -103,10 +103,9 @@ def binary_simple(P,G,w):
 
                     sig = sigmoid(pre)
                     #trick
-                    eye = sigmoid(sig.T.dot(sig))
+                    eye = sigmoid(np.multiply(sig,np.identity(dim)))
 
-                    #print(eye)
-                    Pa = Pa + np.multiply(sig, eye)
+                    Pa = Pa + eye
 
                 s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
 
