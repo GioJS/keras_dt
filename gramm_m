@@ -1,0 +1,13 @@
+S -> NP VP
+VP -> V NP
+NP -> Det N
+NP -> Adj NP
+NP -> john
+N -> boy
+N -> girl
+V -> sees
+V -> likes
+Adj -> big
+Adj -> small
+Det -> a
+Det -> the

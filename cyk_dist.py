@@ -4,7 +4,7 @@ from vectors import *
 from convolutions import *
 
 
-dim = 1024*2
+dim = 1024*4
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
 v = gen.get_random_vector
@@ -16,14 +16,18 @@ def sc(v):
 def invsc(v):
     return sc(v).T
 #init
+
 index0 = sc(v('0'))
 index1 = sc(v('1'))
+
 index2 = sc(v('2'))
 index3 = sc(v('3'))
+index4 = sc(v('4'))
+'''
 D = sc(v('D'))
 E = sc(v('E'))
 S = sc(v('S'))
-sep = sc(v('Sep'))
+sep = sc(v('Sep'))'''
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-(x-0.5)*360))
@@ -103,7 +107,7 @@ def binary_simple(P,G,w):
 
                     sig = sigmoid(pre)
                     #trick
-                    eye = sigmoid(np.multiply(sig,np.identity(dim)))
+                    eye = np.multiply(sig,np.identity(dim))
 
                     Pa = Pa + eye
 
@@ -114,7 +118,7 @@ def binary_simple(P,G,w):
     return P
 #transform P to P_dist with algo5,6
 def cyk_dist_simple(G,w):
-    w = w.replace(' ','')
+    w = w.split(' ') #now terminals are strings
     P_dist = init_simple(w)
     #print P_dist
     P_dist = preterminals_simple_with_sigmoid(P_dist, G, w)
@@ -244,25 +248,43 @@ def test_P(parser,w):
 
 if __name__ == '__main__':
     G = Grammar('S')
-    G.add_rules_from_file('gramm_l')
-    parser = CYK(G)
+    G.add_rules_from_file('gramm_m')
+    '''print(G.get_unit_productions())
+    print()
+    print(G.get_nonunit_productions())'''
+    #parser = CYK(G)
 #    for i in range(2,3):
     #w = ('a '*i)+'b'
     #w = 'a'
-    w = 'aab'
+    w = 'john likes a girl'
     print(w)
     #parser.parse(w)
+    #print(parser.C)
+    #print(parser.getTrees())
+    #exit(0)
+    #parser.parse(w)
     #P = parser.C
-    #print P
+    #print(P)
+    #exit(0)
     from trees import *
 
     dist_P = cyk_dist_simple(G,w)
     #print(dist_P)
-    print('D1\n',D.T.dot(index1.T).dot(index1.T).dot(dist_P))
+    print('NP\n',invsc(v('NP')).dot(index1.T).dot(index1.T).dot(dist_P))
+    print('V\n',invsc(v('V')).dot(index2.T).dot(index1.T).dot(dist_P))
+    print('Det\n',invsc(v('Det')).dot(index3.T).dot(index1.T).dot(dist_P))
+    print('N\n',invsc(v('N')).dot(index4.T).dot(index1.T).dot(dist_P))
+    print('NP\n',invsc(v('NP')).dot(index3.T).dot(index2.T).dot(dist_P))
+    print('VP\n',invsc(v('VP')).dot(index2.T).dot(index3.T).dot(dist_P))
+    print('S\n',invsc(v('S')).dot(index1.T).dot(index4.T).dot(dist_P))
+
+    '''print('D1\n',D.T.dot(index1.T).dot(index1.T).dot(dist_P))
     print('D2\n',D.T.dot(index2.T).dot(index1.T).dot(dist_P))
-    print('E\n',E.T.dot(index3.T).dot(index1.T).dot(dist_P))
-    print('S1\n',S.T.dot(index2.T).dot(index2.T).dot(dist_P))
-    print('S2\n',S.T.dot(index1.T).dot(index3.T).dot(dist_P))
+    print('D3\n',D.T.dot(index3.T).dot(index1.T).dot(dist_P))
+    print('E\n',E.T.dot(index4.T).dot(index1.T).dot(dist_P))
+    print('S1\n',S.T.dot(index3.T).dot(index2.T).dot(dist_P))
+    print('S2\n',S.T.dot(index2.T).dot(index3.T).dot(dist_P))
+    print('S3\n',S.T.dot(index1.T).dot(index4.T).dot(dist_P))'''
 
     '''pure_P = index1.dot(index1).dot(D)
     pure_P += index1.dot(index2).dot(D)
