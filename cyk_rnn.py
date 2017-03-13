@@ -13,6 +13,7 @@ def build_network(input_shape, output_dim=4096):
     model = Sequential()
     model.add(PreterminalRNN(output_dim, input_shape=input_shape))
     model.add(Dense(1, activation='sigmoid'))
+    #if exist checkpoint load it
     if os.path.exists(filepath):
         model.load_weights(filepath)
     model.compile(loss='binary_crossentropy', optimizer='rmsprop')
