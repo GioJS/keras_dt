@@ -20,6 +20,9 @@ def build_network():
 
 def learn_network():
     #model.fit
+    pass
+
+def test_network():
     #model.test
     #print evaluations
     pass
