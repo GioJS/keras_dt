@@ -4,7 +4,7 @@ from keras.layers import Dense
 from layers import PreterminalRNN
 output_dim = 4096
 
-if __name__ == '__main__':
+def build_network():
     #dataset load
     #split training and test set
     #normalization if needed
@@ -15,6 +15,13 @@ if __name__ == '__main__':
     model.add(PreterminalRNN(output_dim, input_shape=input_shape))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='rmsprop')
+    return model
+
+def learn_network():
     #model.fit
     #model.test
     #print evaluations
+    pass
+
+if __name__ == '__main__':
+    model = build_network()
