@@ -256,7 +256,7 @@ if __name__ == '__main__':
 #    for i in range(2,3):
     #w = ('a '*i)+'b'
     #w = 'a'
-    w = 'john likes a girl'
+    w = 'john kiss a girl'
     print(w)
     #parser.parse(w)
     #print(parser.C)
