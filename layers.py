@@ -185,7 +185,7 @@ class PreterminalRNN(Recurrent):
                   'b_regularizer': self.b_regularizer.get_config() if self.b_regularizer else None,
                   'dropout_W': self.dropout_W,
                   'dropout_U': self.dropout_U}
-        base_config = super(SimpleRNN, self).get_config()
+        base_config = super(PreterminalRNN, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
 
 #layer for binary rules(fully-connected)
@@ -313,5 +313,5 @@ class BinaryRNN(Recurrent):
                   'b_regularizer': self.b_regularizer.get_config() if self.b_regularizer else None,
                   'dropout_W': self.dropout_W,
                   'dropout_U': self.dropout_U}
-        base_config = super(SimpleRNN, self).get_config()
+        base_config = super(BinaryRNN, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))

@@ -2,6 +2,7 @@ from keras import backend as K
 from keras.models import Sequential
 from keras.layers import Dense
 from layers import PreterminalRNN
+
 output_dim = 4096
 
 def build_network():
