@@ -4,6 +4,10 @@ from keras import backend as K
 from keras import initializations, regularizers, constraints
 from keras.engine import Layer
 from keras_dt import *
+from keras import activations
+from keras import initializations
+from keras import regularizers
+from keras.layers.recurrent import Recurrent
 
 
 def indices_trees(trees):
@@ -52,7 +56,6 @@ class EmbeddingDT(Layer):
         return self.dt.dt(self.trees[x])
 
 '''
-from keras.layers.recurrent import Recurrent
 
 #layer for preterminals rules
 #TODO, in step method implement preterminals_simple_with_sigmoid
