@@ -55,7 +55,8 @@ class EmbeddingDT(Layer):
 from keras.layers.recurrent import Recurrent
 
 #layer for preterminals rules
-#TODO
+#TODO, in step method implement preterminals_simple_with_sigmoid
+#TODO, refactoring: remove all unnecessary things
 class preterminalRNN(Recurrent):
     def __init__(self, output_dim,
                  init='glorot_uniform', inner_init='orthogonal',
@@ -135,6 +136,7 @@ class preterminalRNN(Recurrent):
         else:
             return x
 
+    #preterminals_simple_with_sigmoid
     def step(self, x, states):
         prev_output = states[0]
         B_U = states[1]
