@@ -4,10 +4,7 @@ from keras.layers import Dense
 from layers import PreterminalRNN
 
 #output_dim wrt RNN
-def build_network(output_dim=4096):
-    n_samples = 1 #from training set
-    input_dim = 4096 #from training set
-    input_shape = (n_samples, input_dim)
+def build_network(input_shape, output_dim=4096):
     model = Sequential()
     model.add(PreterminalRNN(output_dim, input_shape=input_shape))
     model.add(Dense(1, activation='sigmoid'))
@@ -27,4 +24,7 @@ if __name__ == '__main__':
     #dataset load
     #split training and test set
     #normalization if needed
-    model = build_network()
+    n_samples = 1 #from training set
+    input_dim = 4096 #from training set
+    input_shape = (n_samples, input_dim)
+    model = build_network(input_shape)
