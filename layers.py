@@ -60,7 +60,7 @@ class EmbeddingDT(Layer):
 #layer for preterminals rules
 #TODO, in step method implement preterminals_simple_with_sigmoid
 #TODO, refactoring: remove all unnecessary things
-class preterminalRNN(Recurrent):
+class PreterminalRNN(Recurrent):
     def __init__(self, output_dim,
                  init='glorot_uniform', inner_init='orthogonal',
                  activation='sigmoid',
@@ -78,7 +78,7 @@ class preterminalRNN(Recurrent):
 
         if self.dropout_W or self.dropout_U:
             self.uses_learning_phase = True
-        super(preterminalRNN, self).__init__(**kwargs)
+        super(PreterminalRNN, self).__init__(**kwargs)
 
     def build(self, input_shape):
         self.input_spec = [InputSpec(shape=input_shape)]
@@ -189,7 +189,7 @@ class preterminalRNN(Recurrent):
 #layer for binary rules
 #TODO, in step method implement binary_simple
 #TODO, refactoring: remove all unnecessary things
-class binaryRNN(Recurrent):
+class BinaryRNN(Recurrent):
     def __init__(self, output_dim,
                  init='glorot_uniform', inner_init='orthogonal',
                  activation='sigmoid',
@@ -207,7 +207,7 @@ class binaryRNN(Recurrent):
 
         if self.dropout_W or self.dropout_U:
             self.uses_learning_phase = True
-        super(binaryRNN, self).__init__(**kwargs)
+        super(BinaryRNN, self).__init__(**kwargs)
 
     def build(self, input_shape):
         self.input_spec = [InputSpec(shape=input_shape)]
