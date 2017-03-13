@@ -26,7 +26,7 @@ def learn_network(train_X, train_Y, model, nb_epoch=100, batch_size=32):
     callbacks_list = [checkpoint]
     model.fit(trainX, trainY, nb_epoch, batch_size, verbose=1, callbacks=callbacks_list)
 
-def test_network(test_X, test_Y):
+def test_network(test_X, test_Y, model):
     #model.test
     #print evaluations
     pass
