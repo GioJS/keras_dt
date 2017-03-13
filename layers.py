@@ -90,6 +90,7 @@ class PreterminalRNN(Recurrent):
             # initial states: all-zero tensor of shape (output_dim)
             self.states = [None]
         input_dim = input_shape[2]
+        
         self.input_dim = input_dim
 
         self.W = self.add_weight((input_dim, self.output_dim),
