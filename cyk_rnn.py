@@ -19,7 +19,7 @@ def build_network(input_shape, output_dim=4096):
     model.compile(loss='binary_crossentropy', optimizer='rmsprop')
     return model
 
-def learn_network(train_X, train_Y, nb_epoch=100, batch_size=32):
+def learn_network(train_X, train_Y, model, nb_epoch=100, batch_size=32):
     #saves a checkpoint of the best weights
     #use val_acc or val_loss?
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True,save_weights_only=True, mode='max')
