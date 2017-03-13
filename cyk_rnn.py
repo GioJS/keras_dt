@@ -2,20 +2,27 @@ from keras import backend as K
 from keras.models import Sequential
 from keras.layers import Dense
 from layers import PreterminalRNN
-
+import os
 #output_dim wrt RNN
+filepath = 'weights.best.hdf5'
+
 def build_network(input_shape, output_dim=4096):
     model = Sequential()
     model.add(PreterminalRNN(output_dim, input_shape=input_shape))
     model.add(Dense(1, activation='sigmoid'))
+    if os.path.exists(filepath):
+        model.load_weights(filepath)
     model.compile(loss='binary_crossentropy', optimizer='rmsprop')
     return model
 
-def learn_network(train_X, train_y):
-    #model.fit
-    pass
+def learn_network(train_X, train_Y, nb_epoch=100, batch_size=32):
+    #saves a checkpoint of the best weights
+    #use val_acc or val_loss?
+    checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True,save_weights_only=True, mode='max')
+    callbacks_list = [checkpoint]
+    model.fit(trainX, trainY, nb_epoch, batch_size, verbose=1, callbacks=callbacks_list)
 
-def test_network(test_X, test_y):
+def test_network(test_X, test_Y):
     #model.test
     #print evaluations
     pass
