@@ -11,7 +11,7 @@ def build_network():
     #normalization if needed
     n_samples = 1 #from training set
     input_dim = 4096 #from training set
-    input_shape = (input_dim, n_samples)
+    input_shape = (n_samples, input_dim)
     model = Sequential()
     model.add(PreterminalRNN(output_dim, input_shape=input_shape))
     model.add(Dense(1, activation='sigmoid'))
