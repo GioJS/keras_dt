@@ -4,7 +4,10 @@ from keras.layers import Dense
 from layers import PreterminalRNN
 import os
 #output_dim wrt RNN
+#only the best weights
 filepath = 'weights.best.hdf5'
+#different file for epoch and loss
+#filepath = 'weights.{epoch:02d}-{val_loss:.2f}'
 
 def build_network(input_shape, output_dim=4096):
     model = Sequential()
