@@ -8,6 +8,7 @@ from keras import activations
 from keras import initializations
 from keras import regularizers
 from keras.layers.recurrent import Recurrent
+from keras.layers.recurrent import time_distributed_dense
 from keras.engine import InputSpec
 
 def indices_trees(trees):
