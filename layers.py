@@ -184,7 +184,8 @@ class preterminalRNN(Recurrent):
         return dict(list(base_config.items()) + list(config.items()))
 
 #layer for binary rules
-#TODO
+#TODO, in step method implement binary_simple
+#TODO, refactoring: remove all unnecessary things
 class binaryRNN(Recurrent):
     def __init__(self, output_dim,
                  init='glorot_uniform', inner_init='orthogonal',
