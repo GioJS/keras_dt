@@ -18,7 +18,7 @@ def build_network():
     model.compile(loss='binary_crossentropy', optimizer='rmsprop')
     return model
 
-def learn_network():
+def learn_network(train_X, train_y):
     #model.fit
     pass
 
