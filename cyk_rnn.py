@@ -3,9 +3,8 @@ from keras.models import Sequential
 from keras.layers import Dense
 from layers import PreterminalRNN
 
-output_dim = 4096 #TODO
-
-def build_network():
+#output_dim wrt RNN
+def build_network(output_dim=4096):
     #dataset load
     #split training and test set
     #normalization if needed
