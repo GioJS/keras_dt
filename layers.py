@@ -8,7 +8,7 @@ from keras import activations
 from keras import initializations
 from keras import regularizers
 from keras.layers.recurrent import Recurrent
-
+from keras.engine import InputSpec
 
 def indices_trees(trees):
     return np.unique(trees,return_inverse=True)[1]
