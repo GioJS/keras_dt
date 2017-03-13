@@ -21,7 +21,7 @@ def learn_network(train_X, train_y):
     #model.fit
     pass
 
-def test_network():
+def test_network(test_X, test_y):
     #model.test
     #print evaluations
     pass
