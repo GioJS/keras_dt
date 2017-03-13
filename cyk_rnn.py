@@ -5,9 +5,6 @@ from layers import PreterminalRNN
 
 #output_dim wrt RNN
 def build_network(output_dim=4096):
-    #dataset load
-    #split training and test set
-    #normalization if needed
     n_samples = 1 #from training set
     input_dim = 4096 #from training set
     input_shape = (n_samples, input_dim)
@@ -27,4 +24,7 @@ def test_network(test_X, test_y):
     pass
 
 if __name__ == '__main__':
+    #dataset load
+    #split training and test set
+    #normalization if needed
     model = build_network()
