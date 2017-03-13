@@ -57,7 +57,7 @@ class EmbeddingDT(Layer):
 
 '''
 
-#layer for preterminals rules
+#layer for preterminals rules (fully-connected)
 #TODO, in step method implement preterminals_simple_with_sigmoid
 #TODO, refactoring: remove all unnecessary things
 class PreterminalRNN(Recurrent):
@@ -187,7 +187,7 @@ class PreterminalRNN(Recurrent):
         base_config = super(SimpleRNN, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
 
-#layer for binary rules
+#layer for binary rules(fully-connected)
 #TODO, in step method implement binary_simple
 #TODO, refactoring: remove all unnecessary things
 class BinaryRNN(Recurrent):
