@@ -61,8 +61,9 @@ class EmbeddingDT(Layer):
 #TODO, in step method implement preterminals_simple_with_sigmoid
 #TODO, refactoring: remove all unnecessary things
 class PreterminalRNN(Recurrent):
+    #inner_init = init function interal cells (helpful?)
     def __init__(self, output_dim,
-                 init='glorot_uniform', inner_init='orthogonal',
+                 init='normal', inner_init='orthogonal',
                  activation='sigmoid',
                  W_regularizer=None, U_regularizer=None, b_regularizer=None,
                  dropout_W=0., dropout_U=0., **kwargs):
@@ -191,7 +192,7 @@ class PreterminalRNN(Recurrent):
 #TODO, refactoring: remove all unnecessary things
 class BinaryRNN(Recurrent):
     def __init__(self, output_dim,
-                 init='glorot_uniform', inner_init='orthogonal',
+                 init='normal', inner_init='orthogonal',
                  activation='sigmoid',
                  W_regularizer=None, U_regularizer=None, b_regularizer=None,
                  dropout_W=0., dropout_U=0., **kwargs):
