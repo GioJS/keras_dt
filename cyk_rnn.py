@@ -6,7 +6,7 @@ import os
 #output_dim wrt RNN
 #only the best weights
 filepath = 'weights.best.hdf5'
-#different file for epoch and loss
+#different file for epoch and loss/acc
 #filepath = 'weights.{epoch:02d}-{val_loss:.2f}'
 
 def build_network(input_shape, output_dim=4096):
@@ -22,7 +22,7 @@ def build_network(input_shape, output_dim=4096):
 def learn_network(train_X, train_Y, model, nb_epoch=100, batch_size=32):
     #saves a checkpoint of the best weights
     #use val_acc or val_loss?
-    checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True,save_weights_only=True, mode='max')
+    checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True,save_weights_only=True, mode='min')
     callbacks_list = [checkpoint]
     model.fit(trainX, trainY, nb_epoch, batch_size, verbose=1, callbacks=callbacks_list)
 
