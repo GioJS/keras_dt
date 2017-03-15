@@ -26,6 +26,8 @@ def sc(v):
 def invsc(v):
     return K.variable(sc(v).T)
 
+def sigmoid(x):
+    return K.variable(1 / (1 + np.exp(-(x-0.5)*360)))
 
 def indices_trees(trees):
     return np.unique(trees,return_inverse=True)[1]
@@ -87,6 +89,7 @@ class PreterminalRNN(Recurrent):
         self.init = initializations.get(init)
         self.inner_init = initializations.get(inner_init)
         self.activation = activations.get(activation)
+        self.index0 = sc(v('0'))
         self.index1 = sc(v('1'))
         self.position = self.index1
         super(PreterminalRNN, self).__init__(**kwargs)
@@ -136,8 +139,8 @@ class PreterminalRNN(Recurrent):
 
         #get R[A]
         #perform sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
-
-        #output =  P + K.dot(index1,sc(v(str(i+1)))).dot(tmp))
+        tmp = sigmoid(K.dot(symbol, K.dot(self.position,K.dot(index0.T,P))))
+        output =  P + K.dot(index1,K.dot(self.position,tmp))
         self.position = K.dot(self.index1, self.position)
         return output, [output]
 
