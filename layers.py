@@ -88,6 +88,7 @@ class PreterminalRNN(Recurrent):
         self.inner_init = initializations.get(inner_init)
         self.activation = activations.get(activation)
         self.index1 = sc(v('1'))
+        self.position = self.index1
         super(PreterminalRNN, self).__init__(**kwargs)
 
     def build(self, input_shape):
@@ -125,7 +126,7 @@ class PreterminalRNN(Recurrent):
                         np.zeros((input_shape[0], self.output_dim)))
         else:
             self.states = [K.zeros((input_shape[0], self.output_dim))]
-    
+
     def preprocess_input(self, x):
         return x
 
@@ -133,12 +134,11 @@ class PreterminalRNN(Recurrent):
     def step(self, x, states):
         P = states[0] #matrix P at step i-1
 
-        #get current i and transform in [i]+
         #get R[A]
         #perform sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
 
         #output =  P + K.dot(index1,sc(v(str(i+1)))).dot(tmp))
-
+        self.position = K.dot(self.index1, self.position)
         return output, [output]
 
 
