@@ -87,7 +87,7 @@ class PreterminalRNN(Recurrent):
         self.init = initializations.get(init)
         self.inner_init = initializations.get(inner_init)
         self.activation = activations.get(activation)
-
+        self.index1 = sc(v('1'))
         super(PreterminalRNN, self).__init__(**kwargs)
 
     def build(self, input_shape):
@@ -118,7 +118,7 @@ class PreterminalRNN(Recurrent):
         #get R[A]
         #perform sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
 
-        #return  P + index1.dot(sc(v(str(i+1)))).dot(tmp)
+        #return  P + K.dot(index1,sc(v(str(i+1)))).dot(tmp))
 
         return output, [output]
 
