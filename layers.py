@@ -88,8 +88,8 @@ class PreterminalRNN(Recurrent):
         self.init = initializations.get(init)
         self.inner_init = initializations.get(inner_init)
         self.activation = activations.get(activation)
-        self.W_regularizer = regularizers.get(W_regularizer)
-        self.U_regularizer = regularizers.get(U_regularizer)
+        #self.W_regularizer = regularizers.get(W_regularizer)
+        #self.U_regularizer = regularizers.get(U_regularizer)
         #self.b_regularizer = regularizers.get(b_regularizer)
 
 
@@ -106,14 +106,14 @@ class PreterminalRNN(Recurrent):
 
         self.input_dim = input_dim
 
-        self.W = self.add_weight((input_dim, self.output_dim),
+        '''self.W = self.add_weight((input_dim, self.output_dim),
                                  initializer=self.init,
                                  name='{}_W'.format(self.name),
                                  regularizer=self.W_regularizer)
         self.U = self.add_weight((self.output_dim, self.output_dim),
                                  initializer=self.inner_init,
                                  name='{}_U'.format(self.name),
-                                 regularizer=self.U_regularizer)
+                                 regularizer=self.U_regularizer)'''
         #self.b = self.add_weight((self.output_dim,),
         #                         initializer='zero',
         #                         name='{}_b'.format(self.name),
@@ -138,7 +138,7 @@ class PreterminalRNN(Recurrent):
         #perform sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
 
         #return  P + index1.dot(sc(v(str(i+1)))).dot(tmp)
-        
+
         return output, [output]
 
 
