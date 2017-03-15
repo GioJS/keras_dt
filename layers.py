@@ -23,7 +23,7 @@ def invsc(v):
     return K.variable(sc(v).T)
 
 def sigmoid(x):
-    return K.variable(1 / (1 + np.exp(-(x-0.5)*360)))
+    return K.variable(1 / (1 + K.exp(-(x-0.5)*360)))
 
 def indices_trees(trees):
     return np.unique(trees,return_inverse=True)[1]
@@ -123,13 +123,13 @@ class PreterminalRNN(Recurrent):
     #preterminals_simple_with_sigmoid
     def step(self, x, states):
         P = states[0] #matrix P at step i-1
-        symbols = states[1] #i'm not sure
+        symbols = states[1] #i'm not sure, but this is R[A]
 
         tmp = sigmoid(K.dot(symbols, K.dot(self.position, K.dot(K.transpose(self.index0), P))))
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
         output =  P + K.dot(self.index1, K.dot(self.position, tmp))
         self.position = K.dot(self.index1, self.position)
-        return output, [output]
+        return output, [output, tmp]
 
 
 
