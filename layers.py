@@ -102,7 +102,7 @@ class PreterminalRNN(Recurrent):
         input_dim = input_shape[2]
 
         self.input_dim = input_dim
-        
+
         self.P = self.add_weight((input_dim, self.output_dim),
                                  initializer=self.init,
                                  name='{}_P'.format(self.name))
@@ -153,8 +153,7 @@ class PreterminalRNN(Recurrent):
     def get_config(self):
         config = {'output_dim': self.output_dim,
                   'init': self.init.__name__,
-                  'inner_init': self.inner_init.__name__,
-                  'activation': self.activation.__name__}
+                  'inner_init': self.inner_init.__name__}
         base_config = super(PreterminalRNN, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
 
