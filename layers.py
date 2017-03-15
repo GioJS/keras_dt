@@ -83,12 +83,10 @@ class PreterminalRNN(Recurrent):
     #inner_init = init function interal cells (helpful?)
     def __init__(self, output_dim,
                  init='normal', inner_init='orthogonal',
-                 activation='sigmoid',
                  **kwargs):
         self.output_dim = output_dim
         self.init = initializations.get(init)
         self.inner_init = initializations.get(inner_init)
-        self.activation = activations.get(activation)
         self.index0 = sc(v('0'))
         self.index1 = sc(v('1'))
         self.position = self.index1
