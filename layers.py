@@ -80,6 +80,7 @@ class PreterminalRNN(Recurrent):
     def __init__(self, output_dim,
                  init='normal', inner_init='orthogonal',
                  **kwargs):
+        super(PreterminalRNN, self).__init__(**kwargs)
         self.output_dim = output_dim
         self.units = output_dim
         self.init = initializers.get(init)
@@ -87,7 +88,7 @@ class PreterminalRNN(Recurrent):
         self.index0 = sc(v('0'))
         self.index1 = sc(v('1'))
         self.position = self.index0
-        super(PreterminalRNN, self).__init__(**kwargs)
+
 
     def build(self, input_shape):
         #self.input_spec = [InputSpec(shape=input_shape)]
@@ -100,7 +101,7 @@ class PreterminalRNN(Recurrent):
         self.input_spec = InputSpec(shape=(batch_size, None, self.input_dim))
         self.state_spec = InputSpec(shape=(batch_size, self.units))
 
-        self.states = [None]
+        self.states = [None, None]
         if self.stateful:
             self.reset_states()
 
@@ -121,12 +122,11 @@ class PreterminalRNN(Recurrent):
 
     #preterminals_simple_with_sigmoid
     def step(self, x, states):
-        print(states)
         P = states[0] #matrix P at step i-1
         symbols = states[1] #i'm not sure
 
-        #tmp = sigmoid(K.dot(symbols, K.dot(self.position, K.dot(K.transpose(self.index0), P))))
-        tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
+        tmp = sigmoid(K.dot(symbols, K.dot(self.position, K.dot(K.transpose(self.index0), P))))
+        #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
         output =  P + K.dot(self.index1, K.dot(self.position, tmp))
         self.position = K.dot(self.index1, self.position)
         return output, [output]
