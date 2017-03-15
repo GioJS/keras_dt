@@ -1,14 +1,10 @@
 
 
 from keras import backend as K
-from keras import initializations, regularizers, constraints
+from keras import initializers
 from keras.engine import Layer
 from keras_dt import *
-from keras import activations
-from keras import initializations
-from keras import regularizers
 from keras.layers.recurrent import Recurrent
-from keras.layers.recurrent import time_distributed_dense
 from keras.engine import InputSpec
 from vectors import *
 from convolutions import permutation_matrices
@@ -85,23 +81,29 @@ class PreterminalRNN(Recurrent):
                  init='normal', inner_init='orthogonal',
                  **kwargs):
         self.output_dim = output_dim
-        self.init = initializations.get(init)
-        self.inner_init = initializations.get(inner_init)
+        self.units = output_dim
+        self.init = initializers.get(init)
+        self.inner_init = initializers.get(inner_init)
         self.index0 = sc(v('0'))
         self.index1 = sc(v('1'))
         self.position = self.index0
         super(PreterminalRNN, self).__init__(**kwargs)
 
     def build(self, input_shape):
-        self.input_spec = [InputSpec(shape=input_shape)]
+        #self.input_spec = [InputSpec(shape=input_shape)]
+        if isinstance(input_shape, list):
+            input_shape = input_shape[0]
+
+        batch_size = input_shape[0] if self.stateful else None
+        input_dim = input_shape[2]
+        self.input_dim = input_dim
+        self.input_spec = InputSpec(shape=(batch_size, None, self.input_dim))
+        self.state_spec = InputSpec(shape=(batch_size, self.units))
+        
+        self.states = [None]
         if self.stateful:
             self.reset_states()
-        else:
-            # initial states: all-zero tensor of shape (output_dim)
-            self.states = [None]
-        input_dim = input_shape[2]
 
-        self.input_dim = input_dim
 
         self.P = self.add_weight((input_dim, self.output_dim),
                                  initializer=self.init,
@@ -110,38 +112,18 @@ class PreterminalRNN(Recurrent):
                                  initializer=self.inner_init,
                                  name='{}_symbols'.format(self.name))
 
-        if self.initial_weights is not None:
-            self.set_weights(self.initial_weights)
-            del self.initial_weights
         self.built = True
 
-    def reset_states(self):
-        assert self.stateful, 'Layer must be stateful.'
-        input_shape = self.input_spec[0].shape
-        if not input_shape[0]:
-            raise ValueError('If a RNN is stateful, it needs to know '
-                             'its batch size. Specify the batch size '
-                             'of your input tensors: \n'
-                             '- If using a Sequential model, '
-                             'specify the batch size by passing '
-                             'a `batch_input_shape` '
-                             'argument to your first layer.\n'
-                             '- If using the functional API, specify '
-                             'the time dimension by passing a '
-                             '`batch_shape` argument to your Input layer.')
-        if hasattr(self, 'states'):
-            K.set_value(self.states[0],
-                        np.zeros((input_shape[0], self.output_dim)))
-        else:
-            self.states = [K.zeros((input_shape[0], self.output_dim))]
 
-    def preprocess_input(self, x):
+
+    def preprocess_input(self, x, training=None):
         return x
 
     #preterminals_simple_with_sigmoid
     def step(self, x, states):
+        print(states)
         P = states[0] #matrix P at step i-1
-        #symbols = states[1] #i'm not sure
+        symbols = states[1] #i'm not sure
 
         #tmp = sigmoid(K.dot(symbols, K.dot(self.position, K.dot(K.transpose(self.index0), P))))
         tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
@@ -195,8 +177,8 @@ class BinaryRNN(Recurrent):
                  W_regularizer=None, U_regularizer=None, b_regularizer=None,
                  dropout_W=0., dropout_U=0., **kwargs):
         self.output_dim = output_dim
-        self.init = initializations.get(init)
-        self.inner_init = initializations.get(inner_init)
+        self.init = initializers.get(init)
+        self.inner_init = initializers.get(inner_init)
         self.activation = activations.get(activation)
         self.W_regularizer = regularizers.get(W_regularizer)
         self.U_regularizer = regularizers.get(U_regularizer)
