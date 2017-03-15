@@ -118,7 +118,7 @@ class PreterminalRNN(Recurrent):
         #get R[A]
         #perform sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
 
-        #return  P + K.dot(index1,sc(v(str(i+1)))).dot(tmp))
+        #output =  P + K.dot(index1,sc(v(str(i+1)))).dot(tmp))
 
         return output, [output]
 
