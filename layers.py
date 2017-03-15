@@ -121,6 +121,7 @@ class PreterminalRNN(Recurrent):
         return x
 
     #preterminals_simple_with_sigmoid
+    #init_simple??
     def step(self, x, states):
         P = states[0] #matrix P at step i-1
         symbols = states[1] #i'm not sure, but this is R[A]
