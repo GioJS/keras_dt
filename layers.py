@@ -131,12 +131,14 @@ class PreterminalRNN(Recurrent):
     #preterminals_simple_with_sigmoid
     def step(self, x, states):
         P = states[0] #matrix P at step i-1
-        B_U = states[1]
-        B_W = states[2]
+        #B_U = states[1]
+        #B_W = states[2]
+        #get current i and transform in [i]+
+        #get R[A]
+        #perform sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
 
-        h = K.dot(x * B_W, self.W) #+ self.b
-
-        output = self.activation(h + K.dot(P * B_U, self.U))
+        #return  P + index1.dot(sc(v(str(i+1)))).dot(tmp)
+        
         return output, [output]
 
 
