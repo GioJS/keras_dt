@@ -89,7 +89,7 @@ class PreterminalRNN(Recurrent):
         self.inner_init = initializations.get(inner_init)
         self.index0 = sc(v('0'))
         self.index1 = sc(v('1'))
-        self.position = self.index1
+        self.position = self.index0
         super(PreterminalRNN, self).__init__(**kwargs)
 
     def build(self, input_shape):
