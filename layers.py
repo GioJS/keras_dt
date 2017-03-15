@@ -132,6 +132,33 @@ class PreterminalRNN(Recurrent):
         base_config = super(PreterminalRNN, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #layer for binary rules(fully-connected)
 #TODO, in step method implement binary_simple
 #TODO, refactoring: remove all unnecessary things
