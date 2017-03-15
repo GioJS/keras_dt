@@ -103,6 +103,10 @@ class PreterminalRNN(Recurrent):
 
         self.input_dim = input_dim
 
+        self.symbols = self.add_weight((input_dim, self.output_dim),
+                                 initializer=self.init,
+                                 name='{}_symbols'.format(self.name))
+
         if self.initial_weights is not None:
             self.set_weights(self.initial_weights)
             del self.initial_weights
@@ -134,8 +138,9 @@ class PreterminalRNN(Recurrent):
     #preterminals_simple_with_sigmoid
     def step(self, x, states):
         P = states[0] #matrix P at step i-1
-
-        tmp = sigmoid(K.dot(symbol, K.dot(self.position, K.dot(K.transpose(self.index0), P))))
+        symbols = states[1] #i'm not sure
+        
+        tmp = sigmoid(K.dot(symbols, K.dot(self.position, K.dot(K.transpose(self.index0), P))))
         output =  P + K.dot(self.index1, K.dot(self.position, tmp))
         self.position = K.dot(self.index1, self.position)
         return output, [output]
