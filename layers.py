@@ -90,7 +90,7 @@ class PreterminalRNN(Recurrent):
         self.activation = activations.get(activation)
         self.W_regularizer = regularizers.get(W_regularizer)
         self.U_regularizer = regularizers.get(U_regularizer)
-        self.b_regularizer = regularizers.get(b_regularizer)
+        #self.b_regularizer = regularizers.get(b_regularizer)
 
 
         super(PreterminalRNN, self).__init__(**kwargs)
@@ -114,10 +114,10 @@ class PreterminalRNN(Recurrent):
                                  initializer=self.inner_init,
                                  name='{}_U'.format(self.name),
                                  regularizer=self.U_regularizer)
-        self.b = self.add_weight((self.output_dim,),
-                                 initializer='zero',
-                                 name='{}_b'.format(self.name),
-                                 regularizer=self.b_regularizer)
+        #self.b = self.add_weight((self.output_dim,),
+        #                         initializer='zero',
+        #                         name='{}_b'.format(self.name),
+        #                         regularizer=self.b_regularizer)
 
         if self.initial_weights is not None:
             self.set_weights(self.initial_weights)
@@ -134,7 +134,7 @@ class PreterminalRNN(Recurrent):
         B_U = states[1]
         B_W = states[2]
 
-        h = K.dot(x * B_W, self.W) + self.b
+        h = K.dot(x * B_W, self.W) #+ self.b
 
         output = self.activation(h + K.dot(P * B_U, self.U))
         return output, [output]
