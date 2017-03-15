@@ -92,11 +92,9 @@ class PreterminalRNN(Recurrent):
 
     def build(self, input_shape):
         self.input_spec = [InputSpec(shape=input_shape)]
-        if self.stateful:
-            self.reset_states()
-        else:
-            # initial states: all-zero tensor of shape (output_dim)
-            self.states = [None]
+
+        # initial states: all-zero tensor of shape (output_dim)
+        self.states = [None]
         input_dim = input_shape[2]
 
         self.input_dim = input_dim
