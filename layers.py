@@ -82,16 +82,11 @@ class PreterminalRNN(Recurrent):
     def __init__(self, output_dim,
                  init='normal', inner_init='orthogonal',
                  activation='sigmoid',
-                 W_regularizer=None, U_regularizer=None, b_regularizer=None,
                  **kwargs):
         self.output_dim = output_dim
         self.init = initializations.get(init)
         self.inner_init = initializations.get(inner_init)
         self.activation = activations.get(activation)
-        #self.W_regularizer = regularizers.get(W_regularizer)
-        #self.U_regularizer = regularizers.get(U_regularizer)
-        #self.b_regularizer = regularizers.get(b_regularizer)
-
 
         super(PreterminalRNN, self).__init__(**kwargs)
 
@@ -106,19 +101,6 @@ class PreterminalRNN(Recurrent):
 
         self.input_dim = input_dim
 
-        '''self.W = self.add_weight((input_dim, self.output_dim),
-                                 initializer=self.init,
-                                 name='{}_W'.format(self.name),
-                                 regularizer=self.W_regularizer)
-        self.U = self.add_weight((self.output_dim, self.output_dim),
-                                 initializer=self.inner_init,
-                                 name='{}_U'.format(self.name),
-                                 regularizer=self.U_regularizer)'''
-        #self.b = self.add_weight((self.output_dim,),
-        #                         initializer='zero',
-        #                         name='{}_b'.format(self.name),
-        #                         regularizer=self.b_regularizer)
-
         if self.initial_weights is not None:
             self.set_weights(self.initial_weights)
             del self.initial_weights
@@ -131,8 +113,7 @@ class PreterminalRNN(Recurrent):
     #preterminals_simple_with_sigmoid
     def step(self, x, states):
         P = states[0] #matrix P at step i-1
-        #B_U = states[1]
-        #B_W = states[2]
+
         #get current i and transform in [i]+
         #get R[A]
         #perform sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
@@ -147,10 +128,7 @@ class PreterminalRNN(Recurrent):
         config = {'output_dim': self.output_dim,
                   'init': self.init.__name__,
                   'inner_init': self.inner_init.__name__,
-                  'activation': self.activation.__name__,
-                  'W_regularizer': self.W_regularizer.get_config() if self.W_regularizer else None,
-                  'U_regularizer': self.U_regularizer.get_config() if self.U_regularizer else None,
-                  'b_regularizer': self.b_regularizer.get_config() if self.b_regularizer else None}
+                  'activation': self.activation.__name__}
         base_config = super(PreterminalRNN, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
 
