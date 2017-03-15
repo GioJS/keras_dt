@@ -135,8 +135,6 @@ class PreterminalRNN(Recurrent):
     def step(self, x, states):
         P = states[0] #matrix P at step i-1
 
-        #get R[A]
-        #perform sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
         tmp = sigmoid(K.dot(symbol, K.dot(self.position,K.dot(K.transpose(index0),P))))
         output =  P + K.dot(index1,K.dot(self.position,tmp))
         self.position = K.dot(self.index1, self.position)
