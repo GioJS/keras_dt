@@ -106,7 +106,7 @@ class PreterminalRNN(Recurrent):
         self.P = self.add_weight((input_dim, self.output_dim),
                                  initializer=self.init,
                                  name='{}_P'.format(self.name))
-        self.symbols = self.add_weight((input_dim, self.output_dim),
+        self.symbols = self.add_weight((self.output_dim, self.output_dim),
                                  initializer=self.inner_init,
                                  name='{}_symbols'.format(self.name))
 
