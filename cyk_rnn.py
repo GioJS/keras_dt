@@ -38,8 +38,7 @@ if __name__ == '__main__':
     #dataset load
     #split training and test set
     #normalization if needed
-    n_samples = 2 #from training set
     time_steps = 1
     input_dim = 4096 #from training set
-    input_shape = (n_samples, time_steps, input_dim)
+    input_shape = (time_steps, input_dim)
     model = build_network(input_shape)
