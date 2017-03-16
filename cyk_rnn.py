@@ -3,6 +3,8 @@ from keras.models import Sequential
 from keras.layers import Dense
 from layers import PreterminalRNN
 import os
+import cyk_dist
+from parserNLP.Grammar import Grammar
 
 #output_dim wrt RNN
 #only the best weights
@@ -42,3 +44,14 @@ if __name__ == '__main__':
     input_dim = 4096 #from training set
     input_shape = (tstep, input_dim)
     model = build_network(input_shape)
+
+    G = Grammar('S')
+    G.add_rules_from_file('gramm_l')
+    w = 'aab'
+    P = cyk_dist.init_simple(w)
+    P = cyk_dist.preterminals_simple_with_sigmoid(P,G,w)
+    train_X = cyk_dist.sc(cyk_dist.v('A'))
+    train_Y = cyk_dist.index1.T.dot(cyk_dist.index1.T).dot(P)
+
+    learn_network(train_X, train_Y, model)
+    print(model.predict(train_X))
