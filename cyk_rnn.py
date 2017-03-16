@@ -52,7 +52,8 @@ if __name__ == '__main__':
     P = cyk_dist.preterminals_simple_with_sigmoid(P,G,w)
     train_X = cyk_dist.sc(cyk_dist.v('A'))
     train_Y = cyk_dist.index1.T.dot(cyk_dist.index1.T).dot(P)
-    train_X = np.reshape(train_X, (train_X.shape[0], 1, train_X.shape[1]))
+    #train_X = np.array([train_X])
+    train_X = np.array([np.reshape(train_X, (train_X.shape[0], 1, train_X.shape[1]))])
 
 
 
