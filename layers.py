@@ -78,13 +78,12 @@ class EmbeddingDT(Layer):
 class PreterminalRNN(Recurrent):
     #inner_init = init function interal cells (helpful?)
     def __init__(self, output_dim,
-                 init='normal', inner_init='orthogonal',
                  **kwargs):
         super(PreterminalRNN, self).__init__(**kwargs)
         self.output_dim = output_dim
         self.units = output_dim
-        self.init = initializers.get(init)
-        self.inner_init = initializers.get(inner_init)
+        #self.init = initializers.get(init)
+        #self.inner_init = initializers.get(inner_init)
         self.index0 = sc(v('0'))
         self.index1 = sc(v('1'))
         self.position = self.index0
@@ -106,12 +105,12 @@ class PreterminalRNN(Recurrent):
             self.reset_states()
 
 
-        self.P = self.add_weight((input_dim, self.output_dim),
-                                 initializer=self.init,
-                                 name='{}_P'.format(self.name))
-        self.symbols = self.add_weight((self.output_dim, self.output_dim),
-                                 initializer=self.inner_init,
-                                 name='{}_symbols'.format(self.name))
+        #self.P = self.add_weight((input_dim, self.output_dim),
+        #                         initializer=self.init,
+        #                         name='{}_P'.format(self.name))
+        #self.symbols = self.add_weight((self.output_dim, self.output_dim),
+        #                         initializer=self.inner_init,
+        #                         name='{}_symbols'.format(self.name))
 
         self.built = True
 
@@ -126,7 +125,7 @@ class PreterminalRNN(Recurrent):
         P = states[0] #matrix P at step i-1
         symbols = states[1] #i'm not sure, but this is R[A]
 
-        tmp = sigmoid(K.dot(symbols, K.dot(self.position, K.dot(K.transpose(self.index0), P))))
+        tmp = sigmoid(K.dot(symbols, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
         output =  P + K.dot(self.index1, K.dot(self.position, tmp))
         self.position = K.dot(self.index1, self.position)

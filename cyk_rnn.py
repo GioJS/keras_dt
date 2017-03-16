@@ -15,7 +15,7 @@ filepath = 'weights.best.hdf5'
 def build_network(input_shape, output_dim=4096):
     model = Sequential()
     model.add(PreterminalRNN(output_dim, stateful=True, batch_input_shape=(4096,1,4096)))
-    model.add(Dense(1, activation='sigmoid'))
+    #model.add(Dense(1, activation='sigmoid'))
     #if exist checkpoint load it
     if os.path.exists(filepath):
         model.load_weights(filepath)
