@@ -18,7 +18,7 @@ v = gen.get_random_vector
 #[v]+
 def sc(v):
     import tensorflow as tf
-    return K.dot(tf.py_func(circulant,[v], tf.float32),Phi)
+    return K.dot(tf.py_func(circulant,[v], [tf.float32]),Phi)
 #[v]-
 def invsc(v):
     return K.variable(sc(v).T)
