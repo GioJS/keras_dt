@@ -46,20 +46,21 @@ if __name__ == '__main__':
     tstep = 1
     input_dim = 1024 #from training set
     input_shape = (tstep, input_dim)
+    
     model = build_network(input_shape, output_dim=1024)
 
     G = Grammar('S')
     G.add_rules_from_file('gramm_l')
     w = 'aab'
+
     P = cyk_dist.init_simple(w)
     P = cyk_dist.preterminals_simple_with_sigmoid(P,G,w)
-    #train_X = np.array([cyk_dist.sc(cyk_dist.v('A'))])
-    #train_X = np.reshape(train_X, (4096, 1, train_X.shape[1]))
+
     train_X = np.array([cyk_dist.sc(cyk_dist.v('A'))])
+
     #train_X = np.reshape(train_X, (train_X.shape[0], 1, train_X.shape[1]))
     train_Y = np.array([cyk_dist.index1.T.dot(cyk_dist.index1.T).dot(P)])
-    #train_X = np.array([train_X])
-    #train_X = np.reshape(train_X, (train_X.shape[0], 1, train_X.shape[1]))
+
 
 
 

@@ -95,11 +95,12 @@ class PreterminalRNN(Recurrent):
             input_shape = input_shape[0]
 
         batch_size = input_shape[0] if self.stateful else None
+
         input_dim = input_shape[2]
         self.input_dim = input_dim
-        self.input_spec = InputSpec(shape=(batch_size, None, self.input_dim))
+        self.input_spec = InputSpec(shape=(batch_size, self.input_dim, self.input_dim))
         self.state_spec = InputSpec(shape=(self.units, self.units))
-
+        
         self.states = [None, None]
         if self.stateful:
             self.reset_states()
