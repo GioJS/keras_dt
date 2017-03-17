@@ -90,17 +90,17 @@ class PreterminalRNN(Recurrent):
 
 
     def build(self, input_shape):
-        #self.input_spec = [InputSpec(shape=input_shape)]
-        if isinstance(input_shape, list):
+        self.input_spec = InputSpec(shape=input_shape)
+        '''if isinstance(input_shape, list):
             input_shape = input_shape[0]
 
-        batch_size = input_shape[0] if self.stateful else None
-
+        batch_size = input_shape[0] if self.stateful else None'''
+        print(input_shape)
         input_dim = input_shape[2]
         self.input_dim = input_dim
-        self.input_spec = InputSpec(shape=(batch_size, self.input_dim, self.input_dim))
-        self.state_spec = InputSpec(shape=(self.units, self.units))
-        
+        #self.input_spec = InputSpec(shape=(input_dim, None, self.input_dim))
+        #self.state_spec = InputSpec(shape=(self.units, self.units))
+
         self.states = [None, None]
         if self.stateful:
             self.reset_states()
@@ -123,7 +123,7 @@ class PreterminalRNN(Recurrent):
     #preterminals_simple_with_sigmoid
     #init_simple??
     def step(self, x, states):
-        print(x.shape)
+
         P = states[0] #matrix P at step i-1
         symbols = states[1] #i'm not sure, but this is R[A]
 

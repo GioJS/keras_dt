@@ -18,7 +18,7 @@ filepath = 'weights.best.hdf5'
 def build_network(input_shape, output_dim=4096):
     print('building...')
     model = Sequential()
-    model.add(PreterminalRNN(output_dim, stateful=True, batch_size=1, input_shape=(input_shape[1],input_shape[1])))
+    model.add(PreterminalRNN(output_dim, stateful=True, batch_size=1024, input_shape=(1,input_shape[1])))
     #model.add(Dense(1, activation='sigmoid'))
     #if exist checkpoint load it
     if os.path.exists(filepath):
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     tstep = 1
     input_dim = 1024 #from training set
     input_shape = (tstep, input_dim)
-    
+
     model = build_network(input_shape, output_dim=1024)
 
     G = Grammar('S')
@@ -56,13 +56,10 @@ if __name__ == '__main__':
     P = cyk_dist.init_simple(w)
     P = cyk_dist.preterminals_simple_with_sigmoid(P,G,w)
 
-    train_X = np.array([cyk_dist.sc(cyk_dist.v('A'))])
-
-    #train_X = np.reshape(train_X, (train_X.shape[0], 1, train_X.shape[1]))
-    train_Y = np.array([cyk_dist.index1.T.dot(cyk_dist.index1.T).dot(P)])
+    
 
 
 
 
-    learn_network(train_X, train_Y, model, batch_size=1)
-    #print(model.predict(train_X))
+    #learn_network(train_X, train_Y, model, batch_size=1)
+    print(model.predict(train_X))
