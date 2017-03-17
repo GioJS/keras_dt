@@ -104,7 +104,7 @@ class PreterminalRNN(Recurrent):
         if self.stateful:
             self.reset_states()
 
-
+        print(self.states[0].shape)
         #self.P = self.add_weight((input_dim, self.output_dim),
         #                         initializer=self.init,
         #                         name='{}_P'.format(self.name))
@@ -122,6 +122,7 @@ class PreterminalRNN(Recurrent):
     #preterminals_simple_with_sigmoid
     #init_simple??
     def step(self, x, states):
+        print(x.shape)
         P = states[0] #matrix P at step i-1
         symbols = states[1] #i'm not sure, but this is R[A]
 
