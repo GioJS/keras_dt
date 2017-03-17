@@ -20,7 +20,7 @@ def build_network(input_shape, output_dim=4096):
     model = Sequential()
     #output_dim must be an integer not a tuple!!
     #this code produce this error "ValueError: shapes (1,1) and (1024,1024) not aligned: 1 (dim 1) != 1024 (dim 0)"
-    #maybe 'x' is a shared variable or tensor not initialized :(
+    #maybe 'x' is a shared variable or tensor not initialized :( (FIX)
     model.add(PreterminalRNN(output_dim, stateful=True, batch_input_shape=(1024, 2, 1024)))
     #model.add(Dense(1, activation='sigmoid'))
     #if exist checkpoint load it

@@ -12,12 +12,13 @@ from convolutions import permutation_matrices
 
 dim = 1024
 gen = Vector_generator(dim=dim)
-Phi = permutation_matrices(dim)[1]
+Phi = K.variable(value=permutation_matrices(dim)[1])
 v = gen.get_random_vector
 
 #[v]+
 def sc(v):
-    return K.variable(value=circulant(v).dot(Phi))
+    import tensorflow as tf
+    return K.dot(tf.py_func(circulant,[v], tf.float32),Phi)
 #[v]-
 def invsc(v):
     return K.variable(sc(v).T)
