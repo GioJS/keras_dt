@@ -19,8 +19,8 @@ def build_network(input_shape, output_dim=4096):
     print('building...')
     model = Sequential()
     #output_dim must be an integer not a tuple!!
-    #this code produce this error "ValueError: shapes (1,1) and (1024,1024) not aligned: 1 (dim 1) != 1024 (dim 0)"
-    #ValueError: Input should be at least 3D. why????
+    #ValueError: Input should be at least 3D. K.rnn -> inputs: tensor of temporal data of shape (samples, time, ...)
+    #                                                    (at least 3D).
     model.add(PreterminalRNN(output_dim, stateful=True, batch_input_shape=(10, 2, 1024)))
     #model.add(Dense(1, activation='sigmoid'))
     #if exist checkpoint load it
