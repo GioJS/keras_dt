@@ -119,7 +119,8 @@ class PreterminalRNN(Recurrent):
 
 
     def preprocess_input(self, x, training=None):
-        return sc(x)
+        x = sc(x)
+        return K.reshape(x,[K.shape(x)[0], 1, K.shape(x)[1]])
 
     #preterminals_simple_with_sigmoid
     #init_simple??
