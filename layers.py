@@ -92,9 +92,9 @@ class PreterminalRNN(Recurrent):
     def build(self, input_shape):
         self.input_spec = InputSpec(shape=input_shape)
         '''if isinstance(input_shape, list):
-            input_shape = input_shape[0]
+            input_shape = input_shape[0]'''
 
-        batch_size = input_shape[0] if self.stateful else None'''
+        #batch_size = input_shape[0] if self.stateful else None
         print(input_shape)
         input_dim = input_shape[2]
         self.input_dim = input_dim
@@ -129,7 +129,7 @@ class PreterminalRNN(Recurrent):
 
         tmp = sigmoid(K.dot(symbols, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
-        output =  P + K.dot(self.index1, K.dot(self.position, tmp))
+        output =  P + K.dot(sc(x),K.dot(self.index1, K.dot(self.position, tmp)))
         self.position = K.dot(self.index1, self.position)
         return output, [output, tmp]
 
