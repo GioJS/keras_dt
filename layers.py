@@ -104,7 +104,7 @@ class PreterminalRNN(Recurrent):
         if self.stateful:
             self.reset_states()
 
-        print(self.states[0].shape)
+        #print(self.states[0].shape)
         #self.P = self.add_weight((input_dim, self.output_dim),
         #                         initializer=self.init,
         #                         name='{}_P'.format(self.name))
