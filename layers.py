@@ -118,7 +118,7 @@ class PreterminalRNN(Recurrent):
 
 
     def preprocess_input(self, x, training=None):
-        return x
+        return sc(x)
 
     #preterminals_simple_with_sigmoid
     #init_simple??
@@ -129,7 +129,7 @@ class PreterminalRNN(Recurrent):
 
         tmp = sigmoid(K.dot(symbols, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
-        output =  P + K.dot(sc(x),K.dot(self.index1, K.dot(self.position, tmp)))
+        output =  P + K.dot(x,K.dot(self.index1, K.dot(self.position, tmp)))
         self.position = K.dot(self.index1, self.position)
         return output, [output, tmp]
 
