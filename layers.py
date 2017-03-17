@@ -91,16 +91,16 @@ class PreterminalRNN(Recurrent):
 
 
     def build(self, input_shape):
-        self.input_spec = InputSpec(shape=input_shape)
-        '''if isinstance(input_shape, list):
-            input_shape = input_shape[0]'''
+        #self.input_spec = InputSpec(shape=input_shape)
+        if isinstance(input_shape, list):
+            input_shape = input_shape[0]
 
-        #batch_size = input_shape[0] if self.stateful else None
+        batch_size = input_shape[0] if self.stateful else None
         print(input_shape)
         input_dim = input_shape[2]
         self.input_dim = input_dim
-        #self.input_spec = InputSpec(shape=(input_dim, None, self.input_dim))
-        #self.state_spec = InputSpec(shape=(self.units, self.units))
+        self.input_spec = InputSpec(shape=(batch_size, None, self.input_dim))
+        self.state_spec = InputSpec(shape=(self.units, self.units))
 
         self.states = [None, None]
         if self.stateful:
