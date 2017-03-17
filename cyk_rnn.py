@@ -55,11 +55,3 @@ if __name__ == '__main__':
 
     P = cyk_dist.init_simple(w)
     P = cyk_dist.preterminals_simple_with_sigmoid(P,G,w)
-
-    
-
-
-
-
-    #learn_network(train_X, train_Y, model, batch_size=1)
-    print(model.predict(train_X))
