@@ -120,7 +120,9 @@ class PreterminalRNN(Recurrent):
 
     def preprocess_input(self, x, training=None):
         x = sc(x)
-        return K.reshape(x,[K.shape(x)[0], 1, K.shape(x)[1]])
+        #input must be 3D
+        return x
+        # return K.reshape(x,[K.shape(x)[0], 1, K.shape(x)[1]])
 
     #preterminals_simple_with_sigmoid
     #init_simple??
