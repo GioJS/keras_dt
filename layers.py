@@ -10,15 +10,12 @@ from vectors import *
 from convolutions import permutation_matrices
 
 
-dim = 1024
-gen = Vector_generator(dim=dim)
-Phi = K.variable(value=permutation_matrices(dim)[1])
-v = gen.get_random_vector
 
+#backend version
 def kirculant(v):
     return K.variable(value=circulant(v))
 #[v]+
-def sc(v):
+def sc(v, Phi):
     return K.dot(kirculant(v), Phi)
 #[v]-
 def invsc(v):
@@ -83,10 +80,14 @@ class PreterminalRNN(Recurrent):
         super(PreterminalRNN, self).__init__(**kwargs)
         self.output_dim = output_dim
         self.units = output_dim
+        #dim = 1024
+        gen = Vector_generator(dim=output_dim)
+        self.Phi = K.variable(value=permutation_matrices(output_dim)[1])
+        self.v = gen.get_random_vector
         #self.init = initializers.get(init)
         #self.inner_init = initializers.get(inner_init)
-        self.index0 = sc(v('0'))
-        self.index1 = sc(v('1'))
+        self.index0 = sc(self.v('0'),self.Phi)
+        self.index1 = sc(self.v('1'),self.Phi)
         self.position = self.index0
 
 
