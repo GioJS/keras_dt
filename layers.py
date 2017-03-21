@@ -127,7 +127,6 @@ class PreterminalRNN(Recurrent):
         #return K.reshape(x,[self.batch_size, 1, K.shape(x)[1]])
 
     #preterminals_simple_with_sigmoid
-    #init_simple??
     def step(self, x, states):
 
         P = states[0] #matrix P at step i-1
