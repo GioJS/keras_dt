@@ -60,7 +60,7 @@ if __name__ == '__main__':
     P = cyk_dist.preterminals_simple_with_sigmoid(P,G,w)
 
     train_X = np.array([cyk_dist.sc(cyk_dist.v('D')) for i in range(1)])
-    train_Y = cyk_dist.index1.dot(cyk_dist.index1).dot(P)
+    train_Y = cyk_dist.index1.T.dot(cyk_dist.index1.T).dot(P)
     #train_X = np.reshape(train_X, (1024,1,1024))
     #print(train_X)
     learn_network(train_X, train_Y, model)
