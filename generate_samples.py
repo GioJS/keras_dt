@@ -34,4 +34,4 @@ for i in range(10):
     print(w)
     P = init_simple(w)
     P = preterminals_simple_with_sigmoid(P,G,w)
-    np.save("testset/{}_{}.npy".format(w,dim),P,allow_pickle=True)
+    np.save("testset/{}_{}.npy".format(w.replace(' ',''),dim),P,allow_pickle=True)
