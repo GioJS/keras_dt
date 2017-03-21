@@ -15,9 +15,11 @@ gen = Vector_generator(dim=dim)
 Phi = K.variable(value=permutation_matrices(dim)[1])
 v = gen.get_random_vector
 
+def kirculant(v):
+    return K.variable(value=circulant(v))
 #[v]+
 def sc(v):
-    return K.variable(value=circulant(v).dot(Phi))
+    return K.dot(kirculant(v), Phi)
 #[v]-
 def invsc(v):
     return sc(v).T
