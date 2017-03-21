@@ -17,8 +17,6 @@ v = gen.get_random_vector
 
 #[v]+
 def sc(v):
-    #import tensorflow as tf
-    #return K.dot(tf.py_func(circulant,[v], tf.float32),Phi)
     return K.variable(value=circulant(v).dot(Phi))
 #[v]-
 def invsc(v):
@@ -123,8 +121,8 @@ class PreterminalRNN(Recurrent):
     def preprocess_input(self, x, training=None):
         #x = sc(x)
         #input must be 3D
-        #return x
-        return K.reshape(x,[self.batch_size, 1, K.shape(x)[1]])
+        return x
+        #return K.reshape(x,[self.batch_size, 1, K.shape(x)[1]])
 
     #preterminals_simple_with_sigmoid
     #init_simple??
@@ -134,13 +132,10 @@ class PreterminalRNN(Recurrent):
         symbols = states[1] #R[A]
 
         tmp = sigmoid(K.dot(symbols, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
-        print(K.shape(self.position))
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
-        x = self.preprocess_input(x)
+        #x = self.preprocess_input(x)
         #print(K.shape(x))
-        encode1 = K.dot(self.position, tmp)
-        encode2 = K.dot(self.index1,encode1)
-        output =  P + K.dot(x, encode2)
+        output =  P + K.dot(x,K.dot(self.index1, K.dot(self.position, tmp)))
         self.position = K.dot(self.index1, self.position)
         return output, [output, tmp]
 
