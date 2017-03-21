@@ -25,6 +25,7 @@ E -> 'b'
 
 parser = ChartParser(grammar)
 G = Grammar('S')
+parserG = CYK(G)
 G.add_rules_from_file('gramm_l')
 gr = parser.grammar()
 w_old = []
@@ -34,4 +35,8 @@ for i in range(10):
     print(w)
     P = init_simple(w)
     P = preterminals_simple_with_sigmoid(P,G,w)
-    np.save("testset/{}_{}.npy".format(w.replace(' ',''),dim),P,allow_pickle=True)
+    parserG.parse(w)
+    '''with open("testset/{}.cyk".format(w.replace(' ','')), 'w') as f:
+        f.write(str(parserG.C))'''
+    np.savetxt("testset/{}.cyk".format(w.replace(' ','')),parserG.C,fmt="%s", delimiter=' ')
+    np.save("testset/{}_{}.npy".format(w.replace(' ',''),dim),P, allow_pickle=True)

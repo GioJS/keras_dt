@@ -21,7 +21,7 @@ def build_network(input_shape, output_dim=4096):
     #output_dim must be an integer not a tuple!!
     #ValueError: Input should be at least 3D. K.rnn -> inputs: tensor of temporal data of shape (samples, time, ...)
     #                                                    (at least 3D). solved with reshape to 3D tensor
-    model.add(PreterminalRNN(output_dim, stateful=True, batch_input_shape=(1024, 1, 1024)))
+    model.add(PreterminalRNN(output_dim, stateful=False, input_shape=(1, 1024)))
     #model.add(Dense(1, activation='sigmoid'))
     #if exist checkpoint load it
     if os.path.exists(filepath):
@@ -36,7 +36,7 @@ def learn_network(train_X, train_Y, model, nb_epoch=100, batch_size=32):
     print('training...')
     checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only=True, mode='min', period=1)
     callbacks_list = [checkpoint]
-    model.fit(train_X, train_Y, nb_epoch, batch_size, shuffle=False, verbose=2, callbacks=callbacks_list)
+    model.fit(train_X, train_Y, nb_epoch, batch_size, verbose=2, callbacks=callbacks_list)
 
 def test_network(test_X, test_Y, model):
     #model.test
