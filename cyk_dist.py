@@ -124,7 +124,7 @@ def cyk_dist_simple(G,w):
     P_dist = preterminals_simple_with_sigmoid(P_dist, G, w)
     #print P_dist
     P_dist = binary_simple(P_dist, G, w)
-    return P_dist
+    return P_dist.astype(dtype=np.float32)
 
 #initialization of level 0
 def init(w):

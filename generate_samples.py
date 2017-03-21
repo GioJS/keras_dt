@@ -33,8 +33,7 @@ for i in range(10):
     w = ' '.join(produce(gr, gr.start(),w_old))
     w_old.append(w)
     print(w)
-    P = init_simple(w)
-    P = preterminals_simple_with_sigmoid(P,G,w)
+    P = cyk_dist_simple(G, w)
     parserG.parse(w)
     '''with open("testset/{}.cyk".format(w.replace(' ','')), 'w') as f:
         f.write(str(parserG.C))'''
