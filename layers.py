@@ -143,8 +143,6 @@ class PreterminalRNN(Recurrent):
 
 
     def get_config(self):
-        config = {'output_dim': self.output_dim,
-                  'init': self.init.__name__,
-                  'inner_init': self.inner_init.__name__}
+        config = {'output_dim': self.output_dim}
         base_config = super(PreterminalRNN, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
