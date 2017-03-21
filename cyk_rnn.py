@@ -36,7 +36,7 @@ def learn_network(train_X, train_Y, model, nb_epoch=100, batch_size=32):
     print('training...')
     checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only=True, mode='min', period=1)
     callbacks_list = [checkpoint]
-    model.fit(train_X, train_Y, nb_epoch, batch_size, verbose=2, callbacks=callbacks_list)
+    model.fit(train_X, train_Y, nb_epoch, batch_size, shuffle=False, verbose=2, callbacks=callbacks_list)
 
 def test_network(test_X, test_Y, model):
     #model.test
