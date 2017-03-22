@@ -4,7 +4,7 @@ from vectors import *
 from convolutions import *
 
 
-dim = 1024
+dim = 4096
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
 v = gen.get_random_vector
