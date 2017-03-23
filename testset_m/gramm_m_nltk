@@ -1,7 +1,7 @@
 S -> NP VP
 VP -> V NP
-NP -> 'Det N'
-NP -> 'Adj NP'
+NP -> Det N
+NP -> Adj NP
 NP -> 'john'
 NP -> 'jim'
 NP -> 'colo'
