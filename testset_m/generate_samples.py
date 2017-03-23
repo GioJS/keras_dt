@@ -23,17 +23,13 @@ def produce(grammar, symbol, w=[]):
         return produce(grammar, symbol, w)
     return words
 
-grammar = CFG.fromstring('''
-S -> D S
-S -> D E
-D -> 'a'
-E -> 'b'
-''')
+with open('gramm_m_nltk') as f:
+    grammar = CFG.fromstring(''.join(f.readlines()))
 
 parser = ChartParser(grammar)
 G = Grammar('S')
 parserG = CYK(G)
-G.add_rules_from_file('gramm_l')
+G.add_rules_from_file('gramm_m')
 gr = parser.grammar()
 w_old = []
 for i in range(10):
