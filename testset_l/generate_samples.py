@@ -44,5 +44,5 @@ for i in range(10):
     parserG.parse(w)
     '''with open("testset/{}.cyk".format(w.replace(' ','')), 'w') as f:
         f.write(str(parserG.C))'''
-    np.savetxt("{}.cyk".format(w.replace(' ','')),parserG.C,newline='\r\n',fmt="%s", delimiter=' ')
-    np.save("{}_{}.npy".format(w.replace(' ',''),dim),P, allow_pickle=True)
+    np.savetxt("{}.cyk".format(w),parserG.C,newline='\r\n',fmt="%s", delimiter=' ')
+    np.save("{}_{}.npy".format(w,dim),P, allow_pickle=True)
