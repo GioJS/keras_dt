@@ -39,6 +39,8 @@ w_old = []
 for i in range(10):
     w = ' '.join(produce(gr, gr.start(),w_old))
     w_old.append(w)
+    if os.path.exists(w+'.cyk'):
+        continue
     print(w)
     P = cyk_dist_simple(G, w)
     parserG.parse(w)
