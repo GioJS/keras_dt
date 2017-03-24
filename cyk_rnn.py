@@ -3,6 +3,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.callbacks import ModelCheckpoint
 from layers import PreterminalRNN
+from keras.layers.recurrent import LSTM
 import os
 import cyk_dist
 from parserNLP.Grammar import Grammar
@@ -15,13 +16,14 @@ filepath = 'weights.best.hdf5'
 
 
 
-def build_network(input_shape, output_dim=4096):
+def build_network(input_shape, output_dim=4096,matrix_dim=64):
     print('building...')
     model = Sequential()
     #output_dim must be an integer not a tuple!!
     #ValueError: Input should be at least 3D. K.rnn -> inputs: tensor of temporal data of shape (samples, time, ...)
     #                                                    (at least 3D). solved with reshape to 3D tensor
-    model.add(PreterminalRNN(output_dim, stateful=False, input_shape=(1, 1024)))
+    #model.add(LSTM(32, input_dim=64, input_length=10))
+    model.add(PreterminalRNN( output_dim, matrix_dim, input_shape = (10,1024)) )
     #model.add(Dense(1, activation='sigmoid'))
     #if exist checkpoint load it
     if os.path.exists(filepath):
@@ -50,7 +52,7 @@ if __name__ == '__main__':
     input_dim = 1024 #from training set
     input_shape = (tstep, input_dim)
 
-    model = build_network(input_shape, output_dim=1024)
+    model = build_network(input_shape, output_dim=1024,matrix_dim=32)
 
     G = Grammar('S')
     G.add_rules_from_file('gramm_l')
@@ -59,8 +61,8 @@ if __name__ == '__main__':
     P = cyk_dist.init_simple(w)
     P = cyk_dist.preterminals_simple_with_sigmoid(P,G,w)
 
-    train_X = np.array([cyk_dist.sc(cyk_dist.v('D')) for i in range(1)])
-    train_Y = cyk_dist.index1.T.dot(cyk_dist.index1.T).dot(P)
+    train_X = np.array([[cyk_dist.v('D') for i in range(0,10)]])
+    train_Y = np.array([cyk_dist.v('S')])
     #train_X = np.reshape(train_X, (1024,1,1024))
     #print(train_X)
     learn_network(train_X, train_Y, model)

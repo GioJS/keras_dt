@@ -75,16 +75,17 @@ class EmbeddingDT(Layer):
 #TODO, in step method implement preterminals_simple_with_sigmoid
 #TODO, refactoring: remove all unnecessary things
 class PreterminalRNN(Recurrent):
-    def __init__(self, output_dim,
+    def __init__(self, output_dim, matrix_dim,
                  **kwargs):
         super(PreterminalRNN, self).__init__(**kwargs)
         self.output_dim = output_dim
+        self.matrix_dim = matrix_dim
         self.units = output_dim
         #dim = 1024
-        gen = Vector_generator(dim=output_dim)
-        self.Phi = K.variable(value=permutation_matrices(output_dim)[1])
+        gen = Vector_generator(dim=matrix_dim)
+        self.Phi = K.variable(value=permutation_matrices(matrix_dim)[1])
         self.v = gen.get_random_vector
-        #self.init = initializers.get(init)
+        self.init = initializers.get('zeros')
         #self.inner_init = initializers.get(inner_init)
         self.index0 = sc(self.v('0'),self.Phi)
         self.index1 = sc(self.v('1'),self.Phi)
@@ -109,12 +110,18 @@ class PreterminalRNN(Recurrent):
             self.reset_states()
 
         #print(self.states[0].shape)
-        #self.P = self.add_weight((input_dim, self.output_dim),
+        #self.P = self.add_weight((self.matrix_dim, self.matrix_dim),
         #                         initializer=self.init,
         #                         name='{}_P'.format(self.name))
-        #self.symbols = self.add_weight((self.output_dim, self.output_dim),
+        #self.position = self.add_weight((self.matrix_dim, self.matrix_dim),
         #                         initializer=self.inner_init,
-        #                         name='{}_symbols'.format(self.name))
+        #                        name='{}_position'.format(self.name))
+
+
+
+        self.R_A = self.add_weight((self.matrix_dim, self.matrix_dim),
+                                 initializer=self.init,
+                                 name='{}_R_A'.format(self.name))
 
         self.built = True
 
@@ -127,18 +134,35 @@ class PreterminalRNN(Recurrent):
         #return K.reshape(x,[self.batch_size, 1, K.shape(x)[1]])
 
     #preterminals_simple_with_sigmoid
-    def step(self, x, states):
+    def step(self, inputs, states):
 
-        P = states[0] #matrix P at step i-1
-        symbols = states[1] #R[A]
+        P = K.reshape(states[0],[K.shape(states[0])[0], self.matrix_dim, self.matrix_dim]) # matrix P at step i-1
+        position = K.reshape(states[1],[K.shape(states[1])[0], self.matrix_dim, self.matrix_dim]) # position matrix
+#        position = K.dot(position,K.reshape(self.index1,[K.shape(self.index1)[0], self.matrix_dim, self.matrix_dim]))
+        position = K.dot(position,self.index1)
 
-        tmp = sigmoid(K.dot(symbols, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
+        x_reshaped = K.reshape(inputs, [K.shape(inputs)[0], self.matrix_dim, self.matrix_dim])
+
+        #intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
         #x = self.preprocess_input(x)
         #print(K.shape(x))
-        output =  P + K.dot(x,K.dot(self.index1, K.dot(self.position, tmp)))
-        self.position = K.dot(self.index1, self.position)
-        return output, [output, tmp]
+
+        #intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
+        #P_i =  P + K.dot(x_reshaped,K.dot(self.index1, K.dot(self.position, r_A)))
+
+        #P_i_flatten = K.flatten(P_i)
+        P_1 = K.dot(x_reshaped,self.R_A)
+        P_2 = K.batch_dot(position,P_1)
+        P_temp = K.sigmoid(P_2)
+#        P_temp = K.sigmoid(K.dot(position,K.dot(x_reshaped,self.R_A)))
+        P_out = P + P_temp
+        P_out_flatten = K.reshape(P_out,[K.shape(P_out)[0], self.output_dim])
+        position = K.reshape(position,[K.shape(position)[0], self.output_dim])
+        #P_out_flatten = K.reshape(P_out_flatten,(self.matrix_dim * self.matrix_dim))
+
+
+        return P_out_flatten, [P_out_flatten, position]
 
 
 
