@@ -1,0 +1,6 @@
+This folder contains a script python that generates small samples, a dummy grammar
+and the generated files:
+- sentence_dimension.npy -> cyk_dist matrix
+- sentence.cyk -> the associated cyk matrix P
+
+Dimension must be changed in generate_samples.py and in cyk_dist.py
