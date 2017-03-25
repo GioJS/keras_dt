@@ -28,7 +28,7 @@ def build_network(input_shape, output_dim=4096,matrix_dim=64):
     #if exist checkpoint load it
     if os.path.exists(filepath):
         model.load_weights(filepath)
-    model.compile(loss='binary_crossentropy', optimizer='rmsprop')
+    model.compile(loss='mse', optimizer='rmsprop')
     print('built.')
     return model
 
@@ -40,10 +40,10 @@ def learn_network(train_X, train_Y, model, nb_epoch=100, batch_size=32):
     callbacks_list = [checkpoint]
     model.fit(train_X, train_Y, epochs=nb_epoch, batch_size=batch_size, verbose=2, callbacks=callbacks_list)
 
-def test_network(test_X, test_Y, model):
-    #model.test
-    #print evaluations
-    pass
+def test_network(test_X, test_Y, model, batch_size=32):
+    return model.evaluate(test_X, test_Y, batch_size=batch_size)
+def predict_network(samples_X, model, batch_size=32):
+    return model.predict(samples_X, batch_size=batch_size)
 
 if __name__ == '__main__':
     #dataset load
@@ -66,3 +66,7 @@ if __name__ == '__main__':
     #train_X = np.reshape(train_X, (1024,1,1024))
     #print(train_X)
     learn_network(train_X, train_Y, model)
+    score = test_network(train_X, train_Y, model)
+    print(score)
+    predictions = predict_network(train_X, model)
+    print(train_Y, predictions)
