@@ -28,7 +28,7 @@ def build_network(input_shape, output_dim=4096,matrix_dim=64):
     #if exist checkpoint load it
     if os.path.exists(filepath):
         model.load_weights(filepath)
-    model.compile(loss='mse', optimizer='rmsprop')
+    model.compile(loss='binary_crossentropy', optimizer='rmsprop')
     print('built.')
     return model
 
@@ -69,4 +69,4 @@ if __name__ == '__main__':
     score = test_network(train_X, train_Y, model)
     print(score)
     predictions = predict_network(train_X, model)
-    print(train_Y, predictions)
+    print(train_Y,'\n' ,predictions)
