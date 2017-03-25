@@ -3,6 +3,7 @@
 from keras import backend as K
 from keras import initializers
 from keras.engine import Layer
+from keras import activations
 from keras_dt import *
 from keras.layers.recurrent import Recurrent
 from keras.engine import InputSpec
@@ -90,7 +91,7 @@ class PreterminalRNN(Recurrent):
         self.index0 = sc(self.v('0'),self.Phi)
         self.index1 = sc(self.v('1'),self.Phi)
         self.position = self.index0
-
+        self.activation = activations.get('sigmoid')
 
     def build(self, input_shape):
         self.input_spec = InputSpec(shape=input_shape)
@@ -153,7 +154,7 @@ class PreterminalRNN(Recurrent):
         #P_i_flatten = K.flatten(P_i)
         P_1 = K.dot(x_reshaped,self.R_A)
         P_2 = K.batch_dot(position,P_1)
-        P_temp = K.sigmoid(P_2)
+        P_temp =self.activation(P_2)
 #        P_temp = K.sigmoid(K.dot(position,K.dot(x_reshaped,self.R_A)))
         P_out = P + P_temp
         P_out_flatten = K.reshape(P_out,[K.shape(P_out)[0], self.output_dim])
