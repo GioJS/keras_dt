@@ -154,7 +154,7 @@ class PreterminalRNN(Recurrent):
         #P_i_flatten = K.flatten(P_i)
         P_1 = K.dot(x_reshaped,self.R_A)
         P_2 = K.batch_dot(position,P_1)
-        P_temp =self.activation(P_2)
+        P_temp = self.activation(P_2)
 #        P_temp = K.sigmoid(K.dot(position,K.dot(x_reshaped,self.R_A)))
         P_out = P + P_temp
         P_out_flatten = K.reshape(P_out,[K.shape(P_out)[0], self.output_dim])

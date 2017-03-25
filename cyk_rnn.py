@@ -29,7 +29,7 @@ def build_network(input_shape, output_dim=4096,matrix_dim=64):
     #if exist checkpoint load it
     if os.path.exists(filepath):
         model.load_weights(filepath)
-    opt = optimizers.sgd(clipvalue=5, lr=2)
+    opt = optimizers.adam(clipvalue=5)
 
     model.compile(loss='mse', optimizer=opt)
     print('built.')
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     train_Y = np.array([cyk_dist.v('S')])
     #train_X = np.reshape(train_X, (1024,1,1024))
     #print(train_X)
-    learn_network(train_X, train_Y, model)
+    learn_network(train_X, train_Y, model, nb_epoch=1000)
 
     score = test_network(train_X, train_Y, model)
     print(score)
