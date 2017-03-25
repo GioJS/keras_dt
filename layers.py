@@ -86,7 +86,7 @@ class PreterminalRNN(Recurrent):
         gen = Vector_generator(dim=matrix_dim)
         self.Phi = K.variable(value=permutation_matrices(matrix_dim)[1])
         self.v = gen.get_random_vector
-        self.init = initializers.get('zeros')
+        self.init = initializers.get('zero')
         #self.inner_init = initializers.get(inner_init)
         self.index0 = sc(self.v('0'),self.Phi)
         self.index1 = sc(self.v('1'),self.Phi)
