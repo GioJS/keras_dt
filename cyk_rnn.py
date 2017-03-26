@@ -29,9 +29,9 @@ def build_network(input_shape, output_dim=4096,matrix_dim=64):
     #if exist checkpoint load it
     if os.path.exists(filepath):
         model.load_weights(filepath)
-    #opt = optimizers.sgd(clipvalue=5)
+    opt = optimizers.adam(lr=0.1/100)
 
-    model.compile(loss='mse', optimizer='sgd')
+    model.compile(loss='mse', optimizer=opt, metrics=['accuracy'])
     print('built.')
     return model
 
