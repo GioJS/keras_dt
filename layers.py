@@ -86,7 +86,7 @@ class PreterminalRNN(Recurrent):
         gen = Vector_generator(dim=matrix_dim)
         self.Phi = K.variable(value=permutation_matrices(matrix_dim)[1])
         self.v = gen.get_random_vector
-        self.init = initializers.get('zero')
+        self.init = initializers.get('zeros')
         #self.inner_init = initializers.get(inner_init)
         self.index0 = sc(self.v('0'),self.Phi)
         self.index1 = sc(self.v('1'),self.Phi)
@@ -143,20 +143,20 @@ class PreterminalRNN(Recurrent):
 
         x_reshaped = K.reshape(inputs, [K.shape(inputs)[0], self.matrix_dim, self.matrix_dim])
 
-        #intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
+        intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
         #x = self.preprocess_input(x)
         #print(K.shape(x))
 
         #intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
-        #P_i =  P + K.dot(x_reshaped,K.dot(self.index1, K.dot(self.position, r_A)))
+        P_out =  P + K.dot(x_reshaped,K.dot(self.index1, K.dot(self.position, self.R_A)))
 
         #P_i_flatten = K.flatten(P_i)
-        P_1 = K.dot(x_reshaped,self.R_A)
+        '''P_1 = K.dot(x_reshaped,self.R_A)
         P_2 = K.batch_dot(position,P_1)
         P_temp = self.activation(P_2)
 #        P_temp = K.sigmoid(K.dot(position,K.dot(x_reshaped,self.R_A)))
-        P_out = P + P_temp
+        P_out = P + P_temp'''
         P_out_flatten = K.reshape(P_out,[K.shape(P_out)[0], self.output_dim])
         position = K.reshape(position,[K.shape(position)[0], self.output_dim])
         #P_out_flatten = K.reshape(P_out_flatten,(self.matrix_dim * self.matrix_dim))
