@@ -136,7 +136,7 @@ class PreterminalRNN(Recurrent):
 
     #preterminals_simple_with_sigmoid
     def step(self, inputs, states):
-        P = states[0]#K.reshape(states[0],[K.shape(states[0])[0], self.matrix_dim, self.matrix_dim]) # matrix P at step i-1
+        P = K.reshape(states[0],[K.shape(states[0])[0], self.matrix_dim, self.matrix_dim]) # matrix P at step i-1
         position = K.reshape(states[1],[K.shape(states[1])[0], self.matrix_dim, self.matrix_dim]) # position matrix
 #        position = K.dot(position,K.reshape(self.index1,[K.shape(self.index1)[0], self.matrix_dim, self.matrix_dim]))
         position = K.dot(self.index1, position)
