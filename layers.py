@@ -90,7 +90,7 @@ class PreterminalRNN(Recurrent):
         #self.inner_init = initializers.get(inner_init)
         self.index0 = sc(self.v('0'),self.Phi)
         self.index1 = sc(self.v('1'),self.Phi)
-        self.position = self.index0
+        #self.position = self.index0
         self.activation = sigmoid
 
     def build(self, input_shape):
@@ -139,17 +139,18 @@ class PreterminalRNN(Recurrent):
         P = K.reshape(states[0],[K.shape(states[0])[0], self.matrix_dim, self.matrix_dim]) # matrix P at step i-1
         position = K.reshape(states[1],[K.shape(states[1])[0], self.matrix_dim, self.matrix_dim]) # position matrix
 #        position = K.dot(position,K.reshape(self.index1,[K.shape(self.index1)[0], self.matrix_dim, self.matrix_dim]))
-        position = K.dot(position,self.index1)
+        position = K.dot(position, self.index1)
 
-        x_reshaped = K.reshape(inputs, [K.shape(inputs)[0], self.matrix_dim, self.matrix_dim])
+        x_reshaped = K.reshape(inputs, [self.matrix_dim, self.matrix_dim])
 
-        intermediate_computation = self.activation(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
+        intermediate_computation = self.activation(K.dot(self.R_A, K.dot(K.transpose(position), K.dot(K.transpose(self.index0), P))))
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
         #x = self.preprocess_input(x)
         #print(K.shape(x))
 
         #intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
-        P_out =  P + K.dot(x_reshaped,K.dot(self.index1, K.dot(self.position, self.R_A)))
+        #index1 = K.flatten(self.index1)
+        P_out =  P + K.dot(x_reshaped, K.dot(self.index1, K.dot(position, intermediate_computation)))
 
         #P_i_flatten = K.flatten(P_i)
         '''P_1 = K.dot(x_reshaped,self.R_A)
@@ -158,9 +159,9 @@ class PreterminalRNN(Recurrent):
 #        P_temp = K.sigmoid(K.dot(position,K.dot(x_reshaped,self.R_A)))
         P_out = P + P_temp'''
         P_out_flatten = K.reshape(P_out,[K.shape(P_out)[0], self.output_dim])
-        position = K.reshape(position,[K.shape(position)[0], self.output_dim])
-        #P_out_flatten = K.reshape(P_out_flatten,(self.matrix_dim * self.matrix_dim))
 
+        #P_out_flatten = K.reshape(P_out_flatten,(self.matrix_dim * self.matrix_dim))
+        position = K.reshape(position,[K.shape(position)[0], self.output_dim])
 
         return P_out_flatten, [P_out_flatten, position]
 
