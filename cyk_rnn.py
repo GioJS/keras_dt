@@ -65,7 +65,7 @@ if __name__ == '__main__':
     P = cyk_dist.preterminals_simple_with_sigmoid(P,G,w)
 
     train_X = np.array([[cyk_dist.v('D') for i in range(0,10)]])
-    train_Y = np.array([cyk_dist.index1.dot(cyk_dist.index1).dot(cyk_dist.v('D'))])
+    train_Y = np.array([cyk_dist.v('S')])
     #train_X = np.reshape(train_X, (1024,1,1024))
     #print(train_X)
     learn_network(train_X, train_Y, model, nb_epoch=100)
@@ -73,4 +73,4 @@ if __name__ == '__main__':
     score = test_network(train_X, train_Y, model)
     print(score)
     predictions = predict_network(train_X, model)
-    print(train_Y,'\n' ,predictions)
+    print(train_Y,'\n' , predictions)

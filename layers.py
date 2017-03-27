@@ -91,7 +91,7 @@ class PreterminalRNN(Recurrent):
         self.index0 = sc(self.v('0'),self.Phi)
         self.index1 = sc(self.v('1'),self.Phi)
         self.position = self.index0
-        self.activation = activations.get('sigmoid')
+        self.activation = sigmoid
 
     def build(self, input_shape):
         self.input_spec = InputSpec(shape=input_shape)
@@ -143,7 +143,7 @@ class PreterminalRNN(Recurrent):
 
         x_reshaped = K.reshape(inputs, [K.shape(inputs)[0], self.matrix_dim, self.matrix_dim])
 
-        intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
+        intermediate_computation = self.activation(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
         #x = self.preprocess_input(x)
         #print(K.shape(x))
