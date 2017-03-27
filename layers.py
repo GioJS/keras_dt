@@ -139,7 +139,7 @@ class PreterminalRNN(Recurrent):
         P = states[0]#K.reshape(states[0],[K.shape(states[0])[0], self.matrix_dim, self.matrix_dim]) # matrix P at step i-1
         position = K.reshape(states[1],[K.shape(states[1])[0], self.matrix_dim, self.matrix_dim]) # position matrix
 #        position = K.dot(position,K.reshape(self.index1,[K.shape(self.index1)[0], self.matrix_dim, self.matrix_dim]))
-        position = K.dot(position, self.index1)
+        position = K.dot(self.index1, position)
 
         x_reshaped = K.reshape(inputs, [self.matrix_dim, self.matrix_dim])
 
@@ -150,7 +150,8 @@ class PreterminalRNN(Recurrent):
 
         #intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
         #index1 = K.flatten(self.index1)
-        P_out =  P + K.dot(x_reshaped, K.dot(self.index1, K.dot(position, intermediate_computation)))
+
+        P_out =  P + K.dot(x_reshaped, K.dot(self.index1, K.batch_dot(position, intermediate_computation)))
 
         #P_i_flatten = K.flatten(P_i)
         '''P_1 = K.dot(x_reshaped,self.R_A)
