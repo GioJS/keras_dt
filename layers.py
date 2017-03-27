@@ -147,7 +147,6 @@ class PreterminalRNN(Recurrent):
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
         #x = self.preprocess_input(x)
         #print(K.shape(x))
-
         #intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
         #index1 = K.flatten(self.index1)
         P_out =  P + K.dot(x_reshaped, K.dot(self.index1, K.dot(position, intermediate_computation)))
