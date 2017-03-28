@@ -86,12 +86,29 @@ class PreterminalRNN(Recurrent):
         gen = Vector_generator(dim=matrix_dim)
         self.Phi = K.variable(value=permutation_matrices(matrix_dim)[1])
         self.v = gen.get_random_vector
-        self.init = initializers.get('zeros')
+        self.init = initializers.get('normal')
         #self.inner_init = initializers.get(inner_init)
         self.index0 = sc(self.v('0'),self.Phi)
         self.index1 = sc(self.v('1'),self.Phi)
         #self.position = self.index0
         self.activation = sigmoid
+
+    def get_initial_states(self, inputs):
+        # build an all-zero tensor of shape (samples, output_dim)
+        P = K.zeros_like(inputs)  # (samples, timesteps, input_dim)
+        P = K.sum(P, axis=(1, 2))  # (samples,)
+        P = K.expand_dims(P)  # (samples, 1)
+        P = K.tile(P, [1, self.units])  # (samples, output_dim)
+
+        position = K.ones_like(inputs)
+        position = K.sum(position, axis=(1,2))
+       # position = K.flatten(self.index0)
+        #position = K.tile(position, [K.shape(inputs)[0], self.units])
+        position = K.expand_dims(position)
+        position = K.tile(position, [1, self.units])
+        #initial_states = [P for _ in range(len(self.states))]
+        initial_states = [P, position]
+        return initial_states
 
     def build(self, input_shape):
         self.input_spec = InputSpec(shape=input_shape)
@@ -137,21 +154,24 @@ class PreterminalRNN(Recurrent):
     #preterminals_simple_with_sigmoid
     def step(self, inputs, states):
         P = K.reshape(states[0],[K.shape(states[0])[0], self.matrix_dim, self.matrix_dim]) # matrix P at step i-1
+
         position = K.reshape(states[1],[K.shape(states[1])[0], self.matrix_dim, self.matrix_dim]) # position matrix
 #        position = K.dot(position,K.reshape(self.index1,[K.shape(self.index1)[0], self.matrix_dim, self.matrix_dim]))
-        position = K.dot(self.index1, position)
+        position = K.dot(position, self.index1)
 
-        x_reshaped = K.reshape(inputs, [self.matrix_dim, self.matrix_dim])
+        x_reshaped = K.reshape(inputs, [K.shape(inputs)[0] ,self.matrix_dim, self.matrix_dim])
 
-        intermediate_computation = self.activation(K.dot(self.R_A, K.dot(K.transpose(position), K.dot(K.transpose(self.index0), P))))
+        #intermediate_computation = self.activation(K.dot(self.R_A, K.dot(K.transpose(position), K.dot(K.transpose(self.index0), P))))
         #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
         #x = self.preprocess_input(x)
         #print(K.shape(x))
 
         #intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
         #index1 = K.flatten(self.index1)
-
-        P_out =  P + K.dot(x_reshaped, K.dot(self.index1, K.batch_dot(position, intermediate_computation)))
+        P_1 = K.dot(x_reshaped, self.R_A)
+        P_2 = K.batch_dot(position, P_1)
+        P_3 = self.activation(P_2)
+        P_out =  P + P_3
 
         #P_i_flatten = K.flatten(P_i)
         '''P_1 = K.dot(x_reshaped,self.R_A)
@@ -159,6 +179,8 @@ class PreterminalRNN(Recurrent):
         P_temp = self.activation(P_2)
 #        P_temp = K.sigmoid(K.dot(position,K.dot(x_reshaped,self.R_A)))
         P_out = P + P_temp'''
+
+
         P_out_flatten = K.reshape(P_out,[K.shape(P_out)[0], self.output_dim])
 
         #P_out_flatten = K.reshape(P_out_flatten,(self.matrix_dim * self.matrix_dim))

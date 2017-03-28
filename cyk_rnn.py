@@ -29,9 +29,9 @@ def build_network(input_shape, output_dim=4096,matrix_dim=64):
     #if exist checkpoint load it
     if os.path.exists(filepath):
         model.load_weights(filepath)
-    #opt = optimizers.sgd()
+    opt = optimizers.sgd(lr=0.000001)
 
-    model.compile(loss='mse', optimizer='sgd', metrics=['accuracy'])
+    model.compile(loss='hinge', optimizer=opt)
     print('built.')
     return model
 
@@ -64,8 +64,8 @@ if __name__ == '__main__':
     P = cyk_dist.init_simple(w)
     P = cyk_dist.preterminals_simple_with_sigmoid(P,G,w)
 
-    train_X = np.array([[cyk_dist.v('D') for i in range(0,10)]])
-    train_Y = np.array([cyk_dist.v('S')])
+    train_X = np.array([[cyk_dist.v('D_{}'.format(i)) for i in range(0,10)],[cyk_dist.v('E_{}'.format(i)) for i in range(0,10)],[cyk_dist.v('F_{}'.format(i)) for i in range(0,10)],[cyk_dist.v('G_{}'.format(i)) for i in range(0,10)]])
+    train_Y = np.array([cyk_dist.v('S'), cyk_dist.v('B'),cyk_dist.v('S'),cyk_dist.v('B')])
     #train_X = np.reshape(train_X, (1024,1,1024))
     #print(train_X)
     learn_network(train_X, train_Y, model, nb_epoch=100)
