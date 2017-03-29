@@ -9,7 +9,12 @@ from keras.layers.recurrent import Recurrent
 from keras.engine import InputSpec
 from vectors import *
 from convolutions import permutation_matrices
-
+import tensorflow as tf
+from tensorflow.python.framework import ops
+'''
+def sigmoid(x):
+    return 1 / (1 + np.exp(-(x-0.5)*360))
+'''
 
 
 #backend version
@@ -21,10 +26,11 @@ def sc(v, Phi):
 #[v]-
 def invsc(v):
     return sc(v).T
-
+'''
 def sigmoid(x):
-    return K.pow(1 + K.exp(-(x-0.5)*360),-1)
-
+    return K.pow(1 + K.exp(-(x-0.5)*360),-1)'''
+def sigmoid(x):
+    return K.sigmoid((x-0.5)*36) #*360 return 0 :(
 def indices_trees(trees):
     return np.unique(trees,return_inverse=True)[1]
 
@@ -91,7 +97,7 @@ class PreterminalRNN(Recurrent):
         self.index0 = sc(self.v('0'),self.Phi)
         self.index1 = sc(self.v('1'),self.Phi)
         #self.position = self.index0
-        self.activation = K.sigmoid
+        self.activation = sigmoid
 
     def get_initial_states(self, inputs):
         # build an all-zero tensor of shape (samples, output_dim)
