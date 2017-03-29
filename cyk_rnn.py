@@ -31,7 +31,7 @@ def build_network(input_shape, output_dim=4096,matrix_dim=64):
         model.load_weights(filepath)
     opt = optimizers.sgd(lr=0.000001)
 
-    model.compile(loss='hinge', optimizer=opt)
+    model.compile(loss='mse', optimizer=opt)
     print('built.')
     return model
 

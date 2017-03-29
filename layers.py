@@ -91,7 +91,7 @@ class PreterminalRNN(Recurrent):
         self.index0 = sc(self.v('0'),self.Phi)
         self.index1 = sc(self.v('1'),self.Phi)
         #self.position = self.index0
-        self.activation = sigmoid
+        self.activation = K.sigmoid
 
     def get_initial_states(self, inputs):
         # build an all-zero tensor of shape (samples, output_dim)
@@ -172,13 +172,6 @@ class PreterminalRNN(Recurrent):
         P_2 = K.batch_dot(position, P_1)
         P_3 = self.activation(P_2)
         P_out =  P + P_3
-
-        #P_i_flatten = K.flatten(P_i)
-        '''P_1 = K.dot(x_reshaped,self.R_A)
-        P_2 = K.batch_dot(position,P_1)
-        P_temp = self.activation(P_2)
-#        P_temp = K.sigmoid(K.dot(position,K.dot(x_reshaped,self.R_A)))
-        P_out = P + P_temp'''
 
 
         P_out_flatten = K.reshape(P_out,[K.shape(P_out)[0], self.output_dim])
