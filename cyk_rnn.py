@@ -74,3 +74,6 @@ if __name__ == '__main__':
     print(score)
     predictions = predict_network(train_X, model)
     print(train_Y,'\n' , predictions)
+    #to avoid Tensorflow AttributeError: 'NoneType' object has no attribute 'TF_DeleteStatus'
+    import gc
+    gc.collect()
