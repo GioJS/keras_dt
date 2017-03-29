@@ -100,12 +100,12 @@ class PreterminalRNN(Recurrent):
         P = K.expand_dims(P)  # (samples, 1)
         P = K.tile(P, [1, self.units])  # (samples, output_dim)
 
-        position = K.ones_like(inputs)
+        position = K.zeros_like(inputs)
         position = K.sum(position, axis=(1,2))
        # position = K.flatten(self.index0)
         #position = K.tile(position, [K.shape(inputs)[0], self.units])
         position = K.expand_dims(position)
-        position = K.tile(position, [1, self.units])
+        position = K.tile(position, [1, self.units]) + K.flatten(self.index0)
         #initial_states = [P for _ in range(len(self.states))]
         initial_states = [P, position]
         return initial_states
@@ -153,6 +153,7 @@ class PreterminalRNN(Recurrent):
 
     #preterminals_simple_with_sigmoid
     def step(self, inputs, states):
+
         P = K.reshape(states[0],[K.shape(states[0])[0], self.matrix_dim, self.matrix_dim]) # matrix P at step i-1
 
         position = K.reshape(states[1],[K.shape(states[1])[0], self.matrix_dim, self.matrix_dim]) # position matrix
