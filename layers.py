@@ -164,6 +164,7 @@ class PreterminalRNN(Recurrent):
     def step(self, inputs, states):
        # print(states)
         new_states = []
+
         for i,j in zip(range(0,4,2),range(2)):
             P = K.reshape(states[i],[K.shape(states[i])[0], self.matrix_dim, self.matrix_dim]) # matrix P at step i-1
 

@@ -24,8 +24,8 @@ def build_network(input_shape, output_dim=4096,matrix_dim=64):
     #ValueError: Input should be at least 3D. K.rnn -> inputs: tensor of temporal data of shape (samples, time, ...)
     #                                                    (at least 3D). solved with reshape to 3D tensor
     #model.add(LSTM(32, input_dim=64, input_length=10))
-    model.add(PreterminalRNN( output_dim, matrix_dim, input_shape = (10,1024)) )
-    #model.add(Dense(1, activation='sigmoid'))
+    model.add(PreterminalRNN( output_dim, matrix_dim, input_shape = input_shape) )
+    #model.add(Dense(1024, activation='sigmoid'))
     #if exist checkpoint load it
     if os.path.exists(filepath):
         model.load_weights(filepath)
@@ -51,9 +51,9 @@ def predict_network(samples_X, model, batch_size=32):
 if __name__ == '__main__':
     #dataset load
     #split training and test set
-    tstep = 1
-    input_dim = 1024 #from training set
-    input_shape = (tstep, input_dim)
+    #tstep = 1
+    #input_dim = 1024 #from training set
+    input_shape = (10, 1024)
 
     model = build_network(input_shape, output_dim=1024,matrix_dim=32)
 
