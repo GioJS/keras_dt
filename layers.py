@@ -102,7 +102,7 @@ class PreterminalRNN(Recurrent):
     def get_initial_states(self, inputs):
         initial_states = []
         # build an all-zero tensor of shape (samples, output_dim)
-        for _ in range(5):
+        for _ in range(2):
             P = K.zeros_like(inputs)  # (samples, timesteps, input_dim)
             P = K.sum(P, axis=(1, 2))  # (samples,)
             P = K.expand_dims(P)  # (samples, 1)
@@ -132,7 +132,7 @@ class PreterminalRNN(Recurrent):
         #self.input_spec = InputSpec(shape=(batch_size, None, self.input_dim))
         #self.state_spec = InputSpec(shape=(batch_size, self.units))
         #5 symbols 2 matrix per symbol
-        self.states = [None for _ in range(10)]
+        self.states = [None for _ in range(4)]
         if self.stateful:
             self.reset_states()
 
@@ -148,7 +148,7 @@ class PreterminalRNN(Recurrent):
         #fix 5 symbols
         self.R = [self.add_weight((self.matrix_dim, self.matrix_dim),
                                  initializer=self.init,
-                                 name='{}_R_{}'.format(self.name, i)) for i in range(5)]
+                                 name='{}_R_{}'.format(self.name, i)) for i in range(2)]
 
         self.built = True
 
@@ -164,7 +164,7 @@ class PreterminalRNN(Recurrent):
     def step(self, inputs, states):
        # print(states)
         new_states = []
-        for i,j in zip(range(0,10,2),range(5)):
+        for i,j in zip(range(0,4,2),range(2)):
             P = K.reshape(states[i],[K.shape(states[i])[0], self.matrix_dim, self.matrix_dim]) # matrix P at step i-1
 
             position = K.reshape(states[i+1],[K.shape(states[i+1])[0], self.matrix_dim, self.matrix_dim]) # position matrix
