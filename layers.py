@@ -194,8 +194,8 @@ class PreterminalRNN(Recurrent):
             position = K.reshape(position,[K.shape(position)[0], self.output_dim])
             new_states.append(P_out_flatten)
             new_states.append(position)
-
-        return P_out_flatten, new_states
+        #return must be an OP
+        return new_states[0]+new_states[2], new_states
 
 
 
