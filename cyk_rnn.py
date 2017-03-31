@@ -19,12 +19,13 @@ filepath = 'weights.best.hdf5'
 
 def build_network(input_shape, output_dim=4096,matrix_dim=64):
     print('building...')
+    symbols = 2
     model = Sequential()
     #output_dim must be an integer not a tuple!!
     #ValueError: Input should be at least 3D. K.rnn -> inputs: tensor of temporal data of shape (samples, time, ...)
     #                                                    (at least 3D). solved with reshape to 3D tensor
     #model.add(LSTM(32, input_dim=64, input_length=10))
-    model.add(PreterminalRNN( output_dim, matrix_dim, input_shape = input_shape) )
+    model.add(PreterminalRNN( output_dim, matrix_dim, symbols, input_shape = input_shape) )
     #model.add(Dense(1024, kernel_initializer='normal'))
     #if exist checkpoint load it
     if os.path.exists(filepath):

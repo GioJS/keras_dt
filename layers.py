@@ -93,12 +93,13 @@ class EmbeddingDT(Layer):
 # TODO, in step method implement preterminals_simple_with_sigmoid
 # TODO, refactoring: remove all unnecessary things
 class PreterminalRNN(Recurrent):
-    def __init__(self, output_dim, matrix_dim,
+    def __init__(self, output_dim, matrix_dim, symbols,
                  **kwargs):
         super(PreterminalRNN, self).__init__(**kwargs)
         self.output_dim = output_dim
         self.matrix_dim = matrix_dim
         self.units = output_dim
+        self.symbols = symbols
         # dim = 1024
         gen = Vector_generator(dim=matrix_dim)
         self.Phi = K.variable(value=permutation_matrices(matrix_dim)[1])
@@ -142,8 +143,8 @@ class PreterminalRNN(Recurrent):
         self.batch_size = batch_size
         # self.input_spec = InputSpec(shape=(batch_size, None, self.input_dim))
         # self.state_spec = InputSpec(shape=(batch_size, self.units))
-        # 5 symbols 2 matrix per symbol
-        self.states = [None for _ in range(4)]
+        # symbols: 2 matrix per symbol
+        self.states = [None for _ in range(self.symbols*2)]
         if self.stateful:
             self.reset_states()
 
@@ -159,7 +160,7 @@ class PreterminalRNN(Recurrent):
         # fix 5 symbols
         self.R = [self.add_weight((self.matrix_dim, self.matrix_dim),
                                   initializer=self.init,
-                                  name='{}_R_{}'.format(self.name, i)) for i in range(2)]
+                                  name='{}_R_{}'.format(self.name, i)) for i in range(self.symbols)]
 
         self.built = True
 
@@ -173,8 +174,8 @@ class PreterminalRNN(Recurrent):
     def step(self, inputs, states):
         # print(states)
         new_states = []
-
-        for i, j in zip(range(0, 4, 2), range(2)):
+        P_out_sum = None
+        for i, j in zip(range(0, self.symbols*2, 2), range(self.symbols)):
             P = K.reshape(states[i], [K.shape(states[i])[0], self.matrix_dim, self.matrix_dim])  # matrix P at step i-1
 
             position = K.reshape(states[i + 1]
@@ -198,13 +199,16 @@ class PreterminalRNN(Recurrent):
             P_out = P + P_3
 
             P_out_flatten = K.reshape(P_out, [K.shape(P_out)[0], self.output_dim])
-
+            if i==0:
+                P_out_sum = P_out_flatten
+            else:
+                P_out_sum = P_out_sum + P_out_flatten
             # P_out_flatten = K.reshape(P_out_flatten,(self.matrix_dim * self.matrix_dim))
             position = K.reshape(position, [K.shape(position)[0], self.output_dim])
             new_states.append(P_out_flatten)
             new_states.append(position)
             # return must be an OP
-        return new_states[0] + new_states[2], new_states
+        return P_out_sum, new_states
 
     def get_config(self):
         config = {'output_dim': self.output_dim}
