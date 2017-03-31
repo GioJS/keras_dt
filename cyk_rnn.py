@@ -25,7 +25,7 @@ def build_network(input_shape, output_dim=4096,matrix_dim=64):
     #                                                    (at least 3D). solved with reshape to 3D tensor
     #model.add(LSTM(32, input_dim=64, input_length=10))
     model.add(PreterminalRNN( output_dim, matrix_dim, input_shape = input_shape) )
-    #model.add(Dense(1024, activation='sigmoid'))
+    #model.add(Dense(1024, kernel_initializer='normal'))
     #if exist checkpoint load it
     if os.path.exists(filepath):
         model.load_weights(filepath)

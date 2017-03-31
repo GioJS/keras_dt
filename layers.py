@@ -1,5 +1,3 @@
-
-
 from keras import backend as K
 from keras import initializers
 from keras.engine import Layer
@@ -11,28 +9,40 @@ from vectors import *
 from convolutions import permutation_matrices
 import tensorflow as tf
 from tensorflow.python.framework import ops
+
 '''
 def sigmoid(x):
     return 1 / (1 + np.exp(-(x-0.5)*360))
 '''
 
 
-#backend version
+# backend version
 def kirculant(v):
     return K.variable(value=circulant(v))
-#[v]+
+
+
+# [v]+
 def sc(v, Phi):
     return K.dot(kirculant(v), Phi)
-#[v]-
+
+
+# [v]-
 def invsc(v):
     return sc(v).T
+
+
 '''
 def sigmoid(x):
     return K.pow(1 + K.exp(-(x-0.5)*360),-1)'''
+
+
 def sigmoid(x):
-    return K.sigmoid((x-0.5)*360)
+    return K.sigmoid((x - 0.5) * 360)
+
+
 def indices_trees(trees):
-    return np.unique(trees,return_inverse=True)[1]
+    return np.unique(trees, return_inverse=True)[1]
+
 
 '''
 @deprecated
@@ -78,9 +88,10 @@ class EmbeddingDT(Layer):
 
 '''
 
-#layer for preterminals rules (fully-connected)
-#TODO, in step method implement preterminals_simple_with_sigmoid
-#TODO, refactoring: remove all unnecessary things
+
+# layer for preterminals rules (fully-connected)
+# TODO, in step method implement preterminals_simple_with_sigmoid
+# TODO, refactoring: remove all unnecessary things
 class PreterminalRNN(Recurrent):
     def __init__(self, output_dim, matrix_dim,
                  **kwargs):
@@ -88,15 +99,15 @@ class PreterminalRNN(Recurrent):
         self.output_dim = output_dim
         self.matrix_dim = matrix_dim
         self.units = output_dim
-        #dim = 1024
+        # dim = 1024
         gen = Vector_generator(dim=matrix_dim)
         self.Phi = K.variable(value=permutation_matrices(matrix_dim)[1])
         self.v = gen.get_random_vector
         self.init = initializers.get('normal')
-        #self.inner_init = initializers.get(inner_init)
-        self.index0 = sc(self.v('0'),self.Phi)
-        self.index1 = sc(self.v('1'),self.Phi)
-        #self.position = self.index0
+        # self.inner_init = initializers.get(inner_init)
+        self.index0 = sc(self.v('0'), self.Phi)
+        self.index1 = sc(self.v('1'), self.Phi)
+        # self.position = self.index0
         self.activation = sigmoid
 
     def get_initial_states(self, inputs):
@@ -109,12 +120,12 @@ class PreterminalRNN(Recurrent):
             P = K.tile(P, [1, self.units])  # (samples, output_dim)
 
             position = K.zeros_like(inputs)
-            position = K.sum(position, axis=(1,2))
-           # position = K.flatten(self.index0)
-            #position = K.tile(position, [K.shape(inputs)[0], self.units])
+            position = K.sum(position, axis=(1, 2))
+            # position = K.flatten(self.index0)
+            # position = K.tile(position, [K.shape(inputs)[0], self.units])
             position = K.expand_dims(position)
             position = K.tile(position, [1, self.units]) + K.flatten(self.index0)
-            #initial_states = [P for _ in range(len(self.states))]
+            # initial_states = [P for _ in range(len(self.states))]
             initial_states.append(P)
             initial_states.append(position)
         return initial_states
@@ -125,79 +136,75 @@ class PreterminalRNN(Recurrent):
             input_shape = input_shape[0]
 
         batch_size = input_shape[0] if self.stateful else None
-        #print(input_shape)
+        # print(input_shape)
         input_dim = input_shape[2]
         self.input_dim = input_dim
         self.batch_size = batch_size
-        #self.input_spec = InputSpec(shape=(batch_size, None, self.input_dim))
-        #self.state_spec = InputSpec(shape=(batch_size, self.units))
-        #5 symbols 2 matrix per symbol
+        # self.input_spec = InputSpec(shape=(batch_size, None, self.input_dim))
+        # self.state_spec = InputSpec(shape=(batch_size, self.units))
+        # 5 symbols 2 matrix per symbol
         self.states = [None for _ in range(4)]
         if self.stateful:
             self.reset_states()
 
-        #print(self.states[0].shape)
-        #self.P = self.add_weight((self.matrix_dim, self.matrix_dim),
+        # print(self.states[0].shape)
+        # self.P = self.add_weight((self.matrix_dim, self.matrix_dim),
         #                         initializer=self.init,
         #                         name='{}_P'.format(self.name))
-        #self.position = self.add_weight((self.matrix_dim, self.matrix_dim),
+        # self.position = self.add_weight((self.matrix_dim, self.matrix_dim),
         #                         initializer=self.inner_init,
         #                        name='{}_position'.format(self.name))
 
 
-        #fix 5 symbols
+        # fix 5 symbols
         self.R = [self.add_weight((self.matrix_dim, self.matrix_dim),
-                                 initializer=self.init,
-                                 name='{}_R_{}'.format(self.name, i)) for i in range(2)]
+                                  initializer=self.init,
+                                  name='{}_R_{}'.format(self.name, i)) for i in range(2)]
 
         self.built = True
 
-
-
     def preprocess_input(self, x, training=None):
-        #x = sc(x)
-        #input must be 3D
+        # x = sc(x)
+        # input must be 3D
         return x
-        #return K.reshape(x,[self.batch_size, 1, K.shape(x)[1]])
+        # return K.reshape(x,[self.batch_size, 1, K.shape(x)[1]])
 
-    #preterminals_simple_with_sigmoid
+    # preterminals_simple_with_sigmoid
     def step(self, inputs, states):
-       # print(states)
+        # print(states)
         new_states = []
 
-        for i,j in zip(range(0,4,2),range(2)):
-            P = K.reshape(states[i],[K.shape(states[i])[0], self.matrix_dim, self.matrix_dim]) # matrix P at step i-1
+        for i, j in zip(range(0, 4, 2), range(2)):
+            P = K.reshape(states[i], [K.shape(states[i])[0], self.matrix_dim, self.matrix_dim])  # matrix P at step i-1
 
-            position = K.reshape(states[i+1],[K.shape(states[i+1])[0], self.matrix_dim, self.matrix_dim]) # position matrix
-    #        position = K.dot(position,K.reshape(self.index1,[K.shape(self.index1)[0], self.matrix_dim, self.matrix_dim]))
+            position = K.reshape(states[i + 1]
+                                 , [K.shape(states[i + 1])[0], self.matrix_dim, self.matrix_dim])  # position matrix
+            #        position = K.dot(position,K.reshape(self.index1,[K.shape(self.index1)[0], self.matrix_dim, self.matrix_dim]))
             position = K.dot(position, self.index1)
 
-            x_reshaped = K.reshape(inputs, [K.shape(inputs)[0] ,self.matrix_dim, self.matrix_dim])
+            x_reshaped = K.reshape(inputs, [K.shape(inputs)[0], self.matrix_dim, self.matrix_dim])
 
-            #intermediate_computation = self.activation(K.dot(self.R_A, K.dot(K.transpose(position), K.dot(K.transpose(self.index0), P))))
-            #tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
-            #x = self.preprocess_input(x)
-            #print(K.shape(x))
+            # intermediate_computation = self.activation(K.dot(self.R_A, K.dot(K.transpose(position), K.dot(K.transpose(self.index0), P))))
+            # tmp = K.dot(self.position, K.dot(K.transpose(self.index0), P))
+            # x = self.preprocess_input(x)
+            # print(K.shape(x))
 
-            #intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
-            #index1 = K.flatten(self.index1)
-            #print(j)
+            # intermediate_computation = sigmoid(K.dot(self.R_A, K.dot(K.transpose(self.position), K.dot(K.transpose(self.index0), P))))
+            # index1 = K.flatten(self.index1)
+            # print(j)
             P_1 = K.dot(x_reshaped, self.R[j])
             P_2 = K.batch_dot(position, P_1)
             P_3 = self.activation(P_2)
             P_out = P + P_3
 
+            P_out_flatten = K.reshape(P_out, [K.shape(P_out)[0], self.output_dim])
 
-            P_out_flatten = K.reshape(P_out,[K.shape(P_out)[0], self.output_dim])
-
-            #P_out_flatten = K.reshape(P_out_flatten,(self.matrix_dim * self.matrix_dim))
-            position = K.reshape(position,[K.shape(position)[0], self.output_dim])
+            # P_out_flatten = K.reshape(P_out_flatten,(self.matrix_dim * self.matrix_dim))
+            position = K.reshape(position, [K.shape(position)[0], self.output_dim])
             new_states.append(P_out_flatten)
             new_states.append(position)
-        #return must be an OP
-        return new_states[0]+new_states[2], new_states
-
-
+            # return must be an OP
+        return new_states[0] + new_states[2], new_states
 
     def get_config(self):
         config = {'output_dim': self.output_dim}
