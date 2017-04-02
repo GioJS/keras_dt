@@ -27,8 +27,8 @@ def sc(v, Phi):
 
 
 # [v]-
-def invsc(v):
-    return sc(v).T
+def invsc(v, Phi):
+    return sc(v, Phi).T
 
 
 '''
@@ -90,8 +90,6 @@ class EmbeddingDT(Layer):
 
 
 # layer for preterminals rules (fully-connected)
-# TODO, in step method implement preterminals_simple_with_sigmoid
-# TODO, refactoring: remove all unnecessary things
 class PreterminalRNN(Recurrent):
     def __init__(self, output_dim, matrix_dim, symbols,
                  **kwargs):
@@ -144,7 +142,7 @@ class PreterminalRNN(Recurrent):
         # self.input_spec = InputSpec(shape=(batch_size, None, self.input_dim))
         # self.state_spec = InputSpec(shape=(batch_size, self.units))
         # symbols: 2 matrix per symbol
-        self.states = [None for _ in range(self.symbols*2)]
+        self.states = [None for _ in range(self.symbols * 2)]
         if self.stateful:
             self.reset_states()
 
@@ -175,9 +173,8 @@ class PreterminalRNN(Recurrent):
         # print(states)
         new_states = []
         P_out_sum = None
-        for i, j in zip(range(0, self.symbols*2, 2), range(self.symbols)):
+        for i, j in zip(range(0, self.symbols * 2, 2), range(self.symbols)):
             P = K.reshape(states[i], [K.shape(states[i])[0], self.matrix_dim, self.matrix_dim])  # matrix P at step i-1
-
             position = K.reshape(states[i + 1]
                                  , [K.shape(states[i + 1])[0], self.matrix_dim, self.matrix_dim])  # position matrix
             #        position = K.dot(position,K.reshape(self.index1,[K.shape(self.index1)[0], self.matrix_dim, self.matrix_dim]))
@@ -199,7 +196,7 @@ class PreterminalRNN(Recurrent):
             P_out = P + P_3
 
             P_out_flatten = K.reshape(P_out, [K.shape(P_out)[0], self.output_dim])
-            if i==0:
+            if i == 0:
                 P_out_sum = P_out_flatten
             else:
                 P_out_sum = P_out_sum + P_out_flatten
