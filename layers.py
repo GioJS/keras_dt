@@ -112,7 +112,7 @@ class PreterminalRNN(Recurrent):
     def get_initial_states(self, inputs):
         initial_states = []
         # build an all-zero tensor of shape (samples, output_dim)
-        for _ in range(2):
+        for _ in range(self.symbols):
             P = K.zeros_like(inputs)  # (samples, timesteps, input_dim)
             P = K.sum(P, axis=(1, 2))  # (samples,)
             P = K.expand_dims(P)  # (samples, 1)
