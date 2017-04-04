@@ -196,7 +196,7 @@ class PreterminalRNN(Recurrent):
             P_out = P + P_3
 
             P_out_flatten = K.reshape(P_out, [K.shape(P_out)[0], self.output_dim])
-            if i == 0:
+            if P_out_sum is None:
                 P_out_sum = P_out_flatten
             else:
                 P_out_sum = P_out_sum + P_out_flatten
