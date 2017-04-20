@@ -18,11 +18,16 @@ def invsc(v):
 #init
 
 index0 = sc(v('0'))
-index1 = sc(v('1'))
-
+index1 = index0.dot(sc(v('1')))
+from functools import reduce
+index2 = index0.dot(reduce(np.dot, [sc(v('1')) for _ in range(2)]))
+index3 = index0.dot(reduce(np.dot, [sc(v('1')) for _ in range(3)]))
+index4 = index0.dot(reduce(np.dot, [sc(v('1')) for _ in range(4)]))
+'''
 index2 = sc(v('2'))
 index3 = sc(v('3'))
 index4 = sc(v('4'))
+'''
 '''
 D = sc(v('D'))
 E = sc(v('E'))
@@ -35,7 +40,9 @@ def sigmoid(x):
 def init_simple(w):
     P = np.array([0])
     for i in range(len(w)):
-        s = index0.dot(sc(v(str(i+1)))).dot(sc(v(w[i])))
+        pos = index0.dot(reduce(np.dot, [sc(v('1')) for _ in range(i+1)]))
+        s = index0.dot(pos).dot(sc(v(w[i])))
+        #s = index0.dot(sc(v(str(i+1)))).dot(sc(v(w[i])))
         P = P + s
     return P
 #perterminal rules
@@ -63,16 +70,19 @@ def preterminals_simple_with_sigmoid(P, G, w):
 
     s = np.zeros((dim,dim))
     for i in range(len(w)):
+        pos = index0.dot(reduce(np.dot, [sc(v('1')) for _ in range(i + 1)]))
         #print("Symbol = " , i, w[i])
         tmp = np.zeros((dim, dim))
         for symbol in G.groups:
             if symbol in symbols:
                 #print("QUESTO >>> ", symbol)
-                detect_matrix = sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
+                #detect_matrix = sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
+                detect_matrix = sigmoid(symbols[symbol].dot(pos.T).dot(index0.T).dot(P))
                 #print(detect_matrix[0:4,0:4])
                 tmp = tmp + sc(v(symbol)).dot(detect_matrix)
 
-        s = s + index1.dot(sc(v(str(i+1)))).dot(tmp)
+        #s = s + index1.dot(sc(v(str(i+1)))).dot(tmp)
+        s = s + index1.dot(pos).dot(tmp)
     return s
 
 
@@ -96,23 +106,27 @@ def binary_simple(P,G,w):
         R[A] = compute_R_simple(G, rules_A)
 
     for i in range(2,n+1):
+        pos_i = index0.dot(reduce(np.dot, [sc(v('1')) for _ in range(i)]))
         for j in range(1,n-i+2):
+            pos_j = index0.dot(reduce(np.dot, [sc(v('1')) for _ in range(j)]))
             for A in G.groups:
                 Ra = R[A]
                 Pa = np.zeros((dim,dim))
 
                 for k in range(1,i):
-
-                    pre = invsc(v(str(j))).dot(invsc(v(str(k))).dot(P)).dot(Ra).dot(invsc(v(str(j+k))).dot(invsc(v(str(i-k)))).dot(P))
-
+                    pos_k = index0.dot(reduce(np.dot, [sc(v('1')) for _ in range(k)]))
+                    pos_jk = index0.dot(reduce(np.dot, [sc(v('1')) for _ in range(j + k)]))
+                    pos_ik = index0.dot(reduce(np.dot, [sc(v('1')) for _ in range(i - k)]))
+                    #pre = invsc(v(str(j))).dot(invsc(v(str(k))).dot(P)).dot(Ra).dot(invsc(v(str(j+k))).dot(invsc(v(str(i-k)))).dot(P))
+                    pre = pos_j.T.dot(pos_k.T).dot(P).dot(Ra).dot(pos_jk.T).dot(pos_ik.T).dot(P)
                     sig = sigmoid(pre)
                     #trick
                     eye = np.multiply(sig,np.identity(dim))
 
                     Pa = Pa + eye
 
-                s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
-
+                #s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
+                s = pos_i.dot(pos_j).dot(sc(v(A))).dot(Pa)
                 P = P + s
 
     return P
@@ -256,7 +270,7 @@ if __name__ == '__main__':
 #    for i in range(2,3):
     #w = ('a '*i)+'b'
     #w = 'a'
-    w = 'john kiss a girl'
+    w = 'john likes a girl'
     print(w)
     #parser.parse(w)
     #print(parser.C)
