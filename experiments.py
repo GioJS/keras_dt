@@ -17,7 +17,8 @@ def getRules(w,P):
     #print('ll',len(P[0]))
     for i in range(len(w)):
         rule = P[i,i]
-        active_rules.append((1, i + 1, rule))
+        if len(rule)>0:
+            active_rules.append((1, i + 1, rule))
 
     for i in range(2,len(w)):
         #print('i',i)
@@ -26,7 +27,7 @@ def getRules(w,P):
 
             rule = P[j, i]
 
-            if rule:
+            if len(rule)>0:
                 active_rules.append((i+1-j, j+1, rule))
     return active_rules
 #check if active rules are in P_dist
@@ -35,13 +36,14 @@ def checkInDist(active_rules, P_dist):
         i = str(rules[0])
         j = str(rules[1])
         rule_l = rules[2]
+        #print(rule_l,type(rule_l))
         head = rule_l[0].rule.head()
         print(i,j,head)
         print(invsc(v(head)).dot(invsc(v(j))).dot(invsc(v(i))).dot(P_dist))
 
 
 file = 'gramm_m'
-w = 'john likes a girl'
+w = 'john kisses a girl'
 G = Grammar('S')
 G.add_rules_from_file(file)
 
