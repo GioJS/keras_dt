@@ -9,7 +9,7 @@ def getP(w,G):
 #parsing with distributed cyk
 def getPDistributed(w,G):
     return cyk_dist_simple(G,w)
-
+#get active rules
 def getRules(w,P):
     active_rules = []
     print(len(w))
@@ -29,7 +29,7 @@ def getRules(w,P):
             if rule:
                 active_rules.append((i+1-j, j+1, rule))
     return active_rules
-
+#check if active rules are in P_dist
 def checkInDist(active_rules, P_dist):
     for rules in active_rules:
         i = str(rules[0])
