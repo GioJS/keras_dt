@@ -40,8 +40,8 @@ def checkInDist(active_rules, P_dist):
         print(invsc(v(head)).dot(invsc(v(j))).dot(invsc(v(i))).dot(P_dist))
 
 
-file = 'gramm_l'
-w = 'a a b'
+file = 'gramm_m'
+w = 'john likes a girl'
 G = Grammar('S')
 G.add_rules_from_file(file)
 
@@ -49,7 +49,7 @@ P = getP(w, G)
 print(P)
 P_dist = getPDistributed(w, G)
 
-active_rules = getRules(w.replace(' ',''),P)
+active_rules = getRules(w.split(' '),P)
 
 print(active_rules)
 checkInDist(active_rules, P_dist)
