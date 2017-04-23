@@ -48,11 +48,11 @@ def checkInDist(active_rules, P_dist):
             dist_symbols += 1
     return dist_symbols/symbols if symbols > 0 else 0.0
 
-
-file = 'gramm_m'
-w = 'jonh likes a girl'
+# l dummy grammar, m simple english grammar, ml a more complex english grammar
+files = {'l':'gramm_l','m':'gramm_m','ml':'gramm_ml'}
+w = 'john likes a girl'
 G = Grammar('S')
-G.add_rules_from_file(file)
+G.add_rules_from_file(files['ml'])
 
 P = getP(w, G)
 print(P)
