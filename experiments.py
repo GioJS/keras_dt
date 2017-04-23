@@ -34,6 +34,7 @@ def getRules(w,P):
 def checkInDist(active_rules, P_dist):
     symbols = len(active_rules)
     dist_symbols = 0
+    eps = 9e-02
     for rules in active_rules:
         i = str(rules[0])
         j = str(rules[1])
@@ -42,9 +43,10 @@ def checkInDist(active_rules, P_dist):
         head = rule_l[0].rule.head()
         print(i,j,head)
         selected = invsc(v(head)).dot(invsc(v(j))).dot(invsc(v(i))).dot(P_dist)
+        print(selected)
         sim = np.sum(np.diag(selected))/dim
         print(sim)
-        if 0.8 <= sim <= 1.0:
+        if 0.8 <= sim <= (1.0+eps):
             dist_symbols += 1
     return dist_symbols/symbols if symbols > 0 else 0.0
 
