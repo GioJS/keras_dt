@@ -27,7 +27,7 @@ def getRules(w,P):
 
             rule = P[j, i]
 
-            if len(rule)>0:
+            if len(rule)>0 and not (i+1-j, j+1, rule) in active_rules:
                 active_rules.append((i+1-j, j+1, rule))
     return active_rules
 #check if active rules are in P_dist
@@ -64,4 +64,4 @@ P_dist = getPDistributed(w, G)
 active_rules = getRules(w.split(' '),P)
 
 print(active_rules)
-print(checkInDist(active_rules, P_dist))
+print(checkInDist(active_rules, P_dist),'-> symbols in dist')
