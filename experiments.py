@@ -51,9 +51,10 @@ def checkInDist(active_rules, P_dist):
 # l dummy grammar, m simple english grammar, ml a more complex english grammar
 files = {'l':'gramm_l','m':'gramm_m','ml':'gramm_ml'}
 w = 'john likes a girl'
+print(w)
 G = Grammar('S')
 G.add_rules_from_file(files['ml'])
-
+print(files['ml'])
 P = getP(w, G)
 print(P)
 P_dist = getPDistributed(w, G)
