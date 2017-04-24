@@ -44,9 +44,9 @@ def checkInDist(active_rules, P_dist):
         print(i,j,head)
         selected = invsc(v(head)).dot(invsc(v(j))).dot(invsc(v(i))).dot(P_dist)
         print(selected)
-        sim = np.sum(np.diag(selected))/dim
-        print(sim)
-        if 0.8 <= sim <= (1.0+eps):
+        diag = np.diag(selected)
+        #print(sim)
+        if np.all( diag >= 0.5) and np.all(diag <= (1+eps) ):
             dist_symbols += 1
     return dist_symbols/symbols if symbols > 0 else 0.0
 
