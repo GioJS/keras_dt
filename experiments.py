@@ -36,6 +36,34 @@ def getRules(w, P):
     return active_rules
 
 
+def test_P(P, w):
+    Dp = np.array([0])
+    # test
+
+    for i in range(len(w)):
+        s = index0.dot(sc(v(str(i + 1)))).dot(sc(v(w[i])))
+        Dp = Dp + s
+
+    # first row
+    for i in range(len(P)):
+        for A in P[i, i]:
+            tree = A.rule.head()
+            # print 'tree: ',tree
+            td = index1.dot(sc(v(str(i + 1)))).dot(sc(v(tree)))
+            Dp = Dp + td
+    # generic row
+    for i in range(2, len(w)):
+        for j in range(0, len(w) - i + 2):
+            if i == j:
+                continue
+            for A in P[j, i]:
+                tree = A.rule.head()
+
+                td = sc(v(str(i + 1 - j))).dot(sc(v(str(j + 1)))).dot(sc(v(tree)))
+                Dp = Dp + td
+    return Dp
+
+
 # check if active rules are in P_dist
 def checkInDist(active_rules, P_dist):
     symbols = len(active_rules)
@@ -63,12 +91,13 @@ w = 'john likes a girl'
 print(w)
 G = Grammar('S')
 G.add_rules_from_file(files['ml'])
-print(files['ml'])
+parser = CYK(G)
+print(files['m'])
 P = getP(w, G)
 print(P)
 P_dist = getPDistributed(w, G)
-
-active_rules = getRules(w.split(' '), P)
-
-print(active_rules)
-print(checkInDist(active_rules, P_dist), '-> symbols in dist')
+P_real = test_P(P, w.split())
+precision = P_dist[:, 0].dot(P_real[:, 0]) / P_dist[:, 0].dot(P_dist[:, 0])
+recall = P_dist[:, 0].dot(P_real[:, 0]) / P_real[:, 0].dot(P_real[:, 0])
+print('Precision: ', precision)
+print('Recall: ', recall)
