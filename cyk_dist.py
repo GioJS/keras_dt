@@ -23,11 +23,11 @@ index1 = sc(v('1'))
 index2 = sc(v('2'))
 index3 = sc(v('3'))
 index4 = sc(v('4'))
-'''
+
 D = sc(v('D'))
 E = sc(v('E'))
 S = sc(v('S'))
-sep = sc(v('Sep'))'''
+sep = sc(v('Sep'))
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-(x-0.5)*360))
@@ -69,6 +69,7 @@ def preterminals_simple_with_sigmoid(P, G, w):
             if symbol in symbols:
                 #print("QUESTO >>> ", symbol)
                 detect_matrix = sigmoid(symbols[symbol].dot(invsc(v(str(i+1)))).dot(index0.T).dot(P))
+                detect_matrix = np.multiply(detect_matrix, np.identity(dim))
                 #print(detect_matrix[0:4,0:4])
                 tmp = tmp + sc(v(symbol)).dot(detect_matrix)
 
@@ -248,15 +249,15 @@ def test_P(parser,w):
 
 if __name__ == '__main__':
     G = Grammar('S')
-    G.add_rules_from_file('gramm_m')
+    G.add_rules_from_file('gramm_l')
     '''print(G.get_unit_productions())
     print()
     print(G.get_nonunit_productions())'''
     #parser = CYK(G)
 #    for i in range(2,3):
     #w = ('a '*i)+'b'
-    #w = 'a'
-    w = 'john kiss a girl'
+    w = 'a a a b'
+    #w = 'john kiss a girl'
     print(w)
     #parser.parse(w)
     #print(parser.C)
@@ -270,21 +271,21 @@ if __name__ == '__main__':
 
     dist_P = cyk_dist_simple(G,w)
     #print(dist_P)
-    print('NP\n',invsc(v('NP')).dot(index1.T).dot(index1.T).dot(dist_P))
+    '''print('NP\n',invsc(v('NP')).dot(index1.T).dot(index1.T).dot(dist_P))
     print('V\n',invsc(v('V')).dot(index2.T).dot(index1.T).dot(dist_P))
     print('Det\n',invsc(v('Det')).dot(index3.T).dot(index1.T).dot(dist_P))
     print('N\n',invsc(v('N')).dot(index4.T).dot(index1.T).dot(dist_P))
     print('NP\n',invsc(v('NP')).dot(index3.T).dot(index2.T).dot(dist_P))
     print('VP\n',invsc(v('VP')).dot(index2.T).dot(index3.T).dot(dist_P))
-    print('S\n',invsc(v('S')).dot(index1.T).dot(index4.T).dot(dist_P))
+    print('S\n',invsc(v('S')).dot(index1.T).dot(index4.T).dot(dist_P))'''
 
-    '''print('D1\n',D.T.dot(index1.T).dot(index1.T).dot(dist_P))
+    print('D1\n',D.T.dot(index1.T).dot(index1.T).dot(dist_P))
     print('D2\n',D.T.dot(index2.T).dot(index1.T).dot(dist_P))
     print('D3\n',D.T.dot(index3.T).dot(index1.T).dot(dist_P))
     print('E\n',E.T.dot(index4.T).dot(index1.T).dot(dist_P))
     print('S1\n',S.T.dot(index3.T).dot(index2.T).dot(dist_P))
     print('S2\n',S.T.dot(index2.T).dot(index3.T).dot(dist_P))
-    print('S3\n',S.T.dot(index1.T).dot(index4.T).dot(dist_P))'''
+    print('S3\n',S.T.dot(index1.T).dot(index4.T).dot(dist_P))
 
     '''pure_P = index1.dot(index1).dot(D)
     pure_P += index1.dot(index2).dot(D)

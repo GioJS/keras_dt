@@ -65,32 +65,32 @@ def test_P(P, w):
 
 
 # check if active rules are in P_dist
-def checkInDist(active_rules, P_dist):
-    symbols = len(active_rules)
-    dist_symbols = 0
-    eps = 9e-02
-    for rules in active_rules:
-        i = str(rules[0])
-        j = str(rules[1])
-        rule_l = rules[2]
-        # print(rule_l,type(rule_l))
-        head = rule_l[0].rule.head()
-        print(i, j, head)
-        selected = invsc(v(head)).dot(invsc(v(j))).dot(invsc(v(i))).dot(P_dist)
-        print(selected)
-        diag = np.diag(selected)
-        # print(sim)
-        if np.all(diag >= 0.5) and np.all(diag <= (1 + eps)):
-            dist_symbols += 1
-    return dist_symbols / symbols if symbols > 0 else 0.0
+# def checkInDist(active_rules, P_dist):
+#     symbols = len(active_rules)
+#     dist_symbols = 0
+#     eps = 9e-02
+#     for rules in active_rules:
+#         i = str(rules[0])
+#         j = str(rules[1])
+#         rule_l = rules[2]
+#         # print(rule_l,type(rule_l))
+#         head = rule_l[0].rule.head()
+#         print(i, j, head)
+#         selected = invsc(v(head)).dot(invsc(v(j))).dot(invsc(v(i))).dot(P_dist)
+#         print(selected)
+#         diag = np.diag(selected)
+#         # print(sim)
+#         if np.all(diag >= 0.5) and np.all(diag <= (1 + eps)):
+#             dist_symbols += 1
+#     return dist_symbols / symbols if symbols > 0 else 0.0
 
 
 # l dummy grammar, m simple english grammar, ml a more complex english grammar
 files = {'l': 'gramm_l', 'm': 'gramm_m', 'ml': 'gramm_ml'}
-w = 'john likes a girl'
+w = 'john kisses a girl with lips'
 print(w)
 G = Grammar('S')
-G.add_rules_from_file(files['ml'])
+G.add_rules_from_file(files['m'])
 parser = CYK(G)
 print(files['m'])
 P = getP(w, G)
