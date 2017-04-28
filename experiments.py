@@ -86,11 +86,8 @@ def test_P(P, w):
 
 
 # l dummy grammar, m simple english grammar, ml a more complex english grammar
-conf = None
 files = {'l': 'gramm_l', 'm': 'gramm_m', 'ml': 'gramm_ml'}
-with open('conf.json') as f:
-    conf = json.load(f)
-    print(conf)
+print(conf)
 if not conf is None:
     w = conf['sentences'][0]
     file = files[conf['grammar']]
