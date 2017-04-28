@@ -36,13 +36,42 @@ def getRules(w, P):
     return active_rules
 
 
+def tranform_P(P,w):
+    new_P = []
+    row = []
+    for i in range(len(w)):
+        row.append(w[i])
+    new_P.append(row)
+    for i in range(len(w)):
+        empty_row = []
+        for j in range(len(w)):
+            empty_row.append([])
+        new_P.append(list(empty_row))
+
+
+
+    for i in range(len(P)):
+        for A in P[i, i]:
+            tree = A.rule.head()
+            new_P[1][i].append(tree)
+    # generic row
+    for i in range(2, len(w)):
+        for j in range(0, len(w) - i + 2):
+            if i == j:
+                continue
+            for A in P[j, i]:
+                tree = A.rule.head()
+                new_P[i + 1 - j][j].append(tree)
+    return new_P
+
+
 def test_P(P, w):
     Dp = np.array([0])
     # test
 
-    for i in range(len(w)):
-        s = index0.dot(sc(v(str(i + 1)))).dot(sc(v(w[i])))
-        Dp = Dp + s
+    #for i in range(len(w)):
+    #    s = index0.dot(sc(v(str(i + 1)))).dot(sc(v(w[i])))
+    #    Dp = Dp + s
 
     # first row
     for i in range(len(P)):
@@ -100,7 +129,9 @@ G = Grammar('S')
 G.add_rules_from_file(file)
 parser = CYK(G)
 P = getP(w, G)
-print(P)
+print("This is the matrix P\n", P)
+new_P = tranform_P(P,w.split())
+print("This is the matrix P_new\n", new_P)
 P_dist = getPDistributed(w, G)
 P_real = test_P(P, w.split())
 precision = P_dist[:, 0].dot(P_real[:, 0]) / P_dist[:, 0].dot(P_dist[:, 0])

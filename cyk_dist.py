@@ -11,9 +11,11 @@ with open('conf.json') as f:
 if conf is not None:
     dim = conf['dim']
     sig_param = conf['sig']
+    displacement = conf['disp']
 else:
     dim = 1024
     sig_param = 36
+    displacement = 0.5
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
 v = gen.get_random_vector
@@ -46,7 +48,7 @@ index1 = sc(v('1'))
 
 
 def sigmoid(x):
-    return 1 / (1 + np.exp(-(x - 0.5) * sig_param))
+    return 1 / (1 + np.exp(-(x - displacement) * sig_param))
 
 
 def init_simple(w):

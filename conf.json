@@ -1,6 +1,7 @@
 {
-  "dim" : 1024,
-  "sig" : 36,
+  "dim" : 500,
+  "sig" : 100,
+  "disp" : 0.75,
   "grammar" : "m",
   "sentences" : ["john likes a girl"]
 }
