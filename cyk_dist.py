@@ -3,8 +3,8 @@ from parserNLP.CYK import CYK
 from vectors import *
 from convolutions import *
 
-dim = 1024*2
-sig_param = 1440
+dim = 1024
+sig_param = 36
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
 v = gen.get_random_vector
@@ -25,14 +25,15 @@ def invsc(v):
 index0 = sc(v('0'))
 index1 = sc(v('1'))
 
-index2 = sc(v('2'))
-index3 = sc(v('3'))
-index4 = sc(v('4'))
 
-#D = sc(v('D'))
-#E = sc(v('E'))
-#S = sc(v('S'))
-#sep = sc(v('Sep'))
+# index2 = sc(v('2'))
+# index3 = sc(v('3'))
+# index4 = sc(v('4'))
+
+# D = sc(v('D'))
+# E = sc(v('E'))
+# S = sc(v('S'))
+# sep = sc(v('Sep'))
 
 
 def sigmoid(x):
@@ -155,8 +156,8 @@ def preterminals(P, G, w):
     for rule in G.get_unit_productions():
         # print rule
         R = R + (
-        sc(v(rule.head())).dot(sep).dot(sc(v(rule.head()))).dot(sep).dot(sc(v(rule.production()))).dot(sep.T).dot(
-            invsc(v(rule.head())))).dot(sep.T).dot(invsc(v(rule.production())))
+            sc(v(rule.head())).dot(sep).dot(sc(v(rule.head()))).dot(sep).dot(sc(v(rule.production()))).dot(sep.T).dot(
+                invsc(v(rule.head())))).dot(sep.T).dot(invsc(v(rule.production())))
 
     s = np.array([0])
     for i in range(len(w)):
