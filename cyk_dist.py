@@ -3,8 +3,8 @@ from parserNLP.CYK import CYK
 from vectors import *
 from convolutions import *
 
-dim = 1024 * 2
-sig_param = 720
+dim = 1024*2
+sig_param = 1440
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
 v = gen.get_random_vector
@@ -29,10 +29,10 @@ index2 = sc(v('2'))
 index3 = sc(v('3'))
 index4 = sc(v('4'))
 
-D = sc(v('D'))
-E = sc(v('E'))
-S = sc(v('S'))
-sep = sc(v('Sep'))
+#D = sc(v('D'))
+#E = sc(v('E'))
+#S = sc(v('S'))
+#sep = sc(v('Sep'))
 
 
 def sigmoid(x):
