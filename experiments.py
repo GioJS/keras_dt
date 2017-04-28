@@ -94,6 +94,7 @@ if conf is not None:
 else:
     file = files['m']
     w = 'john likes a girl'
+
 # print(w)
 G = Grammar('S')
 G.add_rules_from_file(file)
