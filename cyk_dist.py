@@ -2,9 +2,17 @@ from parserNLP.Grammar import Grammar
 from parserNLP.CYK import CYK
 from vectors import *
 from convolutions import *
+import json
+conf = None
+with open('conf.json') as f:
+    conf = json.load(f)
 
-dim = 1024
-sig_param = 36
+if not conf is None:
+    dim = conf['dim']
+    sig_param = conf['sig']
+else:
+    dim = 1024
+    sig_param = 36
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
 v = gen.get_random_vector

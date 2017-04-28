@@ -86,13 +86,21 @@ def test_P(P, w):
 
 
 # l dummy grammar, m simple english grammar, ml a more complex english grammar
+conf = None
 files = {'l': 'gramm_l', 'm': 'gramm_m', 'ml': 'gramm_ml'}
-w = 'john kisses a girl with lips'
-print(w)
+with open('conf.json') as f:
+    conf = json.load(f)
+    print(conf)
+if not conf is None:
+    w = conf['sentences'][0]
+    file = files[conf['grammar']]
+else:
+    file = files['m']
+    w = 'john likes a girl'
+#print(w)
 G = Grammar('S')
-G.add_rules_from_file(files['m'])
+G.add_rules_from_file(file)
 parser = CYK(G)
-print(files['m'])
 P = getP(w, G)
 print(P)
 P_dist = getPDistributed(w, G)
