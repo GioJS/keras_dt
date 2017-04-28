@@ -3,11 +3,12 @@ from parserNLP.CYK import CYK
 from vectors import *
 from convolutions import *
 import json
+
 conf = None
 with open('conf.json') as f:
     conf = json.load(f)
 
-if not conf is None:
+if conf is not None:
     dim = conf['dim']
     sig_param = conf['sig']
 else:
