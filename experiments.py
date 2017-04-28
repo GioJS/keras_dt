@@ -88,13 +88,13 @@ def test_P(P, w):
 # l dummy grammar, m simple english grammar, ml a more complex english grammar
 files = {'l': 'gramm_l', 'm': 'gramm_m', 'ml': 'gramm_ml'}
 print(conf)
-if not conf is None:
+if conf is not None:
     w = conf['sentences'][0]
     file = files[conf['grammar']]
 else:
     file = files['m']
     w = 'john likes a girl'
-#print(w)
+# print(w)
 G = Grammar('S')
 G.add_rules_from_file(file)
 parser = CYK(G)
