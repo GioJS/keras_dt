@@ -26,7 +26,7 @@ class Vector_generator:
 			#print seed
 	  	#self.seed=0
 
-		np.random.seed(seed)
+		np.random.seed(seed[0])
 		
 		vect = np.random.multivariate_normal(self.mu,self.std)
 		#print vect

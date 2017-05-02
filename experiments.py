@@ -54,6 +54,7 @@ def tranform_P(P,w):
         for A in P[i, i]:
             tree = A.rule.head()
             new_P[1][i].append(tree)
+            #active_rules.append((1, i + 1, rule))
     # generic row
     for i in range(2, len(w)):
         for j in range(0, len(w) - i + 2):
@@ -61,6 +62,7 @@ def tranform_P(P,w):
                 continue
             for A in P[j, i]:
                 tree = A.rule.head()
+                #td = sc(v(str(i + 1 - j))).dot(sc(v(str(j + 1)))).dot(sc(v(tree)))
                 new_P[i + 1 - j][j].append(tree)
     return new_P
 
@@ -134,7 +136,10 @@ new_P = tranform_P(P,w.split())
 print("This is the matrix P_new\n", new_P)
 P_dist = getPDistributed(w, G)
 P_real = test_P(P, w.split())
-precision = P_dist[:, 0].dot(P_real[:, 0]) / P_dist[:, 0].dot(P_dist[:, 0])
-recall = P_dist[:, 0].dot(P_real[:, 0]) / P_real[:, 0].dot(P_real[:, 0])
-print('Precision: ', precision)
-print('Recall: ', recall)
+precisions = []
+recalls = []
+for i in range(dim):
+    precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
+    recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
+print('Precision: ', np.mean(precisions) , np.std(precisions))
+print('Recall: ', np.mean(recalls) , np.std(recalls) )

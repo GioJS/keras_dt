@@ -18,12 +18,14 @@ else:
     displacement = 0.5
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
+#print("Permutatation: ", Phi[0:10])
 v = gen.get_random_vector
 
 
 # [v]+
 def sc(v):
     return circulant(v).dot(Phi)
+#    return circulant(v)
 
 
 # [v]-
@@ -111,15 +113,16 @@ def compute_R_simple(G, rules_A):
 def binary_simple(P, G, w):
     n = len(w)
     R = {}
-
+    keys = sorted(G.groups)
+    #keys = G.groups
     # G.groups = non-terminals
-    for A in G.groups:
+    for A in keys:
         rules_A = G.get_rules(A)
         R[A] = compute_R_simple(G, rules_A)
 
     for i in range(2, n + 1):
         for j in range(1, n - i + 2):
-            for A in G.groups:
+            for A in keys:
                 Ra = R[A]
                 Pa = np.zeros((dim, dim))
 
