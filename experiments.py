@@ -9,8 +9,8 @@ def getP(w, G):
 
 
 # parsing with distributed cyk
-def getPDistributed(w, G):
-    return cyk_dist_simple(G, w)
+def getPDistributed(w, G, symbols):
+    return cyk_dist_simple(G, w, symbols)
 
 
 # get active rules
@@ -36,7 +36,7 @@ def getRules(w, P):
     return active_rules
 
 
-def tranform_P(P,w):
+def tranform_P(P, w):
     new_P = []
     row = []
     for i in range(len(w)):
@@ -48,22 +48,19 @@ def tranform_P(P,w):
             empty_row.append([])
         new_P.append(list(empty_row))
 
-
-
     for i in range(len(P)):
         for A in P[i, i]:
             tree = A.rule.head()
             new_P[1][i].append(tree)
-            #active_rules.append((1, i + 1, rule))
+            # active_rules.append((1, i + 1, rule))
     # generic row
     for i in range(2, len(w)):
         for j in range(0, len(w) - i + 2):
-            if i == j:
-                continue
-            for A in P[j, i]:
-                tree = A.rule.head()
-                #td = sc(v(str(i + 1 - j))).dot(sc(v(str(j + 1)))).dot(sc(v(tree)))
-                new_P[i + 1 - j][j].append(tree)
+            if i != j:
+                for A in P[j, i]:
+                    tree = A.rule.head()
+                    # td = sc(v(str(i + 1 - j))).dot(sc(v(str(j + 1)))).dot(sc(v(tree)))
+                    new_P[i + 1 - j][j].append(tree)
     return new_P
 
 
@@ -71,7 +68,7 @@ def test_P(P, w):
     Dp = np.array([0])
     # test
 
-    #for i in range(len(w)):
+    # for i in range(len(w)):
     #    s = index0.dot(sc(v(str(i + 1)))).dot(sc(v(w[i])))
     #    Dp = Dp + s
 
@@ -80,7 +77,7 @@ def test_P(P, w):
         for A in P[i, i]:
             tree = A.rule.head()
             # print 'tree: ',tree
-            td = index1.dot(sc(v(str(i + 1)))).dot(sc(v(tree)))
+            td = index1.dot(sc(v(str(v2disp(i + 1))))).dot(sc(v(tree)))
             Dp = Dp + td
     # generic row
     for i in range(2, len(w)):
@@ -90,7 +87,7 @@ def test_P(P, w):
             for A in P[j, i]:
                 tree = A.rule.head()
 
-                td = sc(v(str(i + 1 - j))).dot(sc(v(str(j + 1)))).dot(sc(v(tree)))
+                td = sc(v(str(i + 1 - j))).dot(sc(v(str(v2disp(j + 1))))).dot(sc(v(tree)))
                 Dp = Dp + td
     return Dp
 
@@ -120,26 +117,34 @@ def test_P(P, w):
 files = {'l': 'gramm_l', 'm': 'gramm_m', 'ml': 'gramm_ml'}
 print(conf)
 if conf is not None:
-    w = conf['sentences'][0]
+    sentences = conf['sentences']
     file = files[conf['grammar']]
 else:
     file = files['m']
     w = 'john likes a girl'
 
 # print(w)
+symbols = {}
 G = Grammar('S')
 G.add_rules_from_file(file)
 parser = CYK(G)
-P = getP(w, G)
-print("This is the matrix P\n", P)
-new_P = tranform_P(P,w.split())
-print("This is the matrix P_new\n", new_P)
-P_dist = getPDistributed(w, G)
-P_real = test_P(P, w.split())
-precisions = []
-recalls = []
-for i in range(dim):
-    precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
-    recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
-print('Precision: ', np.mean(precisions) , np.std(precisions))
-print('Recall: ', np.mean(recalls) , np.std(recalls) )
+p_means = []
+r_means = []
+for w in sentences:
+    P = getP(w, G)
+    print("This is the matrix P\n", P)
+    new_P = tranform_P(P, w.split())
+    print("This is the matrix P_new\n", new_P)
+    P_dist = getPDistributed(w, G, symbols)
+    # print(symbols)
+    P_real = test_P(P, w.split())
+    precisions = []
+    recalls = []
+    for i in range(dim):
+        precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
+        recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
+    p_means.append(np.mean(precisions))
+    r_means.append(np.mean(recalls))
+    print(p_means, r_means)
+print('Precision: ', np.mean(p_means))
+print('Recall: ', np.mean(r_means))

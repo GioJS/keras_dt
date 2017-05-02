@@ -1,7 +1,13 @@
 {
-  "dim" : 500,
-  "sig" : 100,
-  "disp" : 0.6,
-  "grammar" : "ml",
-  "sentences" : ["john likes a girl"]
+  "dim": 1000,
+  "sig": 100,
+  "disp": 0.6,
+  "grammar": "m",
+  "sentences": [
+    "the girl sees small john",
+    "john likes a girl",
+    "the boy sees john",
+    "john sees the girl",
+    "the girl sees the boy"
+  ]
 }

@@ -18,14 +18,20 @@ else:
     displacement = 0.5
 gen = Vector_generator(dim=dim)
 Phi = permutation_matrices(dim)[1]
-#print("Permutatation: ", Phi[0:10])
+# print("Permutatation: ", Phi[0:10])
 v = gen.get_random_vector
 
 
 # [v]+
 def sc(v):
     return circulant(v).dot(Phi)
-#    return circulant(v)
+
+
+#    return circulant(v) #v2
+
+# v2
+def v2disp(i):
+    return i + 0
 
 
 # [v]-
@@ -56,7 +62,7 @@ def sigmoid(x):
 def init_simple(w):
     P = np.array([0])
     for i in range(len(w)):
-        s = index0.dot(sc(v(str(i + 1)))).dot(sc(v(w[i])))
+        s = index0.dot(sc(v(str(v2disp(i + 1))))).dot(sc(v(w[i])))
         P = P + s
     return P
 
@@ -76,13 +82,13 @@ def preterminals_simple(P, G, w):
     return P
 
 
-def preterminals_simple_with_sigmoid(P, G, w):
-    symbols = {}
-    for rule in G.get_unit_productions():
-        symbols[rule.head()] = np.zeros((dim, dim))
+def preterminals_simple_with_sigmoid(P, G, w, symbols):  # v2
+    if symbols == {}:
+        for rule in G.get_unit_productions():
+            symbols[rule.head()] = np.zeros((dim, dim))
 
-    for rule in G.get_unit_productions():
-        symbols[rule.head()] = symbols[rule.head()] + invsc(v(rule.production()))
+        for rule in G.get_unit_productions():
+            symbols[rule.head()] = symbols[rule.head()] + invsc(v(rule.production()))
 
     s = np.zeros((dim, dim))
     for i in range(len(w)):
@@ -91,12 +97,12 @@ def preterminals_simple_with_sigmoid(P, G, w):
         for symbol in G.groups:
             if symbol in symbols:
                 # print("QUESTO >>> ", symbol)
-                detect_matrix = sigmoid(symbols[symbol].dot(invsc(v(str(i + 1)))).dot(index0.T).dot(P))
+                detect_matrix = sigmoid(symbols[symbol].dot(invsc(v(str(v2disp(i + 1))))).dot(index0.T).dot(P))
                 detect_matrix = np.multiply(detect_matrix, np.identity(dim))
                 # print(detect_matrix[0:4,0:4])
                 tmp = tmp + sc(v(symbol)).dot(detect_matrix)
 
-        s = s + index1.dot(sc(v(str(i + 1)))).dot(tmp)
+        s = s + index1.dot(sc(v(str(v2disp(i + 1))))).dot(tmp)
     return s
 
 
@@ -114,7 +120,7 @@ def binary_simple(P, G, w):
     n = len(w)
     R = {}
     keys = sorted(G.groups)
-    #keys = G.groups
+    # keys = G.groups
     # G.groups = non-terminals
     for A in keys:
         rules_A = G.get_rules(A)
@@ -127,8 +133,8 @@ def binary_simple(P, G, w):
                 Pa = np.zeros((dim, dim))
 
                 for k in range(1, i):
-                    pre = invsc(v(str(j))).dot(invsc(v(str(k))).dot(P)).dot(Ra).dot(
-                        invsc(v(str(j + k))).dot(invsc(v(str(i - k)))).dot(P))
+                    pre = invsc(v(str(v2disp(j)))).dot(invsc(v(str(k))).dot(P)).dot(Ra).dot(
+                        invsc(v(str(v2disp(j + k)))).dot(invsc(v(str(i - k)))).dot(P))
 
                     sig = sigmoid(pre)
                     # trick
@@ -136,7 +142,7 @@ def binary_simple(P, G, w):
 
                     Pa = Pa + eye
 
-                s = sc(v(str(i))).dot(sc(v(str(j)))).dot(sc(v(A))).dot(Pa)
+                s = sc(v(str(i))).dot(sc(v(str(v2disp(j))))).dot(sc(v(A))).dot(Pa)
 
                 P = P + s
 
@@ -144,11 +150,11 @@ def binary_simple(P, G, w):
 
 
 # transform P to P_dist with algo5,6
-def cyk_dist_simple(G, w):
+def cyk_dist_simple(G, w, symbols):
     w = w.split(' ')  # now terminals are strings
     P_dist = init_simple(w)
     # print P_dist
-    P_dist = preterminals_simple_with_sigmoid(P_dist, G, w)
+    P_dist = preterminals_simple_with_sigmoid(P_dist, G, w, symbols)
     # print P_dist
     P_dist = binary_simple(P_dist, G, w)
     return P_dist.astype(dtype=np.float32)
