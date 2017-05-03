@@ -9,8 +9,8 @@ def getP(w, G):
 
 
 # parsing with distributed cyk
-def getPDistributed(w, G, symbols,R):
-    return cyk_dist_simple(G, w, symbols,R)
+def getPDistributed(w, G, symbols, R):
+    return cyk_dist_simple(G, w, symbols, R)
 
 
 # get active rules
@@ -88,7 +88,7 @@ def test_P(P, w):
                 for A in P[j, i]:
                     tree = A.rule.head()
                     print ('t', tree)
-                    print('ij',i + 1 - j, j + 1)
+                    print('ij', i + 1 - j, j + 1)
                     td = sc(v(str(i + 1 - j))).dot(sc(v(str(v2disp(j + 1))))).dot(sc(v(tree)))
                     Dp = Dp + td
     return Dp
@@ -138,7 +138,7 @@ for w in sentences:
     print("This is the matrix P\n", P)
     new_P = tranform_P(P, w.split())
     print("This is the matrix P_new\n", new_P)
-    P_dist = getPDistributed(w, G, symbols,R)
+    P_dist = getPDistributed(w, G, symbols, R)
     # print(symbols)
     P_real = test_P(P, w.split())
     precisions = []
