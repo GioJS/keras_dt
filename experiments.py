@@ -54,7 +54,7 @@ def tranform_P(P, w):
             new_P[1][i].append(tree)
             # active_rules.append((1, i + 1, rule))
     # generic row
-    for i in range(2, len(w)):
+    for i in range(0, len(w)):
         for j in range(0, len(w)):
             # print(i,j)
             if i != j:
@@ -82,7 +82,7 @@ def test_P(P, w):
             td = index1.dot(sc(v(str(v2disp(i + 1))))).dot(sc(v(tree)))
             Dp = Dp + td
     # generic row
-    for i in range(2, len(w)):
+    for i in range(0, len(w)):
         for j in range(0, len(w)):
             if i == j:
                 continue
