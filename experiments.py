@@ -14,26 +14,26 @@ def getPDistributed(w, G, symbols):
 
 
 # get active rules
-def getRules(w, P):
-    active_rules = []
-    print(len(w))
-    # print('l',len(P))
-    # print('ll',len(P[0]))
-    for i in range(len(w)):
-        rule = P[i, i]
-        if len(rule) > 0:
-            active_rules.append((1, i + 1, rule))
-
-    for i in range(2, len(w)):
-        # print('i',i)
-        for j in range(0, len(w) - i + 2):
-            # print('j',j)
-
-            rule = P[j, i]
-
-            if len(rule) > 0 and not (i + 1 - j, j + 1, rule) in active_rules:
-                active_rules.append((i + 1 - j, j + 1, rule))
-    return active_rules
+# def getRules(w, P):
+#     active_rules = []
+#     print(len(w))
+#     # print('l',len(P))
+#     # print('ll',len(P[0]))
+#     for i in range(len(w)):
+#         rule = P[i, i]
+#         if len(rule) > 0:
+#             active_rules.append((1, i + 1, rule))
+#
+#     for i in range(2, len(w)):
+#         # print('i',i)
+#         for j in range(0, len(w) - i + 2):
+#             # print('j',j)
+#
+#             rule = P[j, i]
+#
+#             if len(rule) > 0 and not (i + 1 - j, j + 1, rule) in active_rules:
+#                 active_rules.append((i + 1 - j, j + 1, rule))
+#     return active_rules
 
 
 def tranform_P(P, w):
@@ -61,6 +61,7 @@ def tranform_P(P, w):
                 for A in P[j, i]:
                     tree = A.rule.head()
                     # td = sc(v(str(i + 1 - j))).dot(sc(v(str(j + 1)))).dot(sc(v(tree)))
+                    print(i + 1 - j, j + 1)
                     print (tree)
                     new_P[i - j + 1][j].append(tree)
     return new_P
