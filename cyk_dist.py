@@ -83,12 +83,24 @@ def preterminals_simple(P, G, w):
 
 
 def preterminals_simple_with_sigmoid(P, G, w, symbols):  # v2
+    symbols_aux = {}
+    counters = {}
     if symbols == {}:
         for rule in G.get_unit_productions():
-            symbols[rule.head()] = np.zeros((dim, dim))
-
+            symbols[rule.head()] = np.zeros(dim)
+            symbols_aux[rule.head()] = np.zeros(dim)
+            counters[rule.head()] = 0
         for rule in G.get_unit_productions():
-            symbols[rule.head()] = symbols[rule.head()] + invsc(v(rule.production()))
+
+            # symbols[rule.head()] = symbols[rule.head()] + invsc(v(rule.production()))
+            symbols[rule.head()] = symbols[rule.head()] + v(rule.production())
+            y = symbols_aux[rule.head()].dot(v(rule.production()))
+            if y > 0.1:
+                print('Error')
+                counters[rule.head()] += 1
+            symbols_aux[rule.head()] = symbols_aux[rule.head()] + v(rule.production())
+        for s in symbols:
+            symbols[s] = invsc(symbols[s])
 
     s = np.zeros((dim, dim))
     for i in range(len(w)):

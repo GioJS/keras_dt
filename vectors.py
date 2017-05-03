@@ -1,6 +1,7 @@
 #from keras import backend as K
 import numpy as np
 import sys
+from hashlib import sha256
 '''
 random vector generator(versors)
 '''
@@ -8,8 +9,10 @@ class Vector_generator:
 	def __init__(self,seed=0,dim=1024,mu=0,std=1):
 		self.seed=seed
 		self.dim=dim
-		self.mu=np.zeros(self.dim)
-		self.std=np.eye(self.dim)*(1/float(self.dim))
+		#self.mu=np.zeros(self.dim)
+		#self.std=np.eye(self.dim)*(1/float(self.dim))
+		self.mu = 0
+		self.std = 1 / np.sqrt(dim)
 		self.cache={}
 
 	def get_random_vector(self,label):
@@ -18,7 +21,7 @@ class Vector_generator:
 			return self.cache[label]
 		#if seed is hash adjust it (can be negative)
 		#seed = hash(label)
-		from hashlib import sha256
+
 		#data = np.random.rand(1000)
 		hashl = sha256(label.encode('utf-8'))
 		seed = np.frombuffer(hashl.digest(), dtype='uint32')
@@ -26,9 +29,9 @@ class Vector_generator:
 			#print seed
 	  	#self.seed=0
 
-		np.random.seed(seed[0])
+		np.random.seed(seed)
 		
-		vect = np.random.multivariate_normal(self.mu,self.std)
+		vect = np.random.normal(self.mu,self.std,self.dim)
 		#print vect
 
 		self.cache[label]=vect

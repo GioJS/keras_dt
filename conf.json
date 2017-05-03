@@ -1,8 +1,8 @@
 {
-  "dim": 500,
+  "dim": 4000,
   "sig": 100,
-  "disp": 0.6,
-  "grammar": "ml",
+  "disp": 0.75,
+  "grammar": "m",
   "sentences": [
     "the girl sees small john",
     "john likes a girl",
