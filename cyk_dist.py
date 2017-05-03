@@ -94,11 +94,11 @@ def preterminals_simple_with_sigmoid(P, G, w, symbols):  # v2
 
             # symbols[rule.head()] = symbols[rule.head()] + invsc(v(rule.production()))
             symbols[rule.head()] = symbols[rule.head()] + v(rule.production())
-            y = symbols_aux[rule.head()].dot(v(rule.production()))
-            if y > 0.1:
-                print('Error')
-                counters[rule.head()] += 1
-            symbols_aux[rule.head()] = symbols_aux[rule.head()] + v(rule.production())
+            # y = symbols_aux[rule.head()].dot(v(rule.production()))
+            # if y > 0.1:
+            #     print('Error')
+            #     counters[rule.head()] += 1
+            # symbols_aux[rule.head()] = symbols_aux[rule.head()] + v(rule.production())
         for s in symbols:
             symbols[s] = invsc(symbols[s])
 
