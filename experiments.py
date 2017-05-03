@@ -116,7 +116,7 @@ def test_P(P, w):
 
 
 # l dummy grammar, m simple english grammar, ml a more complex english grammar
-files = {'l': 'gramm_l', 'm': 'gramm_m', 'ml': 'gramm_ml'}
+files = {'l': 'gramm_l', 'm': 'gramm_m', 'ml': 'gramm_ml', 'm1':'gramm_m10', 'm2':'gramm_m100'}
 print(conf)
 if conf is not None:
     sentences = conf['sentences']
