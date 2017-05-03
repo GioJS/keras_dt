@@ -116,15 +116,16 @@ def compute_R_simple(G, rules_A):
     return Ra
 
 
-def binary_simple(P, G, w):
+def binary_simple(P, G, w, R):
     n = len(w)
-    R = {}
+
     keys = sorted(G.groups)
     # keys = G.groups
     # G.groups = non-terminals
-    for A in keys:
-        rules_A = G.get_rules(A)
-        R[A] = compute_R_simple(G, rules_A)
+    if R == {}:
+        for A in keys:
+            rules_A = G.get_rules(A)
+            R[A] = compute_R_simple(G, rules_A)
 
     for i in range(2, n + 1):
         for j in range(1, n - i + 2):
@@ -133,6 +134,7 @@ def binary_simple(P, G, w):
                 Pa = np.zeros((dim, dim))
 
                 for k in range(1, i):
+                    # print(i,j,k)
                     pre = invsc(v(str(v2disp(j)))).dot(invsc(v(str(k))).dot(P)).dot(Ra).dot(
                         invsc(v(str(v2disp(j + k)))).dot(invsc(v(str(i - k)))).dot(P))
 
@@ -143,20 +145,20 @@ def binary_simple(P, G, w):
                     Pa = Pa + eye
 
                 s = sc(v(str(i))).dot(sc(v(str(v2disp(j))))).dot(sc(v(A))).dot(Pa)
-
+                # print(i,j)
                 P = P + s
 
     return P
 
 
 # transform P to P_dist with algo5,6
-def cyk_dist_simple(G, w, symbols):
+def cyk_dist_simple(G, w, symbols, R):
     w = w.split(' ')  # now terminals are strings
     P_dist = init_simple(w)
     # print P_dist
     P_dist = preterminals_simple_with_sigmoid(P_dist, G, w, symbols)
     # print P_dist
-    P_dist = binary_simple(P_dist, G, w)
+    P_dist = binary_simple(P_dist, G, w, R)
     return P_dist.astype(dtype=np.float32)
 
 

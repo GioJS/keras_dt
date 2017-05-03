@@ -9,8 +9,8 @@ def getP(w, G):
 
 
 # parsing with distributed cyk
-def getPDistributed(w, G, symbols):
-    return cyk_dist_simple(G, w, symbols)
+def getPDistributed(w, G, symbols,R):
+    return cyk_dist_simple(G, w, symbols,R)
 
 
 # get active rules
@@ -61,8 +61,7 @@ def tranform_P(P, w):
                 for A in P[j, i]:
                     tree = A.rule.head()
                     # td = sc(v(str(i + 1 - j))).dot(sc(v(str(j + 1)))).dot(sc(v(tree)))
-                    print(i + 1 - j, j + 1)
-                    print (tree)
+                    # print(i + 1 - j, j + 1)
                     new_P[i - j + 1][j].append(tree)
     return new_P
 
@@ -85,13 +84,13 @@ def test_P(P, w):
     # generic row
     for i in range(0, len(w)):
         for j in range(0, len(w)):
-            if i == j:
-                continue
-            for A in P[j, i]:
-                tree = A.rule.head()
-
-                td = sc(v(str(i + 1 - j))).dot(sc(v(str(v2disp(j + 1))))).dot(sc(v(tree)))
-                Dp = Dp + td
+            if i != j:
+                for A in P[j, i]:
+                    tree = A.rule.head()
+                    print ('t', tree)
+                    print('ij',i + 1 - j, j + 1)
+                    td = sc(v(str(i + 1 - j))).dot(sc(v(str(v2disp(j + 1))))).dot(sc(v(tree)))
+                    Dp = Dp + td
     return Dp
 
 
@@ -133,12 +132,13 @@ G.add_rules_from_file(file)
 parser = CYK(G)
 p_means = []
 r_means = []
+R = {}
 for w in sentences:
     P = getP(w, G)
     print("This is the matrix P\n", P)
     new_P = tranform_P(P, w.split())
     print("This is the matrix P_new\n", new_P)
-    P_dist = getPDistributed(w, G, symbols)
+    P_dist = getPDistributed(w, G, symbols,R)
     # print(symbols)
     P_real = test_P(P, w.split())
     precisions = []
