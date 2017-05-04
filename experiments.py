@@ -1,5 +1,5 @@
 from cyk_dist import *
-np.set_printoptions(threshold=numpy.nan)
+np.set_printoptions(threshold=np.nan)
 
 
 # parsing with classical cyk
