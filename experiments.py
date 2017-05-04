@@ -87,8 +87,8 @@ def test_P(P, w):
             if i != j:
                 for A in P[j, i]:
                     tree = A.rule.head()
-                    print ('t', tree)
-                    print('ij', i + 1 - j, j + 1)
+                    #print ('t', tree)
+                    #print('ij', i + 1 - j, j + 1)
                     td = sc(v(str(i + 1 - j))).dot(sc(v(str(v2disp(j + 1))))).dot(sc(v(tree)))
                     Dp = Dp + td
     return Dp

@@ -1,9 +1,10 @@
 {
-  "dim": 2000,
+  "dim": 1500,
   "sig": 100,
   "disp": 0.75,
-  "grammar": "m",
+  "grammar": "mpp",
   "sentences": [
+    "john near franco sees a girl",
     "the girl sees small john",
     "john likes a girl",
     "the boy sees john",
