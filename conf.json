@@ -5,8 +5,8 @@
   "grammar": "mpp",
   "sentences": [
     "john near franco sees a girl",
-    "the girl sees small john",
     "john likes a girl",
+    "the girl sees small john",
     "the boy sees john",
     "john sees the girl",
     "the girl sees the boy"
