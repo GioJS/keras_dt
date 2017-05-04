@@ -147,8 +147,8 @@ for w in sentences:
     for i in range(dim):
         precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
         recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
-    if np.mean(precisions)>1:
-       print(P_dist)
+    if np.mean(precisions)>2:
+       print(precisions[precisions>1])
     p_means.append(np.mean(precisions))
     r_means.append(np.mean(recalls))
     print(p_means, r_means)
