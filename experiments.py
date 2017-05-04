@@ -150,7 +150,7 @@ for w in sentences:
         recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
     if np.mean(precisions)>2:
         errors = precisions[precisions>1]
-        np.savetxt('log'+indx)
+        np.savetxt('log'+indx, errors)
     p_means.append(np.mean(precisions))
     r_means.append(np.mean(recalls))
     #print(p_means, r_means)
