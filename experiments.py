@@ -1,5 +1,4 @@
 from cyk_dist import *
-np.set_printoptions(threshold=np.nan)
 
 
 # parsing with classical cyk
@@ -135,6 +134,7 @@ parser = CYK(G)
 p_means = []
 r_means = []
 R = {}
+indx = 0
 for w in sentences:
     P = getP(w, G)
     print("This is the matrix P\n", P)
@@ -149,7 +149,8 @@ for w in sentences:
         precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
         recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
     if np.mean(precisions)>2:
-       print(precisions[precisions>1])
+        errors = precisions[precisions>1]
+        np.savetxt('log'+indx)
     p_means.append(np.mean(precisions))
     r_means.append(np.mean(recalls))
     #print(p_means, r_means)
