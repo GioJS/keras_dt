@@ -1,4 +1,5 @@
 from cyk_dist import *
+np.set_printoptions(threshold=numpy.nan)
 
 
 # parsing with classical cyk
@@ -151,6 +152,6 @@ for w in sentences:
        print(precisions[precisions>1])
     p_means.append(np.mean(precisions))
     r_means.append(np.mean(recalls))
-    print(p_means, r_means)
+    #print(p_means, r_means)
 print('Precision: ', np.mean(p_means))
 print('Recall: ', np.mean(r_means))
