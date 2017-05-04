@@ -87,8 +87,8 @@ def test_P(P, w):
             if i != j:
                 for A in P[j, i]:
                     tree = A.rule.head()
-                    print ('t', tree)
-                    print('ij', i + 1 - j, j + 1)
+                    #print ('t', tree)
+                    #print('ij', i + 1 - j, j + 1)
                     td = sc(v(str(i + 1 - j))).dot(sc(v(str(v2disp(j + 1))))).dot(sc(v(tree)))
                     Dp = Dp + td
     return Dp
@@ -147,6 +147,8 @@ for w in sentences:
     for i in range(dim):
         precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
         recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
+    if np.mean(precisions)>1:
+       print(P_dist)
     p_means.append(np.mean(precisions))
     r_means.append(np.mean(recalls))
     print(p_means, r_means)
