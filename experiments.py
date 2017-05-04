@@ -151,6 +151,7 @@ for w in sentences:
     if np.mean(precisions)>2:
         errors = precisions[precisions>1]
         np.savetxt('log'+indx, errors)
+        indx += 1
     p_means.append(np.mean(precisions))
     r_means.append(np.mean(recalls))
     #print(p_means, r_means)
