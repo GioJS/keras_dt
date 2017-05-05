@@ -145,7 +145,9 @@ for w in sentences:
     P_dist = getPDistributed(w, G, symbols, R)
     # print(symbols)
     P_real = test_P(P, w.split())
+    n = G.get_unit_productions()
     precisions = []
+
     recalls = []
     for i in range(dim):
         precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
