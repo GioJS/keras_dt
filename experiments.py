@@ -138,8 +138,8 @@ indx = 0
 for w in sentences:
     P = getP(w, G)
     print("This is the matrix P\n", P)
-    new_P = tranform_P(P, w.split())
-    print("This is the matrix P_new\n", new_P)
+    #new_P = tranform_P(P, w.split())
+    #print("This is the matrix P_new\n", new_P)
     P_dist = getPDistributed(w, G, symbols, R)
     # print(symbols)
     P_real = test_P(P, w.split())
