@@ -1,0 +1,84 @@
+{'disp': 0.6, 'grammar': 'm2', 'sig': 100, 'sentences': ['the girl sees small john', 'john likes a girl', 'the boy sees john', 'john sees the girl', 'the girl sees the boy'], 'dim': 2000}
+This is the matrix P
+ (Det -> the,0)	(NP -> Det N,1)		-		-	(S -> NP VP,2)	
+	-	(N -> girl,0)		-		-		-	
+	-		-	(V -> sees,0)		-	(VP -> V NP,3)	
+	-		-		-	(Adj -> small,0)	(NP -> Adj NP,4)	
+	-		-		-		-	(NP -> john,0)	
+
+This is the matrix P_new
+ [['the', 'girl', 'sees', 'small', 'john'], [['Det'], ['N'], ['V'], ['Adj'], ['NP']], [['NP'], [], [], ['NP'], []], [[], [], ['VP'], [], []], [[], [], [], [], []], [['S'], [], [], [], []]]
+t NP
+ij 2 1
+t S
+ij 5 1
+t VP
+ij 3 3
+t NP
+ij 2 4
+[0.51395971109216099] [0.58785820502898467]
+This is the matrix P
+ (NP -> john,0)		-		-	(S -> NP VP,1)	
+	-	(V -> likes,0)		-	(VP -> V NP,2)	
+	-		-	(Det -> a,0)	(NP -> Det N,3)	
+	-		-		-	(N -> girl,0)	
+
+This is the matrix P_new
+ [['john', 'likes', 'a', 'girl'], [['NP'], ['V'], ['Det'], ['N']], [[], [], ['NP'], []], [[], ['VP'], [], []], [['S'], [], [], []]]
+t S
+ij 4 1
+t VP
+ij 3 2
+t NP
+ij 2 3
+[0.51395971109216099, 0.61999468881467157] [0.58785820502898467, 0.54637309929169908]
+This is the matrix P
+ (Det -> the,0)	(NP -> Det N,1)		-	(S -> NP VP,2)	
+	-	(N -> boy,0)		-		-	
+	-		-	(V -> sees,0)	(VP -> V NP,3)	
+	-		-		-	(NP -> john,0)	
+
+This is the matrix P_new
+ [['the', 'boy', 'sees', 'john'], [['Det'], ['N'], ['V'], ['NP']], [['NP'], [], ['VP'], []], [[], [], [], []], [['S'], [], [], []]]
+t NP
+ij 2 1
+t S
+ij 4 1
+t VP
+ij 2 3
+[0.51395971109216099, 0.61999468881467157, 0.67312950609996203] [0.58785820502898467, 0.54637309929169908, 0.71915727815110253]
+This is the matrix P
+ (NP -> john,0)		-		-	(S -> NP VP,1)	
+	-	(V -> sees,0)		-	(VP -> V NP,2)	
+	-		-	(Det -> the,0)	(NP -> Det N,3)	
+	-		-		-	(N -> girl,0)	
+
+This is the matrix P_new
+ [['john', 'sees', 'the', 'girl'], [['NP'], ['V'], ['Det'], ['N']], [[], [], ['NP'], []], [[], ['VP'], [], []], [['S'], [], [], []]]
+t S
+ij 4 1
+t VP
+ij 3 2
+t NP
+ij 2 3
+[0.51395971109216099, 0.61999468881467157, 0.67312950609996203, 0.65537000251685651] [0.58785820502898467, 0.54637309929169908, 0.71915727815110253, 0.57141212060687696]
+This is the matrix P
+ (Det -> the,0)	(NP -> Det N,1)		-		-	(S -> NP VP,2)	
+	-	(N -> girl,0)		-		-		-	
+	-		-	(V -> sees,0)		-	(VP -> V NP,3)	
+	-		-		-	(Det -> the,0)	(NP -> Det N,4)	
+	-		-		-		-	(N -> boy,0)	
+
+This is the matrix P_new
+ [['the', 'girl', 'sees', 'the', 'boy'], [['Det'], ['N'], ['V'], ['Det'], ['N']], [['NP'], [], [], ['NP'], []], [[], [], ['VP'], [], []], [[], [], [], [], []], [['S'], [], [], [], []]]
+t NP
+ij 2 1
+t S
+ij 5 1
+t VP
+ij 3 3
+t NP
+ij 2 4
+[0.51395971109216099, 0.61999468881467157, 0.67312950609996203, 0.65537000251685651, 0.46857502843393156] [0.58785820502898467, 0.54637309929169908, 0.71915727815110253, 0.57141212060687696, 0.64626956930823254]
+Precision:  0.586205787392
+Recall:  0.614214054477
