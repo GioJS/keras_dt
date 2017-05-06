@@ -54,9 +54,16 @@ index1 = sc(v('1'))
 # S = sc(v('S'))
 # sep = sc(v('Sep'))
 
-
+import warnings
+from scipy.special import expit
+warnings.filterwarnings('error')
 def sigmoid(x):
-    return 1 / (1 + np.exp(-(x - displacement) * sig_param))
+    try:
+        y = expit((x - displacement) * sig_param)
+    except Warning:
+        print(np.max(x))
+        print(sys.exc_info()[0])
+    return y
 
 
 def init_simple(w):
@@ -171,7 +178,7 @@ def cyk_dist_simple(G, w, symbols, R):
     P_dist = preterminals_simple_with_sigmoid(P_dist, G, w, symbols)
     # print P_dist
     P_dist = binary_simple(P_dist, G, w, R)
-    return P_dist.astype(dtype=np.float32)
+    return P_dist
 
 
 # initialization of level 0
