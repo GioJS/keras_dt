@@ -87,8 +87,8 @@ def test_P(P, w):
             if i != j:
                 for A in P[j, i]:
                     tree = A.rule.head()
-                    #print ('t', tree)
-                    #print('ij', i + 1 - j, j + 1)
+                    # print ('t', tree)
+                    # print('ij', i + 1 - j, j + 1)
                     td = sc(v(str(i + 1 - j))).dot(sc(v(str(v2disp(j + 1))))).dot(sc(v(tree)))
                     Dp = Dp + td
     return Dp
@@ -117,7 +117,7 @@ def test_P(P, w):
 
 # l dummy grammar, m simple english grammar, ml a more complex english grammar
 files = {'l': 'gramm_l', 'm': 'gramm_m', 'ml': 'gramm_ml', 'm1': 'gramm_m10', 'm2': 'gramm_m100', 'mpp':
-'gramm_pp_m10'}
+    'gramm_pp_m10'}
 print(conf)
 if conf is not None:
     sentences = conf['sentences']
@@ -136,12 +136,13 @@ r_means = []
 R = {}
 indx = 0
 import random
+
 random.shuffle(sentences)
 for w in sentences:
     P = getP(w, G)
     print("This is the matrix P\n", P)
-    #new_P = tranform_P(P, w.split())
-    #print("This is the matrix P_new\n", new_P)
+    # new_P = tranform_P(P, w.split())
+    # print("This is the matrix P_new\n", new_P)
     P_dist = getPDistributed(w, G, symbols, R)
     # print(symbols)
     P_real = test_P(P, w.split())
@@ -152,13 +153,13 @@ for w in sentences:
     for i in range(dim):
         precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
         recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
-    if np.mean(precisions)>2:
+    if np.mean(precisions) > 2:
         p = np.array(precisions)
-        errors = p[p>2]
-        np.savetxt('log'+str(indx), errors)
+        errors = p[p >= 2]
+        np.savetxt('log' + str(indx), errors)
         indx += 1
     p_means.append(np.mean(precisions))
     r_means.append(np.mean(recalls))
-    #print(p_means, r_means)
+    # print(p_means, r_means)
 print('Precision: ', np.mean(p_means))
 print('Recall: ', np.mean(r_means))
