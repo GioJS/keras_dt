@@ -150,7 +150,7 @@ for w in sentences:
     precisions = []
 
     recalls = []
-    for i in range(dim):
+    for i in range(1):
         precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
         recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
     if np.mean(precisions) > 2:
