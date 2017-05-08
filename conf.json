@@ -2,7 +2,7 @@
   "dim": 1000,
   "sig": 100,
   "disp": 0.75,
-  "grammar": "m1",
+  "grammar": "mpp",
   "sentences": [
     "no girl see a cat at del candidate",
     "the boy sees the cable-tv-system",
