@@ -122,7 +122,7 @@ print(conf)
 if conf is not None:
     sentences = conf['sentences']
     file = files[conf['grammar']]
-    med = files[conf['med']]
+    med = conf['med']
 else:
     file = files['m']
     w = 'john likes a girl'
