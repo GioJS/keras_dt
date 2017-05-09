@@ -2,7 +2,8 @@
   "dim": 1000,
   "sig": 100,
   "disp": 0.75,
-  "med":10,
+  "name": "exp_1000_m1",
+  "med": 10,
   "grammar": "m1",
   "sentences": [
     "nary stop-motion sees nary fish",

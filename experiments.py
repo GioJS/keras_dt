@@ -1,5 +1,5 @@
 from cyk_dist import *
-
+import os
 
 # parsing with classical cyk
 def getP(w, G):
@@ -123,6 +123,7 @@ if conf is not None:
     sentences = conf['sentences']
     file = files[conf['grammar']]
     med = conf['med']
+    name_exp = conf['name']
 else:
     file = files['m']
     w = 'john likes a girl'
@@ -135,10 +136,10 @@ parser = CYK(G)
 p_means = []
 r_means = []
 R = {}
-indx = 0
 '''import random
 
 random.shuffle(sentences)'''
+s = 0
 for w in sentences:
     P = getP(w, G)
     print("This is the matrix P\n", P)
@@ -154,16 +155,22 @@ for w in sentences:
     for i in range(dim):
         precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
         recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
+    ####
+    if os.path.exists('experiments'):
+        os.mkdir('experiments')
+    np.savetxt("precisiones_%s%d.txt"%(name_exp,s), precisions)
+    np.savetxt("recalls_%s%d.txt" % (name_exp, s), recalls)
+
     precisions.sort()
     recalls.sort()
     precisions = precisions[med:-med]
     recalls = recalls[med:-med]
-    if np.mean(precisions) > 2:
-        print('sentence: ',w)
-        p = np.array(precisions)
-        errors = p[p >= 2]
-        np.savetxt('log' + str(indx), errors)
-        indx += 1
+    # if np.mean(precisions) > 2:
+    #     print('sentence: ', w)
+    #     p = np.array(precisions)
+    #     errors = p[p >= 2]
+
+
     p_means.append(np.mean(precisions))
     r_means.append(np.mean(recalls))
     # print(p_means, r_means)
