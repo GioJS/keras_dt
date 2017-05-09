@@ -135,9 +135,9 @@ p_means = []
 r_means = []
 R = {}
 indx = 0
-import random
+'''import random
 
-random.shuffle(sentences)
+random.shuffle(sentences)'''
 for w in sentences:
     P = getP(w, G)
     print("This is the matrix P\n", P)
