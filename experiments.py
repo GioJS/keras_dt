@@ -122,6 +122,7 @@ print(conf)
 if conf is not None:
     sentences = conf['sentences']
     file = files[conf['grammar']]
+    med = files[conf]['med']
 else:
     file = files['m']
     w = 'john likes a girl'
@@ -153,6 +154,10 @@ for w in sentences:
     for i in range(dim):
         precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
         recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
+    precisions.sort()
+    recalls.sort()
+    precisions = precisions[med:-med]
+    recalls = recalls[med:-med]
     if np.mean(precisions) > 2:
         print('sentence: ',w)
         p = np.array(precisions)
