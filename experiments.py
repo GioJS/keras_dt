@@ -1,6 +1,7 @@
 from cyk_dist import *
 import os
 
+
 # parsing with classical cyk
 def getP(w, G):
     parser = CYK(G)
@@ -158,9 +159,9 @@ for w in sentences:
     ####
     if not os.path.exists('./experiments'):
         os.mkdir('experiments')
-    np.savetxt("experiments/precisions_%s_%d.txt"%(name_exp,s), precisions)
+    np.savetxt("experiments/precisions_%s_%d.txt" % (name_exp, s), precisions)
     np.savetxt("experiments/recalls_%s_%d.txt" % (name_exp, s), recalls)
-
+    s += 1
     precisions.sort()
     recalls.sort()
     precisions = precisions[med:-med]
