@@ -156,7 +156,7 @@ for w in sentences:
         precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
         recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
     ####
-    if os.path.exists('./experiments'):
+    if not os.path.exists('./experiments'):
         os.mkdir('experiments')
     np.savetxt("precisiones_%s_%d.txt"%(name_exp,s), precisions)
     np.savetxt("recalls_%s_%d.txt" % (name_exp, s), recalls)
