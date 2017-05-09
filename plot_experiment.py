@@ -1,7 +1,7 @@
 import json
 import numpy as np
-#import matplotlib.pyplot as plt
-#import seaborn
+# import matplotlib.pyplot as plt
+# import seaborn
 import glob
 
 with open('conf.json') as f:
@@ -10,11 +10,15 @@ with open('conf.json') as f:
 dim = conf['dim']
 gramm = conf['grammar']
 name = conf['name']
-med = conf['med'] #per i plot tolgo brutti valori
-
-#mettere glob.glob!!!
-precisions_files = glob.glob("experiments/precisions_%s_*"%(name))
-recalls_files = glob.glob("experiments/recalls_%s_*"%(name))
+med = conf['med']  # per i plot tolgo brutti valori
+###
+# prendere data grammatica
+# tutte le precisions e recalls di tutte le dim
+# plottare tali dati
+###
+# mettere glob.glob!!!
+precisions_files = glob.glob("experiments/precisions_%s_*" % (name))
+recalls_files = glob.glob("experiments/recalls_%s_*" % (name))
 print(precisions_files)
 print(recalls_files)
 ##togliere valori med
@@ -27,5 +31,3 @@ print(precisions)
 print(recalls)
 
 ##plots
-
-
