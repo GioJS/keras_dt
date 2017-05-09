@@ -4,8 +4,8 @@ import numpy as np
 #import seaborn
 import glob
 
-
-conf = json.load('conf.json')
+with open('conf.json') as f:
+    conf = json.load(f)
 
 dim = conf['dim']
 gramm = conf['grammar']
