@@ -158,8 +158,8 @@ for w in sentences:
     ####
     if not os.path.exists('./experiments'):
         os.mkdir('experiments')
-    np.savetxt("precisiones_%s_%d.txt"%(name_exp,s), precisions)
-    np.savetxt("recalls_%s_%d.txt" % (name_exp, s), recalls)
+    np.savetxt("experiments/precisiones_%s_%d.txt"%(name_exp,s), precisions)
+    np.savetxt("experiments/recalls_%s_%d.txt" % (name_exp, s), recalls)
 
     precisions.sort()
     recalls.sort()
