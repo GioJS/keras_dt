@@ -18,7 +18,13 @@ recalls_files = glob.glob("experiments/precisions_%s_*"%(name))
 print(precisions_files)
 print(recalls_files)
 ##togliere valori med
-
+precisions = []
+recalls = []
+for file_p, file_r in zip(precisions_files, recalls_files):
+    precisions.append(np.loadtxt(file_p))
+    recalls.append(np.loadtxt(file_r))
+print(precisions)
+print(recalls)
 
 ##plots
 
