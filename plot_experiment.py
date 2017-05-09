@@ -12,6 +12,7 @@ gramm = conf['grammar']
 name = conf['name']
 med = conf['med'] #per i plot tolgo brutti valori
 
+#mettere glob.glob!!!
 precisions_files = os.listdir("experiments/precisions_%s_*"%(name))
 recalls_files = os.listdir("experiments/precisions_%s_*"%(name))
 print(precisions_files)
