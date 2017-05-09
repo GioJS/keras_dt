@@ -147,13 +147,14 @@ for w in sentences:
     # print(symbols)
     P_real = test_P(P, w.split())
     n = G.get_unit_productions()
-    precisions = []
 
+    precisions = []
     recalls = []
     for i in range(dim):
         precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
         recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
     if np.mean(precisions) > 2:
+        print('sentence: ',w)
         p = np.array(precisions)
         errors = p[p >= 2]
         np.savetxt('log' + str(indx), errors)
