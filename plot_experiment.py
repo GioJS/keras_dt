@@ -2,7 +2,7 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn
-import os
+import glob
 
 
 conf = json.load('conf.json')
@@ -13,8 +13,8 @@ name = conf['name']
 med = conf['med'] #per i plot tolgo brutti valori
 
 #mettere glob.glob!!!
-precisions_files = os.listdir("experiments/precisions_%s_*"%(name))
-recalls_files = os.listdir("experiments/precisions_%s_*"%(name))
+precisions_files = glob.glob("experiments/precisions_%s_*"%(name))
+recalls_files = glob.glob("experiments/precisions_%s_*"%(name))
 print(precisions_files)
 print(recalls_files)
 ##togliere valori med
