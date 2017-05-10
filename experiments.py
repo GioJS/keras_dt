@@ -141,7 +141,13 @@ R = {}
 
 random.shuffle(sentences)'''
 s = 0
+
 for w in sentences:
+    precisions = [0] * dim
+    recalls = [0] * dim
+    intersections = [0] * dim
+    system_decisions = [0] * dim
+    oracle_request = [0] * dim
     P = getP(w, G)
     print("This is the matrix P\n", P)
     # new_P = tranform_P(P, w.split())
@@ -151,21 +157,27 @@ for w in sentences:
     P_real = test_P(P, w.split())
     n = G.get_unit_productions()
 
-    precisions = []
-    recalls = []
-    for i in range(dim):
-        precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
-        recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
+    for j in range(dim):
+        # precisions.append(P_dist[:, i].dot(P_real[:, i]) / P_dist[:, i].dot(P_dist[:, i]))
+        intersections[j] = intersections[j] + P_dist[:, j].dot(P_real[:, j])
+        system_decisions[j] = system_decisions[j] + P_dist[:, j].dot(P_dist[:, j])
+        oracle_request[j] = oracle_request[j] + P_real[:, j].dot(P_real[:, j])
+        # recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
     ####
+    for i in range(dim):
+        precisions[i] = intersections[i] / system_decisions[i]
+        recalls[i] = intersections[i] / oracle_request[i]
+    print(precisions)
+    print(recalls)
     if not os.path.exists('./experiments'):
         os.mkdir('experiments')
     np.savetxt("experiments/precisions_%s_%d.txt" % (name_exp, s), precisions)
     np.savetxt("experiments/recalls_%s_%d.txt" % (name_exp, s), recalls)
     s += 1
-    precisions.sort()
-    recalls.sort()
-    precisions = precisions[med:-med]
-    recalls = recalls[med:-med]
+    # precisions.sort()
+    # recalls.sort()
+    # precisions = precisions[med:-med]
+    # recalls = recalls[med:-med]
     # if np.mean(precisions) > 2:
     #     print('sentence: ', w)
     #     p = np.array(precisions)
@@ -173,7 +185,7 @@ for w in sentences:
 
 
     p_means.append(np.mean(precisions))
-    r_means.append(np.mean(recalls))
+    # r_means.append(np.mean(recalls))
     # print(p_means, r_means)
 print('Precision: ', np.mean(p_means))
 print('Recall: ', np.mean(r_means))
