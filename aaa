@@ -1,0 +1,11 @@
+dim:500 frasi:pp gramm=mpp no outliers
+Precision:  0.182018637996
+Recall:  0.800347900088
+
+dim:500 frasi:pp gramm=mpp no outliers disp:0.6
+Precision:  0.118212062583
+Recall:  0.943866783731
+
+dim: 1000 frasi:pp gramm=mpp outliers
+Precision:  0.934824984848
+Recall:  0.673607648692
