@@ -16,20 +16,21 @@ med = conf['med']  # per i plot tolgo brutti valori
 # tutte le precisions e recalls di tutte le dim
 # plottare tali dati
 ###
-# mettere glob.glob!!!
 dims = [500, 1000, 1500, 2000]
 precisions = []
 recalls = []
 precisions_files = {}
 for i in dims:
-    precisions_files[i] = glob.glob("experiments/precisions*_%d_m1_*" % (i))
+    precisions_files[i] = glob.glob("experiments/precisions*_%d_m1_*" % i)
 
 for i in dims:
     precision_f = []
     for f in precisions_files[i]:
         p = np.loadtxt(f)
         precision_f.append(np.mean(p))
-    precisions.append(np.mean(precision_f))
+    plt.plot(np.arange(50), precision_f)
+    plt.show()
+    # precisions.append(np.mean(precision_f))
 print(precisions)
 # for file_p in precisions_files:
 #     precisions.append(np.loadtxt(file_p))
