@@ -17,21 +17,32 @@ med = conf['med']  # per i plot tolgo brutti valori
 # plottare tali dati
 ###
 # mettere glob.glob!!!
+dims = [500, 1000, 1500, 2000]
 precisions = []
 recalls = []
-precisions_files = glob.glob("experiments/precisions_%s_*" % (name))
+precisions_files = {}
+for i in dims:
+    precisions_files[i] = glob.glob("experiments/precisions*_%d_m1_*" % (i))
+
+for i in dims:
+    precision_f = []
+    for f in precisions_files[i]:
+        p = np.loadtxt(f)
+        precision_f.append(np.mean(p))
+    precisions.append(np.mean(precision_f))
+print(precisions)
 # for file_p in precisions_files:
 #     precisions.append(np.loadtxt(file_p))
 # plt.plot(np.arange(15), [np.mean(i) for i in precisions])
 # plt.show()
-recalls_files = glob.glob("experiments/recalls_%s_*" % (name))
-print(precisions_files)
-print(recalls_files)
+# recalls_files = glob.glob("experiments/recalls_%s_*" % (name))
+# print(precisions_files)
+# print(recalls_files)
 
-for file_p, file_r in zip(precisions_files, recalls_files):
-    precisions.append(np.loadtxt(file_p))
-    recalls.append(np.loadtxt(file_r))
-print(precisions)
-print(recalls)
+# for file_p, file_r in zip(precisions_files, recalls_files):
+#     precisions.append(np.loadtxt(file_p))
+#     recalls.append(np.loadtxt(file_r))
+# print(precisions)
+# print(recalls)
 
 ##plots
