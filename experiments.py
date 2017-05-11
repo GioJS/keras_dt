@@ -182,13 +182,13 @@ for w in sentences:
 for i in range(dim):
     precisions[i] = intersections[i] / system_decisions[i]
     recalls[i] = intersections[i] / oracle_request[i]
-np.savetxt("experiments/intersections_%s_%d.txt" % (name_exp, s), intersections)
-np.savetxt("experiments/system_decisions_%s_%d.txt" % (name_exp, s), system_decisions)
-np.savetxt("experiments/oracle_request%s_%d.txt" % (name_exp, s), oracle_request)
-np.savetxt("experiments/precisions_%s_%d.txt" % (name_exp, s), precisions)
-np.savetxt("experiments/recalls_%s_%d.txt" % (name_exp, s), recalls)
-    #p_means.append(np.mean(precisions))
-    # r_means.append(np.mean(recalls))
-    # print(p_means, r_means)
-#print('Precision: ', np.mean(p_means))
-#print('Recall: ', np.mean(r_means))
+np.savetxt("experiments/intersections_%s.txt" % (name_exp), intersections)
+np.savetxt("experiments/system_decisions_%s.txt" % (name_exp), system_decisions)
+np.savetxt("experiments/oracle_request%s.txt" % (name_exp), oracle_request)
+np.savetxt("experiments/precisions_%s.txt" % (name_exp), precisions)
+np.savetxt("experiments/recalls_%s.txt" % (name_exp), recalls)
+# p_means.append(np.mean(precisions))
+# r_means.append(np.mean(recalls))
+# print(p_means, r_means)
+# print('Precision: ', np.mean(p_means))
+# print('Recall: ', np.mean(r_means))

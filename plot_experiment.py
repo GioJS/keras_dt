@@ -27,6 +27,7 @@ for i in dims:
     precision_f = []
     for f in precisions_files[i]:
         p = np.loadtxt(f)
+        print(max(p))
         precision_f.append(np.mean(p))
     plt.plot(np.arange(50), precision_f)
     plt.show()
