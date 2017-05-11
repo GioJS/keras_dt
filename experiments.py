@@ -184,8 +184,8 @@ for w in sentences:
     #     errors = p[p >= 2]
 
 
-    p_means.append(np.mean(precisions))
+    #p_means.append(np.mean(precisions))
     # r_means.append(np.mean(recalls))
     # print(p_means, r_means)
-print('Precision: ', np.mean(p_means))
-print('Recall: ', np.mean(r_means))
+#print('Precision: ', np.mean(p_means))
+#print('Recall: ', np.mean(r_means))
