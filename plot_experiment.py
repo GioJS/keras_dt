@@ -1,7 +1,7 @@
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn
+import seaborn as sns
 import glob
 
 with open('conf.json') as f:
@@ -33,21 +33,26 @@ means_P = []
 vars_P = []
 means_R = []
 vars_R = []
-for i in [500]:
+for i in [500, 1000, 1500]:
     means_P.append(np.mean(precisions[i]))
-    vars_P.append(np.var(precisions[i]))
+    vars_P.append(np.std(precisions[i]))
     means_R.append(np.mean(recalls[i]))
-    vars_R.append(np.var(recalls[i]))
-print(vars_P)
+    vars_R.append(np.std(recalls[i]))
 
-x = np.arange(1)
+x = np.arange(3)
 
 plt.scatter(x, means_P)
-# plt.scatter(x, vars_P)
-plt.errorbar(x, means_P, yerr=vars_P)
-plt.xticks(x,[500])
-plt.ylabel('Mean/Var')
+plt.errorbar(x, means_P, color='#404ee5', ecolor='r', yerr=vars_P, label='Mean Precision')
+plt.scatter(x, means_R)
+plt.errorbar(x, means_R, color='#49c155', ecolor='r', yerr=vars_R, label='Mean Recall')
+plt.legend()
+
+plt.xticks(x, [500, 1000, 1500])
+plt.ylabel('Precision/Recall')
 plt.xlabel('Dimension')
+axes = plt.gca()
+axes.set_ylim([0, 1])
+
 plt.show()
 # precisions.append(np.mean(precision_f))
 # print(precisions)
