@@ -141,13 +141,13 @@ R = {}
 
 random.shuffle(sentences)'''
 s = 0
-
+precisions = [0] * dim
+recalls = [0] * dim
+intersections = [0] * dim
+system_decisions = [0] * dim
+oracle_request = [0] * dim
 for w in sentences:
-    precisions = [0] * dim
-    recalls = [0] * dim
-    intersections = [0] * dim
-    system_decisions = [0] * dim
-    oracle_request = [0] * dim
+
     P = getP(w, G)
     print("This is the matrix P\n", P)
     # new_P = tranform_P(P, w.split())
@@ -164,15 +164,12 @@ for w in sentences:
         oracle_request[j] = oracle_request[j] + P_real[:, j].dot(P_real[:, j])
         # recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
     ####
-    for i in range(dim):
-        precisions[i] = intersections[i] / system_decisions[i]
-        recalls[i] = intersections[i] / oracle_request[i]
+
     print(precisions)
     print(recalls)
     if not os.path.exists('./experiments'):
         os.mkdir('experiments')
-    np.savetxt("experiments/precisions_%s_%d.txt" % (name_exp, s), precisions)
-    np.savetxt("experiments/recalls_%s_%d.txt" % (name_exp, s), recalls)
+
     s += 1
     # precisions.sort()
     # recalls.sort()
@@ -182,8 +179,14 @@ for w in sentences:
     #     print('sentence: ', w)
     #     p = np.array(precisions)
     #     errors = p[p >= 2]
-
-
+for i in range(dim):
+    precisions[i] = intersections[i] / system_decisions[i]
+    recalls[i] = intersections[i] / oracle_request[i]
+np.savetxt("experiments/intersections_%s_%d.txt" % (name_exp, s), intersections)
+np.savetxt("experiments/system_decisions_%s_%d.txt" % (name_exp, s), system_decisions)
+np.savetxt("experiments/oracle_request%s_%d.txt" % (name_exp, s), oracle_request)
+np.savetxt("experiments/precisions_%s_%d.txt" % (name_exp, s), precisions)
+np.savetxt("experiments/recalls_%s_%d.txt" % (name_exp, s), recalls)
     #p_means.append(np.mean(precisions))
     # r_means.append(np.mean(recalls))
     # print(p_means, r_means)
