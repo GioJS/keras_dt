@@ -165,8 +165,6 @@ for w in sentences:
         # recalls.append(P_dist[:, i].dot(P_real[:, i]) / P_real[:, i].dot(P_real[:, i]))
     ####
 
-    print(precisions)
-    print(recalls)
     if not os.path.exists('./experiments'):
         os.mkdir('experiments')
 
