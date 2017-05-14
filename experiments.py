@@ -149,7 +149,7 @@ oracle_request = [0] * dim
 for w in sentences:
 
     P = getP(w, G)
-    print("This is the matrix P\n", P)
+    #print("This is the matrix P\n", P)
     # new_P = tranform_P(P, w.split())
     # print("This is the matrix P_new\n", new_P)
     P_dist = getPDistributed(w, G, symbols, R)
