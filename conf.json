@@ -1,7 +1,7 @@
 {
-  "dim": 2000,
+  "dim": 1000,
   "sig": 100,
-  "disp": 0.75,
+  "disp": 0.6,
   "name": "exp_2000_mpp",
   "med": 10,
   "grammar": "mpp",
